@@ -21,7 +21,11 @@ namespace OpenProtocolInterpreter.Sample
         private readonly Timer _keepAliveTimer;
         private OpenProtocolDriver driver;
 
-        string idLogsPath = "C:\\Users\\a00542721\\OneDrive - ONEVIRTUALOFFICE\\Documents\\my\\Workspaces\\ws-VSCommunity\\Bypass_validator_app\\SQS_logs_examples";
+        string idLogsPath = "C:\\ProgramData\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
+
+        string currentOperatorId = string.Empty;
+        string currentOperatorName = string.Empty;
+        string currentOperatorGroup = string.Empty;
 
         public DriverForm()
         {
@@ -224,20 +228,19 @@ namespace OpenProtocolInterpreter.Sample
             //                     TighteningID: <{tighteningMid.TighteningId}>");
         }
 
-        private void CheckSQSBadge() 
+        private void CheckSQSBadge()
         {
             //CHECK IF IS THERE A KEY OUT BEFORE GET THE CURRENT LOGIN
+            string targetKeyOut = "[WorkerIdent.1.1] SendKeyOut - Command [OperatorCode] Destination [Ident.1] Value [] - Worker";
 
-            string targetString1 = "DoWork: Execute end function with sendcount=1 funccount=0 command=[WORKERIDENTSTATUS]";
-            string targetString2 = "[WorkerIdent.1.1] SetOperatorGrid - [FisPdaStatus.1][Device1] [True]";
-            string targetString3 = "TLBWorkerIdentWorker.GetKeyData - key [";
+            string targetKeyIn = "[WorkerIdent.1.1] SetOperatorGrid - [FisPdaStatus.1][Device1] [True]";
 
-            if (idLogsPath != null) 
+
+            if (idLogsPath != null)
             {
                 string[] files = Directory.GetFiles(idLogsPath);
 
                 var latestFile = files.OrderByDescending(file => new FileInfo(file).LastWriteTime).FirstOrDefault();
-
 
                 List<string> lines = new List<string>();
                 using (var reader = new StreamReader(latestFile))
@@ -251,9 +254,35 @@ namespace OpenProtocolInterpreter.Sample
 
                 lines.Reverse();
 
-                string firstOccurrence = lines.FirstOrDefault(line => line.Contains(targetString1));
 
-                MessageBox.Show(firstOccurrence);
+                string keyOutOccurrence = lines.FirstOrDefault(line => line.Contains(targetKeyOut));
+                var keyOutBaseIndex = lines.IndexOf(keyOutOccurrence);
+
+                string keyInOccurrence = lines.FirstOrDefault(line => line.Contains(targetKeyIn));
+                var keyInBaseIndex = lines.IndexOf(keyInOccurrence);
+
+                if (keyOutBaseIndex > keyInBaseIndex)
+                {
+                    string rawOperatorKeyAndKeyGroup = lines.ElementAt(keyInBaseIndex + 1);
+                    string rawOperatorName = lines.ElementAt(keyInBaseIndex + 8);
+
+                    int operatorIdOffset = 46 + rawOperatorKeyAndKeyGroup.IndexOf("Mem=0:");
+                    int operatorGroupOffset = 10 + rawOperatorKeyAndKeyGroup.IndexOf("keygroup");
+                    int operatorNameOffset = 7 +  rawOperatorName.IndexOf("Value");
+
+                    currentOperatorId = rawOperatorKeyAndKeyGroup.Substring(operatorIdOffset, (rawOperatorKeyAndKeyGroup.IndexOf("keygroup") - (operatorIdOffset + 2)));
+                    currentOperatorGroup = rawOperatorKeyAndKeyGroup.Substring(operatorGroupOffset, (rawOperatorKeyAndKeyGroup.LastIndexOf("]") - operatorGroupOffset));
+                    currentOperatorName = rawOperatorName.Substring(operatorNameOffset, (rawOperatorName.LastIndexOf("]") - operatorNameOffset));
+
+                    MessageBox.Show("keyInBaseIndex: " + keyInBaseIndex);
+                    MessageBox.Show("currentOperatorId: " + currentOperatorId);
+                    MessageBox.Show("currentOperatorId: " + currentOperatorGroup);
+                    MessageBox.Show("currentOperatorName: " + currentOperatorName);
+                }
+                else
+                {
+                    MessageBox.Show("KeyOut first than KeyIn! \r\nKeyOut: " + keyOutBaseIndex + "\r\nKeyIn: " + keyInBaseIndex);
+                }
 
 
                 //foreach (string line in lines)
