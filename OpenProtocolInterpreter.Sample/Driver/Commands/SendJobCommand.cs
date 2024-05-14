@@ -8,6 +8,8 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
 {
     public class SendJobCommand
     {
+        Logger logger;
+
         private readonly OpenProtocolDriver _driver;
 
         public SendJobCommand(OpenProtocolDriver driver)
@@ -15,27 +17,41 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
             _driver = driver;
         }
 
-        public bool Execute(int jobId)
+        public bool Execute(bool relayOneSetReset)
         {
-            Console.WriteLine($"Sending job <{jobId}> to controller!");
-            var mid0200 =  new Mid0200();
+            var mid0200 = new Mid0200();
 
-            mid0200.StatusRelayOne = RelayStatus.On;
-            mid0200.StatusRelayTwo = RelayStatus.On;
-            mid0200.StatusRelayThree = RelayStatus.On;
-            mid0200.StatusRelayFour = RelayStatus.On;
-            mid0200.StatusRelayFive = RelayStatus.On;
-            mid0200.StatusRelaySix = RelayStatus.On;
-            mid0200.StatusRelaySeven = RelayStatus.On;
-            mid0200.StatusRelayEight = RelayStatus.On;
-            mid0200.StatusRelayNine = RelayStatus.On;
-            mid0200.StatusRelayTen = RelayStatus.On;
-
+            if(relayOneSetReset)
+            {
+                mid0200.StatusRelayOne = RelayStatus.On;
+                mid0200.StatusRelayTwo = RelayStatus.Off;
+                mid0200.StatusRelayThree = RelayStatus.Off;
+                mid0200.StatusRelayFour = RelayStatus.Off;
+                mid0200.StatusRelayFive = RelayStatus.Off;
+                mid0200.StatusRelaySix = RelayStatus.Off;
+                mid0200.StatusRelaySeven = RelayStatus.Off;
+                mid0200.StatusRelayEight = RelayStatus.Off;
+                mid0200.StatusRelayNine = RelayStatus.Off;
+                mid0200.StatusRelayTen = RelayStatus.Off;
+            }
+            else
+            {
+                mid0200.StatusRelayOne = RelayStatus.Off;
+                mid0200.StatusRelayTwo = RelayStatus.Off;
+                mid0200.StatusRelayThree = RelayStatus.Off;
+                mid0200.StatusRelayFour = RelayStatus.Off;
+                mid0200.StatusRelayFive = RelayStatus.Off;
+                mid0200.StatusRelaySix = RelayStatus.Off;
+                mid0200.StatusRelaySeven = RelayStatus.Off;
+                mid0200.StatusRelayEight = RelayStatus.Off;
+                mid0200.StatusRelayNine = RelayStatus.Off;
+                mid0200.StatusRelayTen = RelayStatus.Off;
+            }
             
 
-
-
             var mid = _driver.SendAndWaitForResponse(mid0200.Pack(), new TimeSpan(0, 0, 10));
+
+            logger.Log("Pack sent: " + mid0200.Pack());
 
             if (mid.Header.Mid == Mid0004.MID)
             {
@@ -49,12 +65,14 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
 
         private void OnJobAccepted(Mid0005 mid)
         {
-            MessageBox.Show($"Job Accepted by controller!");
+            logger.Log($"Job Accepted by controller!");
         }
 
         private void OnJobRefused(Mid0004 mid)
         {
-            MessageBox.Show($"Job refused by controller under error code <{(int)mid.ErrorCode}> ({mid.ErrorCode.ToString()})!");
+            string str = $"Job refused by controller under error code <{(int)mid.ErrorCode}> ({mid.ErrorCode.ToString()})!";
+            logger.Log(str);
+            MessageBox.Show(str);
         }
     }
 }

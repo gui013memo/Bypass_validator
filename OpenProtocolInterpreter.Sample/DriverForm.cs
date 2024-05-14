@@ -21,11 +21,19 @@ namespace OpenProtocolInterpreter.Sample
         private readonly Timer _keepAliveTimer;
         private OpenProtocolDriver driver;
 
+        BadgeCheckingForm checkingForm;
+
+        Logger logger = new Logger();
+
+        //string idLogsPath = "C:\\ProgramData\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
         string idLogsPath = "C:\\ProgramData\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
 
-        string currentOperatorId = string.Empty;
-        string currentOperatorName = string.Empty;
-        string currentOperatorGroup = string.Empty;
+        public bool idLogsPathOK;
+
+        public bool isSQSLogged = false;
+        public string currentOperatorId = string.Empty;
+        public string currentOperatorName = string.Empty;
+        public string currentOperatorGroup = string.Empty;
 
         public DriverForm()
         {
@@ -33,6 +41,8 @@ namespace OpenProtocolInterpreter.Sample
             _keepAliveTimer = new Timer();
             _keepAliveTimer.Tick += KeepAliveTimer_Tick;
             _keepAliveTimer.Interval = 1000;
+
+            checkingForm = new BadgeCheckingForm(this);
         }
 
         private void BtnConnection_Click(object sender, EventArgs e)
@@ -129,13 +139,8 @@ namespace OpenProtocolInterpreter.Sample
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnTighteningSubscribe_Click(object sender, EventArgs e)
+        private void startInterfaceButton_Click(object sender, EventArgs e)
         {
-
-            consoleTextBox.Text += ($"Sending cmd...");
-
-            //Mid0200.
-
             var pack = driver.SendAndWaitForResponse(new Mid0210().Pack(), TimeSpan.FromSeconds(5));
 
 
@@ -144,22 +149,32 @@ namespace OpenProtocolInterpreter.Sample
                 if (pack.Header.Mid == Mid0004.MID)
                 {
                     var mid04 = pack as Mid0004;
-                    consoleTextBox.Text += ($@"Error while subscribing (MID 0004):
-                                         Error Code: <{mid04.ErrorCode}>
-                                         Failed MID: <{mid04.FailedMid}>");
+
+                    string str = $@"Error while subscribing (MID 0004):
+                                       Error Code: <{mid04.ErrorCode}>
+                                       Failed MID: <{mid04.FailedMid}>";
+
+                    logger.Log(str);
+                    MessageBox.Show(str);
                 }
                 else
-                    consoleTextBox.Text += ($"cmd accepted!");
+                {
+                    logger.Log("MID 0210 accepted");
+                    consoleTextBox.Text = "MID 0210 Accepted";
+
+                    //register command
+                    driver.AddUpdateOnReceivedCommand(typeof(Mid0211), OnTighteningReceived);
+                }
+                    
             }
 
-            //register command
-            driver.AddUpdateOnReceivedCommand(typeof(Mid0211), OnTighteningReceived);
+            
         }
 
 
-        private void BtnSendJob_Click(object sender, EventArgs e)
+        public void BtnSendJob_Click(object sender, EventArgs e)
         {
-            new SendJobCommand(driver).Execute((int)numericJob.Value);
+            new SendJobCommand(driver).Execute(true);
         }
 
         /// <summary>
@@ -188,49 +203,42 @@ namespace OpenProtocolInterpreter.Sample
         /// <param name="e"></param>
         private void OnTighteningReceived(MIDIncome e)
         {
+            logger.Log("MID211 received");
+
             driver.SendMessage(e.Mid.BuildAckPackage());
 
             var externallyMonitoredRelayStatus = e.Mid as Mid0211;
 
+            //CROSS THREADING OPERATION, USE THE DELEGATE AS ON TCP IP ATTEMPT WITH SQS SCREEN CYCLE TIME APP
             consoleTextBox.Text = ("EXTERNAL_MONITORED_1: \r\n" + externallyMonitoredRelayStatus.StatusDigInOne.ToString());
 
             lastMessageArrived.Text = Mid0211.MID.ToString();
 
             if (externallyMonitoredRelayStatus.StatusDigInOne)
             {
-                //CHECK BADGE
+                logger.Log("DigInOne = HIGH");
+
+                CheckSQSBadge();
+
+                logger.Log("Got out of CheckSQSBadge");
+
+                
+                    logger.Log("Got inside of IF idLogsPathOk");
+                    checkingForm.Show();
+                    checkBadgeTimer.Start();
+                
+
             }
-
-
-            //consoleTextBox.Text += ($@"TIGHTENING RECEIVED (MID 0061): 
-            //                     Cell ID: <{tighteningMid.CellId}>
-            //                     Channel ID: <{tighteningMid.ChannelId}>
-            //                     Torque Controller Name: <{tighteningMid.TorqueControllerName}>
-            //                     VIN Number: <{tighteningMid.VinNumber}>
-            //                     Job ID: <{tighteningMid.JobId}>
-            //                     Parameter Set ID: <{tighteningMid.ParameterSetId}>
-            //                     Batch Size: <{tighteningMid.BatchSize}>
-            //                     Batch Counter: <{tighteningMid.BatchCounter}>
-            //                     Tightening Status: <{tighteningMid.TighteningStatus}>
-            //                     Torque Status: <{(int)tighteningMid.TorqueStatus}> ({tighteningMid.TorqueStatus.ToString()})
-            //                     Angle Status: <{(int)tighteningMid.AngleStatus}> ({tighteningMid.AngleStatus.ToString()})
-            //                     Torque Min Limit: <{tighteningMid.TorqueMinLimit}>
-            //                     Torque Max Limit: <{tighteningMid.TorqueMaxLimit}>
-            //                     Torque Final Target: <{tighteningMid.TorqueFinalTarget}>
-            //                     Torque: <{tighteningMid.Torque}>
-            //                     Angle Min Limit: <{tighteningMid.AngleMinLimit}>
-            //                     Angle Max Limit: <{tighteningMid.AngleMaxLimit}>
-            //                     Final Angle Target: <{tighteningMid.AngleFinalTarget}>
-            //                     Angle: <{tighteningMid.Angle}>
-            //                     TimeStamp: <{tighteningMid.Timestamp.ToString("yyyy-MM-dd:HH:mm:ss")}>
-            //                     Last Change In Parameter Set: <{tighteningMid.LastChangeInParameterSet.ToString("yyyy-MM-dd:HH:mm:ss")}>
-            //                     Batch Status: <{(int)tighteningMid.BatchStatus}> ({tighteningMid.BatchStatus})
-            //                     TighteningID: <{tighteningMid.TighteningId}>");
+            else if (externallyMonitoredRelayStatus.StatusDigInOne == false)
+            {
+                logger.Log("DigInOne went FALSE, checkingForm is being discarded and checkBadgeTimer is being stopped");
+                checkingForm.Hide();
+                checkBadgeTimer.Stop();
+            }
         }
 
         private void CheckSQSBadge()
         {
-            //CHECK IF IS THERE A KEY OUT BEFORE GET THE CURRENT LOGIN
             string targetKeyOut = "[WorkerIdent.1.1] SendKeyOut - Command [OperatorCode] Destination [Ident.1] Value [] - Worker";
 
             string targetKeyIn = "[WorkerIdent.1.1] SetOperatorGrid - [FisPdaStatus.1][Device1] [True]";
@@ -238,8 +246,11 @@ namespace OpenProtocolInterpreter.Sample
 
             if (idLogsPath != null)
             {
-                string[] files = Directory.GetFiles(idLogsPath);
+                idLogsPathOK = true;
+                isSQSLogged = true;
+                logger.Log("isSQSLogged = TRUE");
 
+                string[] files = Directory.GetFiles(idLogsPath);
                 var latestFile = files.OrderByDescending(file => new FileInfo(file).LastWriteTime).FirstOrDefault();
 
                 List<string> lines = new List<string>();
@@ -254,7 +265,6 @@ namespace OpenProtocolInterpreter.Sample
 
                 lines.Reverse();
 
-
                 string keyOutOccurrence = lines.FirstOrDefault(line => line.Contains(targetKeyOut));
                 var keyOutBaseIndex = lines.IndexOf(keyOutOccurrence);
 
@@ -268,51 +278,37 @@ namespace OpenProtocolInterpreter.Sample
 
                     int operatorIdOffset = 46 + rawOperatorKeyAndKeyGroup.IndexOf("Mem=0:");
                     int operatorGroupOffset = 10 + rawOperatorKeyAndKeyGroup.IndexOf("keygroup");
-                    int operatorNameOffset = 7 +  rawOperatorName.IndexOf("Value");
+                    int operatorNameOffset = 7 + rawOperatorName.IndexOf("Value");
 
                     currentOperatorId = rawOperatorKeyAndKeyGroup.Substring(operatorIdOffset, (rawOperatorKeyAndKeyGroup.IndexOf("keygroup") - (operatorIdOffset + 2)));
                     currentOperatorGroup = rawOperatorKeyAndKeyGroup.Substring(operatorGroupOffset, (rawOperatorKeyAndKeyGroup.LastIndexOf("]") - operatorGroupOffset));
                     currentOperatorName = rawOperatorName.Substring(operatorNameOffset, (rawOperatorName.LastIndexOf("]") - operatorNameOffset));
 
-                    MessageBox.Show("keyInBaseIndex: " + keyInBaseIndex);
-                    MessageBox.Show("currentOperatorId: " + currentOperatorId);
-                    MessageBox.Show("currentOperatorId: " + currentOperatorGroup);
-                    MessageBox.Show("currentOperatorName: " + currentOperatorName);
+
+                    checkingForm.Show();
+                    //MessageBox.Show("keyInBaseIndex: " + keyInBaseIndex);
+                    //MessageBox.Show("currentOperatorId: " + currentOperatorId);
+                    //MessageBox.Show("currentOperatorId: " + currentOperatorGroup);
+                    //MessageBox.Show("currentOperatorName: " + currentOperatorName);
                 }
                 else
                 {
-                    MessageBox.Show("KeyOut first than KeyIn! \r\nKeyOut: " + keyOutBaseIndex + "\r\nKeyIn: " + keyInBaseIndex);
+                    logger.Log("isSQSLogged = FALSE");
+                    isSQSLogged = false;
+                    //MessageBox.Show("KeyOut first than KeyIn! \r\nKeyOut: " + keyOutBaseIndex + "\r\nKeyIn: " + keyInBaseIndex);
                 }
-
-
-                //foreach (string line in lines)
-                //{
-                //    if (line.Contains(targetString1))
-                //    {
-                //        consoleTextBox.Text += ($"Found \"{targetString1}\"");
-                //        break;
-                //    }
-                //}
-
-                //foreach (string line in lines)
-                //{
-                //    if (line.Contains(targetString2))
-                //    {
-                //        consoleTextBox.Text += ($"Found \"{targetString2}\" at: ");
-                //        break;
-                //    }
-                //}
-
-                //foreach (string line in lines)
-                //{
-                //    if (line.Contains(targetString3))
-                //    {
-                //        consoleTextBox.Text += ($"Found \"{targetString3}\"");
-                //        break;
-                //    }
-                //}
-
             }
+            else
+            {
+                checkBadgeTimer.Stop();
+                idLogsPathOK = false;
+                MessageBox.Show("idLogsPath is NULL");
+                logger.Log("idLogsPath is null");
+                return;
+            }
+
+
+            checkingForm.UpdateSQSStatus();
 
         }
 
@@ -347,6 +343,13 @@ namespace OpenProtocolInterpreter.Sample
         private void button2_Click(object sender, EventArgs e)
         {
             CheckSQSBadge();
+        }
+
+        private void checkBadgeTimer_Tick(object sender, EventArgs e)
+        {
+            CheckSQSBadge();
+
+            logger.Log("timer hitted");
         }
     }
 }

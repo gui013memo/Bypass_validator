@@ -39,18 +39,19 @@
             this.label2 = new System.Windows.Forms.Label();
             this.numericPort = new System.Windows.Forms.NumericUpDown();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnTighteningSubscribe = new System.Windows.Forms.Button();
+            this.startInterfaceButton = new System.Windows.Forms.Button();
             this.consoleTextBox = new System.Windows.Forms.TextBox();
             this.btnJobInfoSubscribe = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnAbortJob = new System.Windows.Forms.Button();
             this.txtProduct = new System.Windows.Forms.TextBox();
             this.btnSendProduct = new System.Windows.Forms.Button();
             this.btnSendJob = new System.Windows.Forms.Button();
             this.numericJob = new System.Windows.Forms.NumericUpDown();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.checkBadgeTimer = new System.Windows.Forms.Timer(this.components);
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericPort)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -65,9 +66,10 @@
             this.connectionStatus,
             this.toolstripLast,
             this.lastMessageArrived});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 268);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 331);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(653, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(871, 26);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -75,29 +77,30 @@
             // 
             this.connectionStatus.BackColor = System.Drawing.Color.Red;
             this.connectionStatus.Name = "connectionStatus";
-            this.connectionStatus.Size = new System.Drawing.Size(79, 17);
+            this.connectionStatus.Size = new System.Drawing.Size(99, 20);
             this.connectionStatus.Text = "Disconnected";
             // 
             // toolstripLast
             // 
             this.toolstripLast.Name = "toolstripLast";
-            this.toolstripLast.Size = new System.Drawing.Size(96, 17);
+            this.toolstripLast.Size = new System.Drawing.Size(120, 20);
             this.toolstripLast.Text = "Last Mid Arrived:";
             // 
             // lastMessageArrived
             // 
             this.lastMessageArrived.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.lastMessageArrived.Name = "lastMessageArrived";
-            this.lastMessageArrived.Size = new System.Drawing.Size(463, 17);
+            this.lastMessageArrived.Size = new System.Drawing.Size(632, 20);
             this.lastMessageArrived.Spring = true;
             this.lastMessageArrived.Text = "Last MID";
             // 
             // textIp
             // 
             this.textIp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textIp.Location = new System.Drawing.Point(36, 12);
+            this.textIp.Location = new System.Drawing.Point(48, 15);
+            this.textIp.Margin = new System.Windows.Forms.Padding(4);
             this.textIp.Name = "textIp";
-            this.textIp.Size = new System.Drawing.Size(160, 22);
+            this.textIp.Size = new System.Drawing.Size(212, 26);
             this.textIp.TabIndex = 2;
             this.textIp.Text = "10.127.1.21";
             // 
@@ -105,18 +108,20 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(7, 13);
+            this.label1.Location = new System.Drawing.Point(9, 16);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(22, 16);
+            this.label1.Size = new System.Drawing.Size(29, 20);
             this.label1.TabIndex = 3;
             this.label1.Text = "IP:";
             // 
             // btnConnection
             // 
             this.btnConnection.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConnection.Location = new System.Drawing.Point(385, 10);
+            this.btnConnection.Location = new System.Drawing.Point(513, 12);
+            this.btnConnection.Margin = new System.Windows.Forms.Padding(4);
             this.btnConnection.Name = "btnConnection";
-            this.btnConnection.Size = new System.Drawing.Size(100, 23);
+            this.btnConnection.Size = new System.Drawing.Size(133, 28);
             this.btnConnection.TabIndex = 4;
             this.btnConnection.Text = "Connect";
             this.btnConnection.UseVisualStyleBackColor = true;
@@ -126,23 +131,25 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(209, 13);
+            this.label2.Location = new System.Drawing.Point(279, 16);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(34, 16);
+            this.label2.Size = new System.Drawing.Size(45, 20);
             this.label2.TabIndex = 6;
             this.label2.Text = "Port:";
             // 
             // numericPort
             // 
             this.numericPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericPort.Location = new System.Drawing.Point(250, 13);
+            this.numericPort.Location = new System.Drawing.Point(333, 16);
+            this.numericPort.Margin = new System.Windows.Forms.Padding(4);
             this.numericPort.Maximum = new decimal(new int[] {
             1215752192,
             23,
             0,
             0});
             this.numericPort.Name = "numericPort";
-            this.numericPort.Size = new System.Drawing.Size(120, 22);
+            this.numericPort.Size = new System.Drawing.Size(160, 26);
             this.numericPort.TabIndex = 7;
             this.numericPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericPort.Value = new decimal(new int[] {
@@ -153,43 +160,47 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnTighteningSubscribe);
+            this.groupBox1.Controls.Add(this.startInterfaceButton);
             this.groupBox1.Controls.Add(this.consoleTextBox);
             this.groupBox1.Controls.Add(this.btnJobInfoSubscribe);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(12, 52);
+            this.groupBox1.Location = new System.Drawing.Point(16, 64);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(629, 85);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Size = new System.Drawing.Size(839, 105);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Subscribes";
             // 
-            // btnTighteningSubscribe
+            // startInterfaceButton
             // 
-            this.btnTighteningSubscribe.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTighteningSubscribe.Location = new System.Drawing.Point(115, 21);
-            this.btnTighteningSubscribe.Name = "btnTighteningSubscribe";
-            this.btnTighteningSubscribe.Size = new System.Drawing.Size(103, 51);
-            this.btnTighteningSubscribe.TabIndex = 11;
-            this.btnTighteningSubscribe.Text = "Tightening Subscribe";
-            this.btnTighteningSubscribe.UseVisualStyleBackColor = true;
-            this.btnTighteningSubscribe.Click += new System.EventHandler(this.BtnTighteningSubscribe_Click);
+            this.startInterfaceButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startInterfaceButton.Location = new System.Drawing.Point(153, 26);
+            this.startInterfaceButton.Margin = new System.Windows.Forms.Padding(4);
+            this.startInterfaceButton.Name = "startInterfaceButton";
+            this.startInterfaceButton.Size = new System.Drawing.Size(137, 63);
+            this.startInterfaceButton.TabIndex = 11;
+            this.startInterfaceButton.Text = "START INTERFACE";
+            this.startInterfaceButton.UseVisualStyleBackColor = true;
+            this.startInterfaceButton.Click += new System.EventHandler(this.startInterfaceButton_Click);
             // 
             // consoleTextBox
             // 
-            this.consoleTextBox.Location = new System.Drawing.Point(246, 0);
-            this.consoleTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.consoleTextBox.Location = new System.Drawing.Point(328, 0);
+            this.consoleTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.consoleTextBox.Multiline = true;
             this.consoleTextBox.Name = "consoleTextBox";
-            this.consoleTextBox.Size = new System.Drawing.Size(379, 86);
+            this.consoleTextBox.Size = new System.Drawing.Size(504, 105);
             this.consoleTextBox.TabIndex = 10;
             // 
             // btnJobInfoSubscribe
             // 
             this.btnJobInfoSubscribe.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnJobInfoSubscribe.Location = new System.Drawing.Point(6, 21);
+            this.btnJobInfoSubscribe.Location = new System.Drawing.Point(8, 26);
+            this.btnJobInfoSubscribe.Margin = new System.Windows.Forms.Padding(4);
             this.btnJobInfoSubscribe.Name = "btnJobInfoSubscribe";
-            this.btnJobInfoSubscribe.Size = new System.Drawing.Size(103, 51);
+            this.btnJobInfoSubscribe.Size = new System.Drawing.Size(137, 63);
             this.btnJobInfoSubscribe.TabIndex = 10;
             this.btnJobInfoSubscribe.Text = "Job Info Subscribe";
             this.btnJobInfoSubscribe.UseVisualStyleBackColor = true;
@@ -205,19 +216,46 @@
             this.groupBox2.Controls.Add(this.btnSendJob);
             this.groupBox2.Controls.Add(this.numericJob);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(12, 148);
+            this.groupBox2.Location = new System.Drawing.Point(16, 182);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(629, 100);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Size = new System.Drawing.Size(839, 123);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Commands";
             // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(671, 46);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(137, 63);
+            this.button2.TabIndex = 13;
+            this.button2.Text = "TEST IDs";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(525, 46);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(137, 63);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "Choose SQS directory";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // btnAbortJob
             // 
             this.btnAbortJob.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAbortJob.Location = new System.Drawing.Point(6, 50);
+            this.btnAbortJob.Location = new System.Drawing.Point(8, 62);
+            this.btnAbortJob.Margin = new System.Windows.Forms.Padding(4);
             this.btnAbortJob.Name = "btnAbortJob";
-            this.btnAbortJob.Size = new System.Drawing.Size(168, 23);
+            this.btnAbortJob.Size = new System.Drawing.Size(224, 28);
             this.btnAbortJob.TabIndex = 12;
             this.btnAbortJob.Text = "Abort Job";
             this.btnAbortJob.UseVisualStyleBackColor = true;
@@ -226,18 +264,20 @@
             // txtProduct
             // 
             this.txtProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProduct.Location = new System.Drawing.Point(180, 51);
+            this.txtProduct.Location = new System.Drawing.Point(240, 63);
+            this.txtProduct.Margin = new System.Windows.Forms.Padding(4);
             this.txtProduct.MaxLength = 25;
             this.txtProduct.Name = "txtProduct";
-            this.txtProduct.Size = new System.Drawing.Size(160, 22);
+            this.txtProduct.Size = new System.Drawing.Size(212, 26);
             this.txtProduct.TabIndex = 10;
             // 
             // btnSendProduct
             // 
             this.btnSendProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSendProduct.Location = new System.Drawing.Point(200, 20);
+            this.btnSendProduct.Location = new System.Drawing.Point(267, 25);
+            this.btnSendProduct.Margin = new System.Windows.Forms.Padding(4);
             this.btnSendProduct.Name = "btnSendProduct";
-            this.btnSendProduct.Size = new System.Drawing.Size(100, 23);
+            this.btnSendProduct.Size = new System.Drawing.Size(133, 28);
             this.btnSendProduct.TabIndex = 11;
             this.btnSendProduct.Text = "Send Product";
             this.btnSendProduct.UseVisualStyleBackColor = true;
@@ -246,9 +286,10 @@
             // btnSendJob
             // 
             this.btnSendJob.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSendJob.Location = new System.Drawing.Point(74, 21);
+            this.btnSendJob.Location = new System.Drawing.Point(99, 26);
+            this.btnSendJob.Margin = new System.Windows.Forms.Padding(4);
             this.btnSendJob.Name = "btnSendJob";
-            this.btnSendJob.Size = new System.Drawing.Size(100, 23);
+            this.btnSendJob.Size = new System.Drawing.Size(133, 28);
             this.btnSendJob.TabIndex = 10;
             this.btnSendJob.Text = "Send Job";
             this.btnSendJob.UseVisualStyleBackColor = true;
@@ -257,14 +298,15 @@
             // numericJob
             // 
             this.numericJob.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericJob.Location = new System.Drawing.Point(6, 21);
+            this.numericJob.Location = new System.Drawing.Point(8, 26);
+            this.numericJob.Margin = new System.Windows.Forms.Padding(4);
             this.numericJob.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             0});
             this.numericJob.Name = "numericJob";
-            this.numericJob.Size = new System.Drawing.Size(62, 22);
+            this.numericJob.Size = new System.Drawing.Size(83, 26);
             this.numericJob.TabIndex = 10;
             this.numericJob.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -274,33 +316,16 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // button1
+            // checkBadgeTimer
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(394, 37);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(103, 51);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "Choose SQS directory";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(503, 37);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(103, 51);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "TEST IDs";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.checkBadgeTimer.Interval = 250;
+            this.checkBadgeTimer.Tick += new System.EventHandler(this.checkBadgeTimer_Tick);
             // 
             // DriverForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(653, 290);
+            this.ClientSize = new System.Drawing.Size(871, 357);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.numericPort);
@@ -309,6 +334,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textIp);
             this.Controls.Add(this.statusStrip1);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DriverForm";
             this.Text = "Form1";
             this.statusStrip1.ResumeLayout(false);
@@ -335,7 +361,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numericPort;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnTighteningSubscribe;
+        private System.Windows.Forms.Button startInterfaceButton;
         private System.Windows.Forms.Button btnJobInfoSubscribe;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ToolStripStatusLabel lastMessageArrived;
@@ -348,6 +374,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Timer checkBadgeTimer;
     }
 }
 
