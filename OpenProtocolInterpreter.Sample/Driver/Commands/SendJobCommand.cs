@@ -1,6 +1,8 @@
 ﻿using OpenProtocolInterpreter.Communication;
 using OpenProtocolInterpreter.Job;
+using OpenProtocolInterpreter.IOInterface;
 using System;
+using System.Windows.Forms;
 
 namespace OpenProtocolInterpreter.Sample.Driver.Commands
 {
@@ -16,11 +18,24 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
         public bool Execute(int jobId)
         {
             Console.WriteLine($"Sending job <{jobId}> to controller!");
-            var jobMid = new Mid0038()
-            {
-                JobId = jobId
-            };
-            var mid = _driver.SendAndWaitForResponse(jobMid.Pack(), new TimeSpan(0, 0, 10));
+            var mid0200 =  new Mid0200();
+
+            mid0200.StatusRelayOne = RelayStatus.On;
+            mid0200.StatusRelayTwo = RelayStatus.On;
+            mid0200.StatusRelayThree = RelayStatus.On;
+            mid0200.StatusRelayFour = RelayStatus.On;
+            mid0200.StatusRelayFive = RelayStatus.On;
+            mid0200.StatusRelaySix = RelayStatus.On;
+            mid0200.StatusRelaySeven = RelayStatus.On;
+            mid0200.StatusRelayEight = RelayStatus.On;
+            mid0200.StatusRelayNine = RelayStatus.On;
+            mid0200.StatusRelayTen = RelayStatus.On;
+
+            
+
+
+
+            var mid = _driver.SendAndWaitForResponse(mid0200.Pack(), new TimeSpan(0, 0, 10));
 
             if (mid.Header.Mid == Mid0004.MID)
             {
@@ -34,12 +49,12 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
 
         private void OnJobAccepted(Mid0005 mid)
         {
-            Console.WriteLine($"Job Accepted by controller!");
+            MessageBox.Show($"Job Accepted by controller!");
         }
 
         private void OnJobRefused(Mid0004 mid)
         {
-            Console.WriteLine($"Job refused by controller under error code <{(int)mid.ErrorCode}> ({mid.ErrorCode.ToString()})!");
+            MessageBox.Show($"Job refused by controller under error code <{(int)mid.ErrorCode}> ({mid.ErrorCode.ToString()})!");
         }
     }
 }
