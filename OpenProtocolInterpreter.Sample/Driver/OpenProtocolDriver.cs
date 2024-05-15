@@ -66,7 +66,7 @@ namespace OpenProtocolInterpreter.Sample.Driver
         {
             try
             {
-                System.Threading.Thread.Sleep(500); //Just to not send so many packages at once
+                System.Threading.Thread.Sleep(50); //Just to not send so many packages at once
                 Console.WriteLine($"Sending message: {message}");
 
                 this.simpleTcpClient.WriteLine(message);
@@ -88,7 +88,7 @@ namespace OpenProtocolInterpreter.Sample.Driver
         {
             try
             {
-                System.Threading.Thread.Sleep(500);
+                System.Threading.Thread.Sleep(100);
                 Mid midResponse = null;
 
                 Console.WriteLine($"Sending message: {message}");

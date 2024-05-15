@@ -49,7 +49,7 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
             }
             
 
-            var mid = _driver.SendAndWaitForResponse(mid0200.Pack(), new TimeSpan(0, 0, 15));
+            var mid = _driver.SendAndWaitForResponse(mid0200.Pack(), new TimeSpan(0, 0, 5));
 
             logger.Log("Pack sent: " + mid0200.Pack());
 

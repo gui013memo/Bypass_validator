@@ -28,6 +28,7 @@ namespace OpenProtocolInterpreter.Sample
         //string idLogsPath = "C:\\ProgramData\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
         string idLogsPath = "C:\\ProgramData\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
 
+        bool bypassAllowed = false;
         public bool idLogsPathOK;
 
         public bool isSQSLogged = false;
@@ -224,18 +225,23 @@ namespace OpenProtocolInterpreter.Sample
             {
                 logger.Log("DigInOne = HIGH");
 
+
+
+                CheckSQSBadge();
+
                 this.Invoke((MethodInvoker)delegate
                 {
                     checkingForm.Show();
                 });
 
-                CheckSQSBadge();
-
                 logger.Log("Got out of CheckSQSBadge");
 
-                checkBadgeTimer.Start();
+                this.Invoke((MethodInvoker)delegate
+                {
+                    checkBadgeTimer.Start();
+                });
 
-               
+
 
             }
             else if (externallyMonitoredRelayStatus.StatusDigInOne == false)
@@ -245,8 +251,14 @@ namespace OpenProtocolInterpreter.Sample
                 if (checkingForm.Visible)
                 {
                     checkingForm.Hide();
-                }                
-                checkBadgeTimer.Stop();
+                }
+
+                this.Invoke((MethodInvoker)delegate
+                {
+                    checkBadgeTimer.Stop();
+                });
+
+                
             }
         }
 
@@ -297,7 +309,16 @@ namespace OpenProtocolInterpreter.Sample
                     currentOperatorGroup = rawOperatorKeyAndKeyGroup.Substring(operatorGroupOffset, (rawOperatorKeyAndKeyGroup.LastIndexOf("]") - operatorGroupOffset));
                     currentOperatorName = rawOperatorName.Substring(operatorNameOffset, (rawOperatorName.LastIndexOf("]") - operatorNameOffset));
 
-
+                    if (currentOperatorGroup == "Master_Admin" && !bypassAllowed)
+                    {
+                        new SendJobCommand(driver).Execute(true);
+                        bypassAllowed = true;
+                    }
+                    else if (currentOperatorGroup == "Operator" && bypassAllowed)
+                    {
+                        new SendJobCommand(driver).Execute(false);
+                        bypassAllowed = false;
+                    }
 
                     //MessageBox.Show("keyInBaseIndex: " + keyInBaseIndex);
                     //MessageBox.Show("currentOperatorId: " + currentOperatorId);
@@ -306,6 +327,11 @@ namespace OpenProtocolInterpreter.Sample
                 }
                 else
                 {
+                    if (bypassAllowed)
+                    {
+                        new SendJobCommand(driver).Execute(false);
+                        bypassAllowed = false;
+                    }
                     logger.Log("isSQSLogged = FALSE");
                     isSQSLogged = false;
                     //MessageBox.Show("KeyOut first than KeyIn! \r\nKeyOut: " + keyOutBaseIndex + "\r\nKeyIn: " + keyInBaseIndex);

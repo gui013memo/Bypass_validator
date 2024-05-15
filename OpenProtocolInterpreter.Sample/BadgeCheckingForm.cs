@@ -20,6 +20,7 @@ namespace OpenProtocolInterpreter.Sample
         public BadgeCheckingForm(DriverForm driverForm)
         {
             InitializeComponent();
+            this.FormBorderStyle = FormBorderStyle.None;
             this.TopMost = true;
             DriverForm = driverForm;
         }
@@ -38,41 +39,27 @@ namespace OpenProtocolInterpreter.Sample
 
                     bypassRequestedLabel.ForeColor = Color.Green;
 
-                    setResetRelayOne = true;
-
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        DriverForm.SendJobCommandFunction(setResetRelayOne);
-                    });
+                    operatorNameLabel.Text = DriverForm.currentOperatorName;
+                    OperatorIdLabel.Text = DriverForm.currentOperatorId;
 
                 }
                 else
                 {
                     logger.Log("Operador não autorizado");
 
-                    setResetRelayOne = false;
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        DriverForm.SendJobCommandFunction(setResetRelayOne);
-                    });
-                    
-
                     operatorStatusLabel.Text = "OPERADOR NÃO AUTORIZADO";
                     operatorStatusLabel.BackColor = Color.Red;
                     operatorStatusLabel.ForeColor = Color.White;
 
                     bypassRequestedLabel.ForeColor = Color.Red;
+
+                    operatorNameLabel.Text = DriverForm.currentOperatorName;
+                    OperatorIdLabel.Text = DriverForm.currentOperatorId;
                 }
             }
             else
             {
                 logger.Log("Sem crachá logado");
-
-                setResetRelayOne = false;
-                this.Invoke((MethodInvoker)delegate
-                {
-                    DriverForm.SendJobCommandFunction(setResetRelayOne);
-                });
 
                 operatorStatusLabel.Text = "LOGAR CRACHÁ OPERADOR";
 
@@ -80,6 +67,9 @@ namespace OpenProtocolInterpreter.Sample
                 operatorStatusLabel.ForeColor = Color.Black;
 
                 bypassRequestedLabel.ForeColor = Color.Blue;
+
+                operatorNameLabel.Text = string.Empty;
+                OperatorIdLabel.Text = string.Empty;
             }
         }
 
