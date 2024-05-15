@@ -15,7 +15,7 @@ namespace OpenProtocolInterpreter.Sample
         bool setResetRelayOne = false;
         DriverForm DriverForm;
 
-        Logger logger;
+        Logger logger = new Logger();
 
         public BadgeCheckingForm(DriverForm driverForm)
         {
@@ -39,15 +39,23 @@ namespace OpenProtocolInterpreter.Sample
                     bypassRequestedLabel.ForeColor = Color.Green;
 
                     setResetRelayOne = true;
-                    DriverForm.BtnSendJob_Click(this.setResetRelayOne, EventArgs.Empty);
+
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        DriverForm.SendJobCommandFunction(setResetRelayOne);
+                    });
+
                 }
                 else
                 {
                     logger.Log("Operador não autorizado");
 
                     setResetRelayOne = false;
-                    DriverForm.BtnSendJob_Click(this.setResetRelayOne, EventArgs.Empty);
-
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        DriverForm.SendJobCommandFunction(setResetRelayOne);
+                    });
+                    
 
                     operatorStatusLabel.Text = "OPERADOR NÃO AUTORIZADO";
                     operatorStatusLabel.BackColor = Color.Red;
@@ -61,7 +69,10 @@ namespace OpenProtocolInterpreter.Sample
                 logger.Log("Sem crachá logado");
 
                 setResetRelayOne = false;
-                DriverForm.BtnSendJob_Click(this.setResetRelayOne, EventArgs.Empty);
+                this.Invoke((MethodInvoker)delegate
+                {
+                    DriverForm.SendJobCommandFunction(setResetRelayOne);
+                });
 
                 operatorStatusLabel.Text = "LOGAR CRACHÁ OPERADOR";
 

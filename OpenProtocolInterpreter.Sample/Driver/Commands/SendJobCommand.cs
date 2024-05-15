@@ -8,7 +8,7 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
 {
     public class SendJobCommand
     {
-        Logger logger;
+        Logger logger = new Logger();
 
         private readonly OpenProtocolDriver _driver;
 
@@ -49,10 +49,11 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
             }
             
 
-            var mid = _driver.SendAndWaitForResponse(mid0200.Pack(), new TimeSpan(0, 0, 10));
+            var mid = _driver.SendAndWaitForResponse(mid0200.Pack(), new TimeSpan(0, 0, 15));
 
             logger.Log("Pack sent: " + mid0200.Pack());
 
+            //mid is being null
             if (mid.Header.Mid == Mid0004.MID)
             {
                 OnJobRefused(mid as Mid0004);

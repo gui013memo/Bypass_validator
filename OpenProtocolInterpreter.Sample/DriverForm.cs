@@ -165,16 +165,21 @@ namespace OpenProtocolInterpreter.Sample
                     //register command
                     driver.AddUpdateOnReceivedCommand(typeof(Mid0211), OnTighteningReceived);
                 }
-                    
+
             }
 
-            
+
         }
 
 
         public void BtnSendJob_Click(object sender, EventArgs e)
         {
             new SendJobCommand(driver).Execute(true);
+        }
+
+        public void SendJobCommandFunction(bool setReset)
+        {
+            new SendJobCommand(driver).Execute(setReset);
         }
 
         /// <summary>
@@ -209,8 +214,9 @@ namespace OpenProtocolInterpreter.Sample
 
             var externallyMonitoredRelayStatus = e.Mid as Mid0211;
 
-            //CROSS THREADING OPERATION, USE THE DELEGATE AS ON TCP IP ATTEMPT WITH SQS SCREEN CYCLE TIME APP
-            consoleTextBox.Text = ("EXTERNAL_MONITORED_1: \r\n" + externallyMonitoredRelayStatus.StatusDigInOne.ToString());
+
+
+            //consoleTextBox.Text = ("EXTERNAL_MONITORED_1: \r\n" + externallyMonitoredRelayStatus.StatusDigInOne.ToString());
 
             lastMessageArrived.Text = Mid0211.MID.ToString();
 
@@ -218,21 +224,28 @@ namespace OpenProtocolInterpreter.Sample
             {
                 logger.Log("DigInOne = HIGH");
 
+                this.Invoke((MethodInvoker)delegate
+                {
+                    checkingForm.Show();
+                });
+
                 CheckSQSBadge();
 
                 logger.Log("Got out of CheckSQSBadge");
 
-                
-                    logger.Log("Got inside of IF idLogsPathOk");
-                    checkingForm.Show();
-                    checkBadgeTimer.Start();
-                
+                checkBadgeTimer.Start();
+
+               
 
             }
             else if (externallyMonitoredRelayStatus.StatusDigInOne == false)
             {
-                logger.Log("DigInOne went FALSE, checkingForm is being discarded and checkBadgeTimer is being stopped");
-                checkingForm.Hide();
+                logger.Log("DigInOne is FALSE, checkingForm is being hidden and checkBadgeTimer is being stopped");
+
+                if (checkingForm.Visible)
+                {
+                    checkingForm.Hide();
+                }                
                 checkBadgeTimer.Stop();
             }
         }
@@ -285,7 +298,7 @@ namespace OpenProtocolInterpreter.Sample
                     currentOperatorName = rawOperatorName.Substring(operatorNameOffset, (rawOperatorName.LastIndexOf("]") - operatorNameOffset));
 
 
-                    checkingForm.Show();
+
                     //MessageBox.Show("keyInBaseIndex: " + keyInBaseIndex);
                     //MessageBox.Show("currentOperatorId: " + currentOperatorId);
                     //MessageBox.Show("currentOperatorId: " + currentOperatorGroup);
@@ -307,8 +320,11 @@ namespace OpenProtocolInterpreter.Sample
                 return;
             }
 
+            this.Invoke((MethodInvoker)delegate
+            {
+                checkingForm.UpdateSQSStatus();
+            });
 
-            checkingForm.UpdateSQSStatus();
 
         }
 
@@ -332,7 +348,7 @@ namespace OpenProtocolInterpreter.Sample
 
         private void BtnAbortJob_Click(object sender, EventArgs e)
         {
-            new AbortJobCommand(driver).Execute();
+            new SendJobCommand(driver).Execute(false);
         }
 
         private void button1_Click(object sender, EventArgs e)
