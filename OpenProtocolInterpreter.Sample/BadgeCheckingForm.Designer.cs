@@ -39,7 +39,7 @@
             this.bypassRequestedLabel.AutoSize = true;
             this.bypassRequestedLabel.Font = new System.Drawing.Font("Consolas", 60F, System.Drawing.FontStyle.Bold);
             this.bypassRequestedLabel.ForeColor = System.Drawing.Color.Blue;
-            this.bypassRequestedLabel.Location = new System.Drawing.Point(22, 47);
+            this.bypassRequestedLabel.Location = new System.Drawing.Point(39, 9);
             this.bypassRequestedLabel.Name = "bypassRequestedLabel";
             this.bypassRequestedLabel.Size = new System.Drawing.Size(930, 117);
             this.bypassRequestedLabel.TabIndex = 0;
@@ -51,7 +51,7 @@
             this.operatorStatusLabel.BackColor = System.Drawing.Color.Yellow;
             this.operatorStatusLabel.Font = new System.Drawing.Font("Consolas", 38F);
             this.operatorStatusLabel.ForeColor = System.Drawing.Color.Black;
-            this.operatorStatusLabel.Location = new System.Drawing.Point(46, 193);
+            this.operatorStatusLabel.Location = new System.Drawing.Point(63, 126);
             this.operatorStatusLabel.Name = "operatorStatusLabel";
             this.operatorStatusLabel.Size = new System.Drawing.Size(872, 75);
             this.operatorStatusLabel.TabIndex = 1;
@@ -61,7 +61,7 @@
             // 
             this.operatorNameLabel.AutoSize = true;
             this.operatorNameLabel.Font = new System.Drawing.Font("Consolas", 40F);
-            this.operatorNameLabel.Location = new System.Drawing.Point(119, 303);
+            this.operatorNameLabel.Location = new System.Drawing.Point(129, 214);
             this.operatorNameLabel.Name = "operatorNameLabel";
             this.operatorNameLabel.Size = new System.Drawing.Size(700, 79);
             this.operatorNameLabel.TabIndex = 2;
@@ -71,7 +71,7 @@
             // 
             this.OperatorIdLabel.AutoSize = true;
             this.OperatorIdLabel.Font = new System.Drawing.Font("Consolas", 38F);
-            this.OperatorIdLabel.Location = new System.Drawing.Point(210, 392);
+            this.OperatorIdLabel.Location = new System.Drawing.Point(210, 293);
             this.OperatorIdLabel.Name = "OperatorIdLabel";
             this.OperatorIdLabel.Size = new System.Drawing.Size(522, 75);
             this.OperatorIdLabel.TabIndex = 3;
@@ -82,13 +82,16 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.ClientSize = new System.Drawing.Size(1040, 510);
+            this.ClientSize = new System.Drawing.Size(1044, 383);
             this.Controls.Add(this.OperatorIdLabel);
             this.Controls.Add(this.operatorNameLabel);
             this.Controls.Add(this.operatorStatusLabel);
             this.Controls.Add(this.bypassRequestedLabel);
+            this.Location = new System.Drawing.Point(350, 500);
             this.Name = "BadgeCheckingForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "BadgeCheckingForm";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

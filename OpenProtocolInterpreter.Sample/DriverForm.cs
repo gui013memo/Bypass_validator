@@ -25,8 +25,8 @@ namespace OpenProtocolInterpreter.Sample
 
         Logger logger = new Logger();
 
-        //string idLogsPath = "C:\\ProgramData\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
         string idLogsPath = "C:\\ProgramData\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
+        //string idLogsPath = "C:\\ProgramData\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
 
         bool bypassAllowed = false;
         public bool idLogsPathOK;
@@ -44,6 +44,8 @@ namespace OpenProtocolInterpreter.Sample
             _keepAliveTimer.Interval = 1000;
 
             checkingForm = new BadgeCheckingForm(this);
+
+           //checkingForm.Show();
         }
 
         private void BtnConnection_Click(object sender, EventArgs e)
@@ -161,7 +163,6 @@ namespace OpenProtocolInterpreter.Sample
                 else
                 {
                     logger.Log("MID 0210 accepted");
-                    consoleTextBox.Text = "MID 0210 Accepted";
 
                     //register command
                     driver.AddUpdateOnReceivedCommand(typeof(Mid0211), OnTighteningReceived);
@@ -250,7 +251,11 @@ namespace OpenProtocolInterpreter.Sample
 
                 if (checkingForm.Visible)
                 {
-                    checkingForm.Hide();
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        checkingForm.Hide();
+                    });
+
                 }
 
                 this.Invoke((MethodInvoker)delegate
@@ -258,7 +263,7 @@ namespace OpenProtocolInterpreter.Sample
                     checkBadgeTimer.Stop();
                 });
 
-                
+
             }
         }
 
@@ -313,6 +318,7 @@ namespace OpenProtocolInterpreter.Sample
                     {
                         new SendJobCommand(driver).Execute(true);
                         bypassAllowed = true;
+                        hideCheckingFormTime.Start();
                     }
                     else if (currentOperatorGroup == "Operator" && bypassAllowed)
                     {
@@ -367,15 +373,9 @@ namespace OpenProtocolInterpreter.Sample
             }
         }
 
-        private void BtnSendProduct_Click(object sender, EventArgs e)
-        {
-            new DownloadProductCommand(driver).Execute(txtProduct.Text);
-        }
 
-        private void BtnAbortJob_Click(object sender, EventArgs e)
-        {
-            new SendJobCommand(driver).Execute(false);
-        }
+
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -391,7 +391,39 @@ namespace OpenProtocolInterpreter.Sample
         {
             CheckSQSBadge();
 
+            this.Invoke((MethodInvoker)delegate
+            {
+                checkingForm.TopMost = true;
+            });
+            //checkingForm.Focus();
+
             logger.Log("timer hitted");
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void setToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new SendJobCommand(driver).Execute(true);
+        }
+
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new SendJobCommand(driver).Execute(false);
+        }
+
+        private void changeSQSDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            idLogsPath = ChooseFolder();
+        }
+
+        private void hideCheckingFormTime_Tick(object sender, EventArgs e)
+        {
+            hideCheckingFormTime.Stop();
+
         }
     }
 }
