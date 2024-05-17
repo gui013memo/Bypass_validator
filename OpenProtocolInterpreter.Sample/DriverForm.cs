@@ -269,6 +269,7 @@ namespace OpenProtocolInterpreter.Sample
 
         private void CheckSQSBadge()
         {
+
             string targetKeyOut = "[WorkerIdent.1.1] SendKeyOut - Command [OperatorCode] Destination [Ident.1] Value [] - Worker";
 
             string targetKeyIn = "[WorkerIdent.1.1] SetOperatorGrid - [FisPdaStatus.1][Device1] [True]";
