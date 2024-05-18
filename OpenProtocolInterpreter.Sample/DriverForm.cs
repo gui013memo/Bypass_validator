@@ -45,7 +45,7 @@ namespace OpenProtocolInterpreter.Sample
 
             checkingForm = new BadgeCheckingForm(this);
 
-           //checkingForm.Show();
+            //checkingForm.Show();
         }
 
         private void BtnConnection_Click(object sender, EventArgs e)
@@ -372,20 +372,6 @@ namespace OpenProtocolInterpreter.Sample
             {
                 return null;
             }
-        }
-
-
-
-
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            idLogsPath = ChooseFolder();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            CheckSQSBadge();
         }
 
         private void checkBadgeTimer_Tick(object sender, EventArgs e)

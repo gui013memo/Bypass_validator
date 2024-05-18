@@ -38,7 +38,6 @@
             this.btnConnection = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.numericPort = new System.Windows.Forms.NumericUpDown();
-            this.startInterfaceButton = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.checkBadgeTimer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -47,6 +46,7 @@
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeSQSDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hideCheckingFormTime = new System.Windows.Forms.Timer(this.components);
+            this.button1 = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericPort)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -59,10 +59,10 @@
             this.connectionStatus,
             this.toolstripLast,
             this.lastMessageArrived});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 252);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 234);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(330, 26);
+            this.statusStrip1.Size = new System.Drawing.Size(327, 26);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -111,7 +111,7 @@
             // btnConnection
             // 
             this.btnConnection.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConnection.Location = new System.Drawing.Point(11, 179);
+            this.btnConnection.Location = new System.Drawing.Point(8, 170);
             this.btnConnection.Margin = new System.Windows.Forms.Padding(4);
             this.btnConnection.Name = "btnConnection";
             this.btnConnection.Size = new System.Drawing.Size(306, 60);
@@ -151,18 +151,6 @@
             0,
             0});
             // 
-            // startInterfaceButton
-            // 
-            this.startInterfaceButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startInterfaceButton.Location = new System.Drawing.Point(11, 108);
-            this.startInterfaceButton.Margin = new System.Windows.Forms.Padding(4);
-            this.startInterfaceButton.Name = "startInterfaceButton";
-            this.startInterfaceButton.Size = new System.Drawing.Size(306, 63);
-            this.startInterfaceButton.TabIndex = 11;
-            this.startInterfaceButton.Text = "Start interface";
-            this.startInterfaceButton.UseVisualStyleBackColor = true;
-            this.startInterfaceButton.Click += new System.EventHandler(this.startInterfaceButton_Click);
-            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -181,7 +169,7 @@
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(330, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(327, 28);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -222,12 +210,23 @@
             this.hideCheckingFormTime.Interval = 1500;
             this.hideCheckingFormTime.Tick += new System.EventHandler(this.hideCheckingFormTime_Tick);
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(10, 100);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(306, 60);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "Start interface";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // DriverForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(330, 278);
-            this.Controls.Add(this.startInterfaceButton);
+            this.ClientSize = new System.Drawing.Size(327, 260);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.numericPort);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnConnection);
@@ -238,7 +237,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DriverForm";
-            this.Text = "Form1";
+            this.Text = "OPBC";
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericPort)).EndInit();
@@ -259,7 +258,6 @@
         private System.Windows.Forms.Button btnConnection;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numericPort;
-        private System.Windows.Forms.Button startInterfaceButton;
         private System.Windows.Forms.ToolStripStatusLabel lastMessageArrived;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Timer checkBadgeTimer;
@@ -269,6 +267,7 @@
         private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeSQSDirectoryToolStripMenuItem;
         private System.Windows.Forms.Timer hideCheckingFormTime;
+        private System.Windows.Forms.Button button1;
     }
 }
 
