@@ -47,7 +47,7 @@
             // ipTextBox
             // 
             this.ipTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ipTextBox.Location = new System.Drawing.Point(52, 65);
+            this.ipTextBox.Location = new System.Drawing.Point(50, 53);
             this.ipTextBox.Name = "ipTextBox";
             this.ipTextBox.Size = new System.Drawing.Size(149, 22);
             this.ipTextBox.TabIndex = 2;
@@ -58,7 +58,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(77, 44);
+            this.label1.Location = new System.Drawing.Point(75, 32);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(97, 21);
             this.label1.TabIndex = 3;
@@ -70,7 +70,7 @@
             this.btnConnection.BackColor = System.Drawing.Color.Red;
             this.btnConnection.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConnection.ForeColor = System.Drawing.Color.White;
-            this.btnConnection.Location = new System.Drawing.Point(37, 142);
+            this.btnConnection.Location = new System.Drawing.Point(35, 125);
             this.btnConnection.Name = "btnConnection";
             this.btnConnection.Size = new System.Drawing.Size(179, 40);
             this.btnConnection.TabIndex = 4;
@@ -82,7 +82,7 @@
             // 
             this.portLabel.AutoSize = true;
             this.portLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.portLabel.Location = new System.Drawing.Point(105, 90);
+            this.portLabel.Location = new System.Drawing.Point(103, 78);
             this.portLabel.Name = "portLabel";
             this.portLabel.Size = new System.Drawing.Size(39, 21);
             this.portLabel.TabIndex = 6;
@@ -136,7 +136,7 @@
             // portTextBox
             // 
             this.portTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.portTextBox.Location = new System.Drawing.Point(52, 110);
+            this.portTextBox.Location = new System.Drawing.Point(50, 98);
             this.portTextBox.Name = "portTextBox";
             this.portTextBox.Size = new System.Drawing.Size(149, 22);
             this.portTextBox.TabIndex = 10;
@@ -164,7 +164,7 @@
             this.versionLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.versionLabel.Font = new System.Drawing.Font("Microsoft New Tai Lue", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.versionLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(63)))), ((int)(((byte)(72)))));
-            this.versionLabel.Location = new System.Drawing.Point(204, 186);
+            this.versionLabel.Location = new System.Drawing.Point(205, 173);
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(31, 15);
             this.versionLabel.TabIndex = 12;
@@ -175,7 +175,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(239, 204);
+            this.ClientSize = new System.Drawing.Size(239, 189);
             this.Controls.Add(this.portTextBox);
             this.Controls.Add(this.topPanel);
             this.Controls.Add(this.versionLabel);
