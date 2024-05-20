@@ -39,6 +39,8 @@ namespace OpenProtocolInterpreter.Sample
         public string currentOperatorName = string.Empty;
         public string currentOperatorGroup = string.Empty;
 
+        HomeForm homeForm;
+
         public DriverForm()
         {
             InitializeComponent();
@@ -51,6 +53,10 @@ namespace OpenProtocolInterpreter.Sample
             this.topPanel.MouseDown += new MouseEventHandler(topPanel_MouseDown);
             this.topPanel.MouseMove += new MouseEventHandler(topPanel_MouseMove);
             this.topPanel.MouseUp += new MouseEventHandler(topPanel_MouseUp);
+
+            homeForm = new HomeForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+
+            homeButton_Click(this.driver, EventArgs.Empty);
 
             //checkingForm.Show();
         }
@@ -109,15 +115,15 @@ namespace OpenProtocolInterpreter.Sample
                 typeof(Mid9999)
             }); ;
 
-            var client = new Ethernet.SimpleTcpClient().Connect(ipTextBox.Text, int.Parse(portTextBox.Text));
-            if (driver.BeginCommunication(client))
-            {
-                _keepAliveTimer.Start();
-            }
-            else
-            {
-                driver = null;
-            }
+            //var client = new Ethernet.SimpleTcpClient().Connect(ipTextBox.Text, int.Parse(portTextBox.Text));
+            //if (driver.BeginCommunication(client))
+            //{
+            //    _keepAliveTimer.Start();
+            //}
+            //else
+            //{
+            //    driver = null;
+            //}
         }
 
         private void KeepAliveTimer_Tick(object sender, EventArgs e)
@@ -453,6 +459,31 @@ namespace OpenProtocolInterpreter.Sample
         private void portTextBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void topPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void homeButton_Click(object sender, EventArgs e)
+        {
+            this.formLoaderPanel.Controls.Clear();
+
+            this.formLoaderPanel.Controls.Add(homeForm);
+            homeForm.Show();
+
+            homeButton.BackgroundImage = Properties.Resources.Home_icon_Highlighted;
+        }
+
+        private void homeButton_Leave_1(object sender, EventArgs e)
+        {
+            homeButton.BackgroundImage = Properties.Resources.Home_icon_svg___Copy___Copy;
         }
     }
 }
