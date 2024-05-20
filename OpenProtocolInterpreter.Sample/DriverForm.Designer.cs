@@ -30,22 +30,21 @@
         {
             this.components = new System.ComponentModel.Container();
             this.checkBadgeTimer = new System.Windows.Forms.Timer(this.components);
-            this.hideCheckingFormTime = new System.Windows.Forms.Timer(this.components);
+            this.hideCheckingFormTimer = new System.Windows.Forms.Timer(this.components);
             this.topPanel = new System.Windows.Forms.Panel();
             this.yellowStripPanel = new System.Windows.Forms.Panel();
+            this.appNameLabel = new System.Windows.Forms.Label();
             this.closeMainFormButton = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
-            this.versionLabel = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.homeButton = new System.Windows.Forms.Button();
             this.formLoaderPanel = new System.Windows.Forms.Panel();
+            this.versionLabel = new System.Windows.Forms.Label();
+            this.sidePanel = new System.Windows.Forms.Panel();
+            this.aboutButton = new System.Windows.Forms.Button();
+            this.analysisButton = new System.Windows.Forms.Button();
+            this.settingsButton = new System.Windows.Forms.Button();
+            this.homeButton = new System.Windows.Forms.Button();
             this.topPanel.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.sidePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkBadgeTimer
@@ -53,32 +52,47 @@
             this.checkBadgeTimer.Interval = 250;
             this.checkBadgeTimer.Tick += new System.EventHandler(this.checkBadgeTimer_Tick);
             // 
-            // hideCheckingFormTime
+            // hideCheckingFormTimer
             // 
-            this.hideCheckingFormTime.Interval = 1500;
-            this.hideCheckingFormTime.Tick += new System.EventHandler(this.hideCheckingFormTime_Tick);
+            this.hideCheckingFormTimer.Interval = 1500;
+            this.hideCheckingFormTimer.Tick += new System.EventHandler(this.hideCheckingFormTime_Tick);
             // 
             // topPanel
             // 
             this.topPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(63)))), ((int)(((byte)(72)))));
             this.topPanel.Controls.Add(this.yellowStripPanel);
-            this.topPanel.Controls.Add(this.label3);
+            this.topPanel.Controls.Add(this.appNameLabel);
             this.topPanel.Controls.Add(this.closeMainFormButton);
             this.topPanel.Controls.Add(this.button3);
             this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.topPanel.Location = new System.Drawing.Point(0, 0);
+            this.topPanel.Margin = new System.Windows.Forms.Padding(2);
             this.topPanel.Name = "topPanel";
-            this.topPanel.Size = new System.Drawing.Size(518, 37);
+            this.topPanel.Size = new System.Drawing.Size(515, 28);
             this.topPanel.TabIndex = 8;
-            this.topPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.topPanel_Paint);
             // 
             // yellowStripPanel
             // 
             this.yellowStripPanel.BackColor = System.Drawing.Color.Gold;
-            this.yellowStripPanel.Location = new System.Drawing.Point(0, 33);
+            this.yellowStripPanel.Location = new System.Drawing.Point(0, 25);
+            this.yellowStripPanel.Margin = new System.Windows.Forms.Padding(2);
             this.yellowStripPanel.Name = "yellowStripPanel";
-            this.yellowStripPanel.Size = new System.Drawing.Size(800, 3);
+            this.yellowStripPanel.Size = new System.Drawing.Size(600, 2);
             this.yellowStripPanel.TabIndex = 9;
+            // 
+            // appNameLabel
+            // 
+            this.appNameLabel.AutoSize = true;
+            this.appNameLabel.BackColor = System.Drawing.Color.Transparent;
+            this.appNameLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.appNameLabel.Font = new System.Drawing.Font("Microsoft New Tai Lue", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.appNameLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
+            this.appNameLabel.Location = new System.Drawing.Point(0, 0);
+            this.appNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.appNameLabel.Name = "appNameLabel";
+            this.appNameLabel.Size = new System.Drawing.Size(320, 27);
+            this.appNameLabel.TabIndex = 11;
+            this.appNameLabel.Text = "Open Protocol Bypass Controller";
             // 
             // closeMainFormButton
             // 
@@ -86,40 +100,38 @@
             this.closeMainFormButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.closeMainFormButton.Font = new System.Drawing.Font("Microsoft New Tai Lue", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.closeMainFormButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
-            this.closeMainFormButton.Location = new System.Drawing.Point(490, 0);
+            this.closeMainFormButton.Location = new System.Drawing.Point(491, 0);
+            this.closeMainFormButton.Margin = new System.Windows.Forms.Padding(2);
             this.closeMainFormButton.Name = "closeMainFormButton";
-            this.closeMainFormButton.Size = new System.Drawing.Size(25, 34);
+            this.closeMainFormButton.Size = new System.Drawing.Size(19, 26);
             this.closeMainFormButton.TabIndex = 0;
             this.closeMainFormButton.Text = "X";
             this.closeMainFormButton.UseVisualStyleBackColor = true;
             this.closeMainFormButton.Click += new System.EventHandler(this.closeMainFormButton_Click);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label3.Font = new System.Drawing.Font("Microsoft New Tai Lue", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
-            this.label3.Location = new System.Drawing.Point(3, 4);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(320, 27);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Open Protocol Bypass Controller";
-            // 
             // button3
             // 
             this.button3.FlatAppearance.BorderSize = 0;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Matura MT Script Capitals", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
             this.button3.Location = new System.Drawing.Point(459, -5);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(37, 43);
+            this.button3.Size = new System.Drawing.Size(28, 33);
             this.button3.TabIndex = 12;
             this.button3.Text = "_";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // formLoaderPanel
+            // 
+            this.formLoaderPanel.BackColor = System.Drawing.Color.Silver;
+            this.formLoaderPanel.Location = new System.Drawing.Point(68, 32);
+            this.formLoaderPanel.Margin = new System.Windows.Forms.Padding(2);
+            this.formLoaderPanel.Name = "formLoaderPanel";
+            this.formLoaderPanel.Size = new System.Drawing.Size(442, 357);
+            this.formLoaderPanel.TabIndex = 13;
             // 
             // versionLabel
             // 
@@ -128,83 +140,78 @@
             this.versionLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.versionLabel.Font = new System.Drawing.Font("Microsoft New Tai Lue", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.versionLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.versionLabel.Location = new System.Drawing.Point(4, 325);
+            this.versionLabel.Location = new System.Drawing.Point(4, 346);
+            this.versionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(31, 15);
             this.versionLabel.TabIndex = 12;
             this.versionLabel.Text = "1.0.0";
             // 
-            // panel2
+            // sidePanel
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.panel2.Controls.Add(this.button9);
-            this.panel2.Controls.Add(this.button8);
-            this.panel2.Controls.Add(this.button7);
-            this.panel2.Controls.Add(this.homeButton);
-            this.panel2.Controls.Add(this.versionLabel);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel2.Location = new System.Drawing.Point(0, 37);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(81, 345);
-            this.panel2.TabIndex = 12;
+            this.sidePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.sidePanel.Controls.Add(this.aboutButton);
+            this.sidePanel.Controls.Add(this.analysisButton);
+            this.sidePanel.Controls.Add(this.settingsButton);
+            this.sidePanel.Controls.Add(this.homeButton);
+            this.sidePanel.Controls.Add(this.versionLabel);
+            this.sidePanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.sidePanel.Location = new System.Drawing.Point(0, 28);
+            this.sidePanel.Margin = new System.Windows.Forms.Padding(2);
+            this.sidePanel.Name = "sidePanel";
+            this.sidePanel.Size = new System.Drawing.Size(64, 367);
+            this.sidePanel.TabIndex = 12;
             // 
-            // button1
+            // aboutButton
             // 
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Microsoft New Tai Lue", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(473, 70);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(25, 25);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "X";
-            this.button1.UseVisualStyleBackColor = true;
+            this.aboutButton.BackgroundImage = global::OpenProtocolInterpreter.Sample.Properties.Resources.about_small;
+            this.aboutButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.aboutButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.aboutButton.FlatAppearance.BorderSize = 0;
+            this.aboutButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.aboutButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aboutButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.aboutButton.Location = new System.Drawing.Point(0, 114);
+            this.aboutButton.Margin = new System.Windows.Forms.Padding(2);
+            this.aboutButton.Name = "aboutButton";
+            this.aboutButton.Size = new System.Drawing.Size(64, 31);
+            this.aboutButton.TabIndex = 16;
+            this.aboutButton.UseVisualStyleBackColor = true;
+            this.aboutButton.Click += new System.EventHandler(this.AboutButton_Click);
             // 
-            // button9
+            // analysisButton
             // 
-            this.button9.BackgroundImage = global::OpenProtocolInterpreter.Sample.Properties.Resources.about_small;
-            this.button9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button9.FlatAppearance.BorderSize = 0;
-            this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.button9.Location = new System.Drawing.Point(0, 150);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(81, 40);
-            this.button9.TabIndex = 16;
-            this.button9.UseVisualStyleBackColor = true;
+            this.analysisButton.BackgroundImage = global::OpenProtocolInterpreter.Sample.Properties.Resources.back_and_fourth;
+            this.analysisButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.analysisButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.analysisButton.FlatAppearance.BorderSize = 0;
+            this.analysisButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.analysisButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.analysisButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.analysisButton.Location = new System.Drawing.Point(0, 72);
+            this.analysisButton.Margin = new System.Windows.Forms.Padding(2);
+            this.analysisButton.Name = "analysisButton";
+            this.analysisButton.Size = new System.Drawing.Size(64, 42);
+            this.analysisButton.TabIndex = 15;
+            this.analysisButton.UseVisualStyleBackColor = true;
+            this.analysisButton.Click += new System.EventHandler(this.AnalysisButton_Click);
             // 
-            // button8
+            // settingsButton
             // 
-            this.button8.BackgroundImage = global::OpenProtocolInterpreter.Sample.Properties.Resources.back_and_fourth;
-            this.button8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button8.FlatAppearance.BorderSize = 0;
-            this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.button8.Location = new System.Drawing.Point(0, 95);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(81, 55);
-            this.button8.TabIndex = 15;
-            this.button8.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            this.button7.BackgroundImage = global::OpenProtocolInterpreter.Sample.Properties.Resources.settings___small1;
-            this.button7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button7.FlatAppearance.BorderSize = 0;
-            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.button7.Location = new System.Drawing.Point(0, 45);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(81, 50);
-            this.button7.TabIndex = 14;
-            this.button7.UseVisualStyleBackColor = true;
+            this.settingsButton.BackgroundImage = global::OpenProtocolInterpreter.Sample.Properties.Resources.settings___small1;
+            this.settingsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.settingsButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.settingsButton.FlatAppearance.BorderSize = 0;
+            this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.settingsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.settingsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.settingsButton.Location = new System.Drawing.Point(0, 34);
+            this.settingsButton.Margin = new System.Windows.Forms.Padding(2);
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(64, 38);
+            this.settingsButton.TabIndex = 14;
+            this.settingsButton.UseVisualStyleBackColor = true;
+            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
             // 
             // homeButton
             // 
@@ -216,59 +223,50 @@
             this.homeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.homeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
             this.homeButton.Location = new System.Drawing.Point(0, 0);
+            this.homeButton.Margin = new System.Windows.Forms.Padding(2);
             this.homeButton.Name = "homeButton";
-            this.homeButton.Size = new System.Drawing.Size(81, 45);
+            this.homeButton.Size = new System.Drawing.Size(64, 34);
             this.homeButton.TabIndex = 13;
             this.homeButton.UseVisualStyleBackColor = true;
             this.homeButton.Click += new System.EventHandler(this.homeButton_Click);
-            this.homeButton.Leave += new System.EventHandler(this.homeButton_Leave_1);
-            // 
-            // formLoaderPanel
-            // 
-            this.formLoaderPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.formLoaderPanel.Location = new System.Drawing.Point(81, 37);
-            this.formLoaderPanel.Name = "formLoaderPanel";
-            this.formLoaderPanel.Size = new System.Drawing.Size(437, 345);
-            this.formLoaderPanel.TabIndex = 13;
             // 
             // DriverForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(518, 382);
-            this.Controls.Add(this.formLoaderPanel);
-            this.Controls.Add(this.panel2);
+            this.ClientSize = new System.Drawing.Size(515, 395);
+            this.Controls.Add(this.sidePanel);
             this.Controls.Add(this.topPanel);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.formLoaderPanel);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "DriverForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "OPBC";
             this.topPanel.ResumeLayout(false);
             this.topPanel.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.sidePanel.ResumeLayout(false);
+            this.sidePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.Timer checkBadgeTimer;
-        private System.Windows.Forms.Timer hideCheckingFormTime;
+        private System.Windows.Forms.Timer hideCheckingFormTimer;
         private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.Panel yellowStripPanel;
         private System.Windows.Forms.Button closeMainFormButton;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label appNameLabel;
         private System.Windows.Forms.Label versionLabel;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel sidePanel;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button homeButton;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button settingsButton;
+        private System.Windows.Forms.Button analysisButton;
+        private System.Windows.Forms.Button aboutButton;
         private System.Windows.Forms.Panel formLoaderPanel;
     }
 }

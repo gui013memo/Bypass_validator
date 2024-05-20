@@ -40,6 +40,9 @@ namespace OpenProtocolInterpreter.Sample
         public string currentOperatorGroup = string.Empty;
 
         HomeForm homeForm;
+        SettingsForm settingsForm;
+        AnalysisForm analysisForm;
+        AboutForm aboutForm;
 
         public DriverForm()
         {
@@ -49,10 +52,19 @@ namespace OpenProtocolInterpreter.Sample
             _keepAliveTimer.Interval = 1000;
 
             checkingForm = new BadgeCheckingForm(this);
+            homeForm = new HomeForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            settingsForm = new SettingsForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            analysisForm = new AnalysisForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            aboutForm = new AboutForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+
 
             this.topPanel.MouseDown += new MouseEventHandler(topPanel_MouseDown);
             this.topPanel.MouseMove += new MouseEventHandler(topPanel_MouseMove);
             this.topPanel.MouseUp += new MouseEventHandler(topPanel_MouseUp);
+
+            this.appNameLabel.MouseDown += new MouseEventHandler(topPanel_MouseDown);
+            this.appNameLabel.MouseDown += new MouseEventHandler(topPanel_MouseMove);
+            this.appNameLabel.MouseDown += new MouseEventHandler(topPanel_MouseUp);
 
             homeForm = new HomeForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
 
@@ -347,7 +359,7 @@ namespace OpenProtocolInterpreter.Sample
                     {
                         new SendJobCommand(driver).Execute(true);
                         bypassAllowed = true;
-                        hideCheckingFormTime.Start();
+                        hideCheckingFormTimer.Start();
                     }
                     else if (currentOperatorGroup == "Operator" && bypassAllowed)
                     {
@@ -437,7 +449,7 @@ namespace OpenProtocolInterpreter.Sample
 
         private void hideCheckingFormTime_Tick(object sender, EventArgs e)
         {
-            hideCheckingFormTime.Stop();
+            hideCheckingFormTimer.Stop();
 
         }
 
@@ -466,13 +478,18 @@ namespace OpenProtocolInterpreter.Sample
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void topPanel_Paint(object sender, PaintEventArgs e)
+        private void ClearHighlightedButtons()
         {
-
+            homeButton.BackgroundImage = Properties.Resources.Home_icon_svg___Copy___Copy;
+            settingsButton.BackgroundImage = Properties.Resources.settings___small1;
+            analysisButton.BackgroundImage = Properties.Resources.back_and_fourth;
+            aboutButton.BackgroundImage = Properties.Resources.about_small;
         }
 
         private void homeButton_Click(object sender, EventArgs e)
         {
+            ClearHighlightedButtons();
+
             this.formLoaderPanel.Controls.Clear();
 
             this.formLoaderPanel.Controls.Add(homeForm);
@@ -481,9 +498,41 @@ namespace OpenProtocolInterpreter.Sample
             homeButton.BackgroundImage = Properties.Resources.Home_icon_Highlighted;
         }
 
-        private void homeButton_Leave_1(object sender, EventArgs e)
+
+        private void settingsButton_Click(object sender, EventArgs e)
         {
-            homeButton.BackgroundImage = Properties.Resources.Home_icon_svg___Copy___Copy;
+            ClearHighlightedButtons();
+
+            this.formLoaderPanel.Controls.Clear();
+
+            this.formLoaderPanel.Controls.Add(settingsForm);
+            settingsForm.Show();
+
+            settingsButton.BackgroundImage = Properties.Resources.settings___small11;
+        }
+
+        private void AnalysisButton_Click(object sender, EventArgs e)
+        {
+            ClearHighlightedButtons();
+
+            this.formLoaderPanel.Controls.Clear();
+
+            this.formLoaderPanel.Controls.Add(analysisForm);
+            analysisForm.Show();
+
+            analysisButton.BackgroundImage = Properties.Resources.back_and_fourth_Highlighted;
+        }
+
+        private void AboutButton_Click(object sender, EventArgs e)
+        {
+            ClearHighlightedButtons();
+
+            this.formLoaderPanel.Controls.Clear();
+
+            this.formLoaderPanel.Controls.Add(aboutForm);
+            aboutForm.Show();
+
+            aboutButton.BackgroundImage = Properties.Resources.about_small_highlighted;
         }
     }
 }

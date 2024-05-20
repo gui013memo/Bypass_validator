@@ -10,12 +10,11 @@ using System.Windows.Forms;
 
 namespace OpenProtocolInterpreter.Sample
 {
-    public partial class SettingsForm : Form
+    public partial class AnalysisForm : Form
     {
-        public SettingsForm()
+        public AnalysisForm()
         {
             InitializeComponent();
         }
-
     }
 }
