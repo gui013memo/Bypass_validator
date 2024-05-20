@@ -28,6 +28,9 @@ namespace OpenProtocolInterpreter.Sample
         string idLogsPath = "C:\\ProgramData\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
         //string idLogsPath = "C:\\ProgramData\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
 
+        private bool mouseDown;
+        private Point lastLocation;
+
         bool bypassAllowed = false;
         public bool idLogsPathOK;
 
@@ -45,7 +48,33 @@ namespace OpenProtocolInterpreter.Sample
 
             checkingForm = new BadgeCheckingForm(this);
 
+            this.topPanel.MouseDown += new MouseEventHandler(topPanel_MouseDown);
+            this.topPanel.MouseMove += new MouseEventHandler(topPanel_MouseMove);
+            this.topPanel.MouseUp += new MouseEventHandler(topPanel_MouseUp);
+
             //checkingForm.Show();
+        }
+
+        private void topPanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            lastLocation = e.Location;
+        }
+
+        private void topPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
+
+                this.Update();
+            }
+        }
+
+        private void topPanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
         }
 
         private void BtnConnection_Click(object sender, EventArgs e)
@@ -411,6 +440,11 @@ namespace OpenProtocolInterpreter.Sample
         {
             hideCheckingFormTime.Stop();
 
+        }
+
+        private void closeMainFormButton_Click(object sender, EventArgs e)
+        {
+            this.Close();   
         }
     }
 }
