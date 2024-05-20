@@ -109,18 +109,14 @@ namespace OpenProtocolInterpreter.Sample
                 typeof(Mid9999)
             }); ;
 
-            var client = new Ethernet.SimpleTcpClient().Connect(textIp.Text, (int)numericPort.Value);
+            var client = new Ethernet.SimpleTcpClient().Connect(ipTextBox.Text, int.Parse(portTextBox.Text));
             if (driver.BeginCommunication(client))
             {
                 _keepAliveTimer.Start();
-                connectionStatus.Text = "Connected!";
-                connectionStatus.BackColor = Color.Green;
             }
             else
             {
                 driver = null;
-                connectionStatus.Text = "Disconnected!";
-                connectionStatus.BackColor = Color.Red;
             }
         }
 
@@ -132,7 +128,6 @@ namespace OpenProtocolInterpreter.Sample
                 var pack = driver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(10));
                 if (pack != null && pack.Header.Mid == Mid9999.MID)
                 {
-                    lastMessageArrived.Text = Mid9999.MID.ToString();
                     Console.WriteLine($"Keep Alive Received");
                 }
                 else
@@ -222,7 +217,6 @@ namespace OpenProtocolInterpreter.Sample
             driver.SendMessage(e.Mid.BuildAckPackage());
 
             var jobInfo = e.Mid as Mid0035;
-            lastMessageArrived.Text = Mid0035.MID.ToString();
             Console.WriteLine($@"JOB INFO RECEIVED (MID 0035): 
                                  Job ID: <{jobInfo.JobId}>
                                  Job Status: <{(int)jobInfo.JobStatus}> ({jobInfo.JobStatus.ToString()})
@@ -249,7 +243,6 @@ namespace OpenProtocolInterpreter.Sample
 
             //consoleTextBox.Text = ("EXTERNAL_MONITORED_1: \r\n" + externallyMonitoredRelayStatus.StatusDigInOne.ToString());
 
-            lastMessageArrived.Text = Mid0211.MID.ToString();
 
             if (externallyMonitoredRelayStatus.StatusDigInOne)
             {
@@ -444,7 +437,22 @@ namespace OpenProtocolInterpreter.Sample
 
         private void closeMainFormButton_Click(object sender, EventArgs e)
         {
-            this.Close();   
+            this.Close();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void portTextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
