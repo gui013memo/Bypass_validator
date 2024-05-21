@@ -256,8 +256,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Timer checkBadgeTimer;
-        private System.Windows.Forms.Timer hideCheckingFormTimer;
         private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.Panel yellowStripPanel;
         private System.Windows.Forms.Button closeMainFormButton;
@@ -270,6 +268,8 @@
         private System.Windows.Forms.Button analysisButton;
         private System.Windows.Forms.Button aboutButton;
         private System.Windows.Forms.Panel formLoaderPanel;
+        public System.Windows.Forms.Timer checkBadgeTimer;
+        public System.Windows.Forms.Timer hideCheckingFormTimer;
     }
 }
 

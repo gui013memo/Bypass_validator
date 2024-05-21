@@ -57,23 +57,15 @@ namespace OpenProtocolInterpreter.Sample
             settingsForm = new SettingsForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             analysisForm = new AnalysisForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             aboutForm = new AboutForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
-            callBypassForm = new CallBypassForm();
+            callBypassForm = new CallBypassForm(checkingForm, this);
 
-            this.topPanel.MouseDown += new MouseEventHandler(topPanel_MouseDown);
-            this.topPanel.MouseMove += new MouseEventHandler(topPanel_MouseMove);
-            this.topPanel.MouseUp += new MouseEventHandler(topPanel_MouseUp);
-
-            this.appNameLabel.MouseDown += new MouseEventHandler(topPanel_MouseDown);
-            this.appNameLabel.MouseDown += new MouseEventHandler(topPanel_MouseMove);
-            this.appNameLabel.MouseDown += new MouseEventHandler(topPanel_MouseUp);
-
-            homeForm = new HomeForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            this.topPanel.MouseDown += new MouseEventHandler(topPanel_MouseDown); this.appNameLabel.MouseDown += new MouseEventHandler(topPanel_MouseDown);
+            this.topPanel.MouseMove += new MouseEventHandler(topPanel_MouseMove); this.appNameLabel.MouseMove += new MouseEventHandler(topPanel_MouseMove);
+            this.topPanel.MouseUp += new MouseEventHandler(topPanel_MouseUp); this.appNameLabel.MouseUp += new MouseEventHandler(topPanel_MouseUp);
 
             homeButton_Click(this.driver, EventArgs.Empty);
 
             callBypassForm.Show();
-
-            //checkingForm.Show();
         }
 
         private void topPanel_MouseDown(object sender, MouseEventArgs e)
@@ -276,16 +268,8 @@ namespace OpenProtocolInterpreter.Sample
                 this.Invoke((MethodInvoker)delegate
                 {
                     checkingForm.Show();
-                });
-
-                logger.Log("Got out of CheckSQSBadge");
-
-                this.Invoke((MethodInvoker)delegate
-                {
                     checkBadgeTimer.Start();
                 });
-
-
 
             }
             else if (externallyMonitoredRelayStatus.StatusDigInOne == false)
@@ -298,7 +282,6 @@ namespace OpenProtocolInterpreter.Sample
                     {
                         checkingForm.Hide();
                     });
-
                 }
 
                 this.Invoke((MethodInvoker)delegate
@@ -310,8 +293,9 @@ namespace OpenProtocolInterpreter.Sample
             }
         }
 
-        private void CheckSQSBadge()
+        public void CheckSQSBadge()
         {
+            logger.Log("CheckSQSBadge func called");
 
             string targetKeyOut = "[WorkerIdent.1.1] SendKeyOut - Command [OperatorCode] Destination [Ident.1] Value [] - Worker";
 
@@ -400,8 +384,6 @@ namespace OpenProtocolInterpreter.Sample
             {
                 checkingForm.UpdateSQSStatus();
             });
-
-
         }
 
         public string ChooseFolder()
@@ -430,25 +412,6 @@ namespace OpenProtocolInterpreter.Sample
             logger.Log("timer hitted");
         }
 
-        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void setToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new SendJobCommand(driver).Execute(true);
-        }
-
-        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new SendJobCommand(driver).Execute(false);
-        }
-
-        private void changeSQSDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            idLogsPath = ChooseFolder();
-        }
 
         private void hideCheckingFormTime_Tick(object sender, EventArgs e)
         {

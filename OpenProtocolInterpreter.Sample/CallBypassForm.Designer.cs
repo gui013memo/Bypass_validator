@@ -31,38 +31,42 @@ namespace OpenProtocolInterpreter.Sample
         /// </summary>
         private void InitializeComponent()
         {
-            this.label2 = new System.Windows.Forms.Label();
+            this.bypassRequestButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // label2
+            // bypassRequestButton
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Yellow;
-            this.label2.Location = new System.Drawing.Point(6, 4);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 15);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "BYPASS";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+            this.bypassRequestButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(94)))), ((int)(((byte)(107)))));
+            this.bypassRequestButton.FlatAppearance.BorderSize = 0;
+            this.bypassRequestButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bypassRequestButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bypassRequestButton.ForeColor = System.Drawing.Color.Yellow;
+            this.bypassRequestButton.Location = new System.Drawing.Point(5, 2);
+            this.bypassRequestButton.Name = "bypassRequestButton";
+            this.bypassRequestButton.Size = new System.Drawing.Size(120, 35);
+            this.bypassRequestButton.TabIndex = 0;
+            this.bypassRequestButton.Text = "BYPASS";
+            this.bypassRequestButton.UseVisualStyleBackColor = true;
+            this.bypassRequestButton.Click += new System.EventHandler(this.bypassRequestButton_Click);
             // 
             // CallBypassForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(63)))), ((int)(((byte)(72)))));
-            this.ClientSize = new System.Drawing.Size(83, 27);
-            this.Controls.Add(this.label2);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(94)))), ((int)(((byte)(107)))));
+            this.ClientSize = new System.Drawing.Size(130, 40);
+            this.Controls.Add(this.bypassRequestButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Location = new System.Drawing.Point(1015, 1027);
             this.Name = "CallBypassForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.TopMost = true;
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-        private Label label2;
+
+        private Button bypassRequestButton;
     }
 }
