@@ -21,5 +21,10 @@ namespace OpenProtocolInterpreter.Sample
         {
 
         }
+
+        private void textBox5_Enter(object sender, EventArgs e)
+        {
+            label1.Focus();
+        }
     }
 }

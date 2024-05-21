@@ -43,6 +43,7 @@ namespace OpenProtocolInterpreter.Sample
         SettingsForm settingsForm;
         AnalysisForm analysisForm;
         AboutForm aboutForm;
+        CallBypassForm callBypassForm;
 
         public DriverForm()
         {
@@ -56,7 +57,7 @@ namespace OpenProtocolInterpreter.Sample
             settingsForm = new SettingsForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             analysisForm = new AnalysisForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             aboutForm = new AboutForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
-
+            callBypassForm = new CallBypassForm();
 
             this.topPanel.MouseDown += new MouseEventHandler(topPanel_MouseDown);
             this.topPanel.MouseMove += new MouseEventHandler(topPanel_MouseMove);
@@ -69,6 +70,8 @@ namespace OpenProtocolInterpreter.Sample
             homeForm = new HomeForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
 
             homeButton_Click(this.driver, EventArgs.Empty);
+
+            callBypassForm.Show();
 
             //checkingForm.Show();
         }

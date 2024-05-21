@@ -113,6 +113,7 @@
             this.textBox5.Size = new System.Drawing.Size(202, 99);
             this.textBox5.TabIndex = 14;
             this.textBox5.Text = resources.GetString("textBox5.Text");
+            this.textBox5.Enter += new System.EventHandler(this.textBox5_Enter);
             // 
             // ipAndPortVS1Label
             // 

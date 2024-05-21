@@ -79,7 +79,6 @@
             // button6
             // 
             this.button6.BackColor = System.Drawing.Color.Red;
-            this.button6.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.button6.FlatAppearance.BorderSize = 0;
             this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
