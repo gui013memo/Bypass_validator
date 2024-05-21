@@ -57,7 +57,7 @@ namespace OpenProtocolInterpreter.Sample
             this.ClientSize = new System.Drawing.Size(130, 40);
             this.Controls.Add(this.bypassRequestButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Location = new System.Drawing.Point(1015, 1027);
+            this.Location = new System.Drawing.Point(1016, 1027);
             this.Name = "CallBypassForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TopMost = true;
