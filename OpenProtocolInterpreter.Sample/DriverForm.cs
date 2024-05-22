@@ -21,8 +21,6 @@ namespace OpenProtocolInterpreter.Sample
         private readonly Timer _keepAliveTimer;
         private OpenProtocolDriver driver;
 
-        BadgeCheckingForm checkingForm;
-
         Logger logger = new Logger();
 
         string idLogsPath = "C:\\ProgramData\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
@@ -31,6 +29,7 @@ namespace OpenProtocolInterpreter.Sample
         private bool mouseDown;
         private Point lastLocation;
 
+        bool CheckSQSBadgeRunning = false;
         bool bypassAllowed = false;
         public bool idLogsPathOK;
 
@@ -44,6 +43,7 @@ namespace OpenProtocolInterpreter.Sample
         AnalysisForm analysisForm;
         AboutForm aboutForm;
         CallBypassForm callBypassForm;
+        BadgeCheckingForm checkingForm;
 
         public DriverForm()
         {
@@ -66,6 +66,8 @@ namespace OpenProtocolInterpreter.Sample
             homeButton_Click(this.driver, EventArgs.Empty);
 
             callBypassForm.Show();
+
+
         }
 
         private void topPanel_MouseDown(object sender, MouseEventArgs e)
@@ -78,8 +80,7 @@ namespace OpenProtocolInterpreter.Sample
         {
             if (mouseDown)
             {
-                this.Location = new Point(
-                    (this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
+                this.Location = new Point((this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
 
                 this.Update();
             }
@@ -297,6 +298,8 @@ namespace OpenProtocolInterpreter.Sample
         {
             logger.Log("CheckSQSBadge func called");
 
+            CheckSQSBadgeRunning = true;
+
             string targetKeyOut = "[WorkerIdent.1.1] SendKeyOut - Command [OperatorCode] Destination [Ident.1] Value [] - Worker";
 
             string targetKeyIn = "[WorkerIdent.1.1] SetOperatorGrid - [FisPdaStatus.1][Device1] [True]";
@@ -344,13 +347,13 @@ namespace OpenProtocolInterpreter.Sample
 
                     if (currentOperatorGroup == "Master_Admin" && !bypassAllowed)
                     {
-                        new SendJobCommand(driver).Execute(true);
+                        // new SendJobCommand(driver).Execute(true);
                         bypassAllowed = true;
-                        hideCheckingFormTimer.Start();
+                        checkingForm.shadeEffectTimer.Start();
                     }
                     else if (currentOperatorGroup == "Operator" && bypassAllowed)
                     {
-                        new SendJobCommand(driver).Execute(false);
+                        // new SendJobCommand(driver).Execute(false);
                         bypassAllowed = false;
                     }
 
@@ -384,6 +387,8 @@ namespace OpenProtocolInterpreter.Sample
             {
                 checkingForm.UpdateSQSStatus();
             });
+
+            CheckSQSBadgeRunning = false;
         }
 
         public string ChooseFolder()
@@ -401,17 +406,20 @@ namespace OpenProtocolInterpreter.Sample
 
         private void checkBadgeTimer_Tick(object sender, EventArgs e)
         {
-            CheckSQSBadge();
-
-            this.Invoke((MethodInvoker)delegate
+            logger.Log("checkBadgeTimer_Tick hitted");
+            if (!CheckSQSBadgeRunning)
             {
-                checkingForm.TopMost = true;
-            });
-            //checkingForm.Focus();
+                logger.Log("CheckSQSBadgeRunning is false, calling CheckSQSBadge()");
 
-            logger.Log("timer hitted");
+                CheckSQSBadge();
+
+                this.Invoke((MethodInvoker)delegate
+                {
+                    checkingForm.TopMost = true;
+                });
+            }
+            logger.Log("CheckSQSBadgeRunning is true, skipping CheckSQSBadge()");
         }
-
 
         private void hideCheckingFormTime_Tick(object sender, EventArgs e)
         {
@@ -422,21 +430,6 @@ namespace OpenProtocolInterpreter.Sample
         private void closeMainFormButton_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void portTextBox_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -463,7 +456,6 @@ namespace OpenProtocolInterpreter.Sample
 
             homeButton.BackgroundImage = Properties.Resources.Home_icon_Highlighted;
         }
-
 
         private void settingsButton_Click(object sender, EventArgs e)
         {
@@ -499,6 +491,11 @@ namespace OpenProtocolInterpreter.Sample
             aboutForm.Show();
 
             aboutButton.BackgroundImage = Properties.Resources.about_small_highlighted;
+        }
+
+        private void appNameLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -45,6 +45,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -202,7 +203,7 @@
             this.button4.BackColor = System.Drawing.Color.Gainsboro;
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button4.ForeColor = System.Drawing.Color.Red;
-            this.button4.Location = new System.Drawing.Point(243, 261);
+            this.button4.Location = new System.Drawing.Point(84, 307);
             this.button4.MaximumSize = new System.Drawing.Size(1800, 1800);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(149, 27);
@@ -214,11 +215,11 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(116, 267);
+            this.label8.Location = new System.Drawing.Point(113, 264);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(125, 21);
+            this.label8.Size = new System.Drawing.Size(124, 21);
             this.label8.TabIndex = 19;
-            this.label8.Text = "Reset to defaults";
+            this.label8.Text = "Connect on start";
             // 
             // saveButton
             // 
@@ -227,7 +228,7 @@
             this.saveButton.BackColor = System.Drawing.Color.Gainsboro;
             this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.saveButton.ForeColor = System.Drawing.Color.Green;
-            this.saveButton.Location = new System.Drawing.Point(155, 306);
+            this.saveButton.Location = new System.Drawing.Point(243, 307);
             this.saveButton.MaximumSize = new System.Drawing.Size(1800, 1800);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(149, 27);
@@ -235,11 +236,24 @@
             this.saveButton.Text = "SAVE";
             this.saveButton.UseVisualStyleBackColor = false;
             // 
+            // button5
+            // 
+            this.button5.BackColor = System.Drawing.Color.Gainsboro;
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.button5.Location = new System.Drawing.Point(243, 261);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(149, 27);
+            this.button5.TabIndex = 22;
+            this.button5.Text = "Disable";
+            this.button5.UseVisualStyleBackColor = false;
+            // 
             // SettingsForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(445, 356);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.label8);
@@ -283,5 +297,6 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button button5;
     }
 }

@@ -21,7 +21,6 @@ namespace OpenProtocolInterpreter.Sample
             this.driverForm = driverForm;
             checkingForm = badgeForm;
             InitializeComponent();
-            this.Load += new EventHandler(Form1_Load);
             this.Paint += new PaintEventHandler(Form1_Paint);
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -30,7 +29,7 @@ namespace OpenProtocolInterpreter.Sample
         }
         private void SetRoundedRegion()
         {
-            int radius = 5;  // Adjust the radius to your preference
+            int radius = 10;  // Adjust the radius to your preference
             GraphicsPath path = new GraphicsPath();
             path.StartFigure();
             path.AddArc(new Rectangle(0, 0, radius, radius), 180, 90);
@@ -59,19 +58,19 @@ namespace OpenProtocolInterpreter.Sample
 
         private void bypassRequestButton_Click(object sender, EventArgs e)
         {
-            this.Invoke((MethodInvoker)delegate
-            {
+           // this.Invoke((MethodInvoker)delegate
+            //{
                 driverForm.CheckSQSBadge();
-            });
-            this.Invoke((MethodInvoker)delegate
-            {
+            //});
+           // this.Invoke((MethodInvoker)delegate
+           // {
                 checkingForm.Show();
-            });
+           // });
 
-            this.Invoke((MethodInvoker)delegate
-            {
+           // this.Invoke((MethodInvoker)delegate
+           // {
                 driverForm.checkBadgeTimer.Start();
-            });
+           // });
         }
     }
 }

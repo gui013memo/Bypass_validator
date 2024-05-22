@@ -29,374 +29,374 @@
         private void InitializeComponent()
         {
             this.panel5 = new System.Windows.Forms.Panel();
-            this.button6 = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
-            this.button5 = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label10 = new System.Windows.Forms.Label();
-            this.nodeOneToolaLabel = new System.Windows.Forms.Label();
-            this.portTextBox = new System.Windows.Forms.TextBox();
-            this.btnConnection = new System.Windows.Forms.Button();
-            this.ipTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.portLabel = new System.Windows.Forms.Label();
+            this.startOrStopButton = new System.Windows.Forms.Button();
+            this.changeModeLabel = new System.Windows.Forms.Label();
+            this.autoOrManualButton = new System.Windows.Forms.Button();
+            this.controlLabel = new System.Windows.Forms.Label();
+            this.vsThreePanel = new System.Windows.Forms.Panel();
+            this.vsThreeConnStateLabel = new System.Windows.Forms.Label();
+            this.vsThreeToolLabel = new System.Windows.Forms.Label();
+            this.vsThreePortTextBox = new System.Windows.Forms.TextBox();
+            this.vsThreeAutoOrManualButton = new System.Windows.Forms.Button();
+            this.vsThreeIpTextBox = new System.Windows.Forms.TextBox();
+            this.vsThreeControllerIpLabel = new System.Windows.Forms.Label();
+            this.vsThreePortLabel = new System.Windows.Forms.Label();
+            this.vsTwoPanel = new System.Windows.Forms.Panel();
+            this.vsTwoConnStateLabel = new System.Windows.Forms.Label();
+            this.vsTwoToolLabel = new System.Windows.Forms.Label();
+            this.vsTwoPortTextBox = new System.Windows.Forms.TextBox();
+            this.vsTwoAutoOrManualButton = new System.Windows.Forms.Button();
+            this.vsTwoIpTextBox = new System.Windows.Forms.TextBox();
+            this.vsTwoControllerIpLabel = new System.Windows.Forms.Label();
+            this.vsTwoPortLabel = new System.Windows.Forms.Label();
+            this.vsOnePanel = new System.Windows.Forms.Panel();
+            this.vsOneConnStateLabel = new System.Windows.Forms.Label();
+            this.vsOneToolLabel = new System.Windows.Forms.Label();
+            this.vsOnePortTextBox = new System.Windows.Forms.TextBox();
+            this.vsOneAutoOrManualButton = new System.Windows.Forms.Button();
+            this.vsOneIpTextBox = new System.Windows.Forms.TextBox();
+            this.vsOneControllerIpLabel = new System.Windows.Forms.Label();
+            this.vsOnePortLabel = new System.Windows.Forms.Label();
             this.panel5.SuspendLayout();
-            this.panel4.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.vsThreePanel.SuspendLayout();
+            this.vsTwoPanel.SuspendLayout();
+            this.vsOnePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel5.Controls.Add(this.button6);
-            this.panel5.Controls.Add(this.label9);
-            this.panel5.Controls.Add(this.button5);
-            this.panel5.Controls.Add(this.label11);
+            this.panel5.Controls.Add(this.startOrStopButton);
+            this.panel5.Controls.Add(this.changeModeLabel);
+            this.panel5.Controls.Add(this.autoOrManualButton);
+            this.panel5.Controls.Add(this.controlLabel);
             this.panel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
             this.panel5.Location = new System.Drawing.Point(227, 181);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(209, 163);
             this.panel5.TabIndex = 19;
             // 
-            // button6
+            // startOrStopButton
             // 
-            this.button6.BackColor = System.Drawing.Color.Red;
-            this.button6.FlatAppearance.BorderSize = 0;
-            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
-            this.button6.Location = new System.Drawing.Point(15, 33);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(179, 40);
-            this.button6.TabIndex = 12;
-            this.button6.Text = "STOP";
-            this.button6.UseVisualStyleBackColor = false;
+            this.startOrStopButton.BackColor = System.Drawing.Color.Green;
+            this.startOrStopButton.FlatAppearance.BorderSize = 0;
+            this.startOrStopButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startOrStopButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
+            this.startOrStopButton.Location = new System.Drawing.Point(15, 33);
+            this.startOrStopButton.Name = "startOrStopButton";
+            this.startOrStopButton.Size = new System.Drawing.Size(179, 40);
+            this.startOrStopButton.TabIndex = 12;
+            this.startOrStopButton.Text = "START";
+            this.startOrStopButton.UseVisualStyleBackColor = false;
             // 
-            // label9
+            // changeModeLabel
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(44, 89);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(128, 21);
-            this.label9.TabIndex = 11;
-            this.label9.Text = "CHANGE MODE";
+            this.changeModeLabel.AutoSize = true;
+            this.changeModeLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.changeModeLabel.Location = new System.Drawing.Point(44, 89);
+            this.changeModeLabel.Name = "changeModeLabel";
+            this.changeModeLabel.Size = new System.Drawing.Size(128, 21);
+            this.changeModeLabel.TabIndex = 11;
+            this.changeModeLabel.Text = "CHANGE MODE";
             // 
-            // button5
+            // autoOrManualButton
             // 
-            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(130)))), ((int)(((byte)(184)))));
-            this.button5.FlatAppearance.BorderSize = 0;
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
-            this.button5.Location = new System.Drawing.Point(17, 109);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(179, 40);
-            this.button5.TabIndex = 4;
-            this.button5.Text = "MANUAL";
-            this.button5.UseVisualStyleBackColor = false;
+            this.autoOrManualButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(130)))), ((int)(((byte)(184)))));
+            this.autoOrManualButton.FlatAppearance.BorderSize = 0;
+            this.autoOrManualButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.autoOrManualButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
+            this.autoOrManualButton.Location = new System.Drawing.Point(17, 109);
+            this.autoOrManualButton.Name = "autoOrManualButton";
+            this.autoOrManualButton.Size = new System.Drawing.Size(179, 40);
+            this.autoOrManualButton.TabIndex = 4;
+            this.autoOrManualButton.Text = "MANUAL";
+            this.autoOrManualButton.UseVisualStyleBackColor = false;
             // 
-            // label11
+            // controlLabel
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(68, 9);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(84, 21);
-            this.label11.TabIndex = 6;
-            this.label11.Text = "CONTROL";
+            this.controlLabel.AutoSize = true;
+            this.controlLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.controlLabel.Location = new System.Drawing.Point(68, 9);
+            this.controlLabel.Name = "controlLabel";
+            this.controlLabel.Size = new System.Drawing.Size(84, 21);
+            this.controlLabel.TabIndex = 6;
+            this.controlLabel.Text = "CONTROL";
             // 
-            // panel4
+            // vsThreePanel
             // 
-            this.panel4.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel4.Controls.Add(this.label13);
-            this.panel4.Controls.Add(this.label6);
-            this.panel4.Controls.Add(this.textBox3);
-            this.panel4.Controls.Add(this.button4);
-            this.panel4.Controls.Add(this.textBox4);
-            this.panel4.Controls.Add(this.label7);
-            this.panel4.Controls.Add(this.label8);
-            this.panel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.panel4.Location = new System.Drawing.Point(12, 181);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(209, 163);
-            this.panel4.TabIndex = 17;
+            this.vsThreePanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.vsThreePanel.Controls.Add(this.vsThreeConnStateLabel);
+            this.vsThreePanel.Controls.Add(this.vsThreeToolLabel);
+            this.vsThreePanel.Controls.Add(this.vsThreePortTextBox);
+            this.vsThreePanel.Controls.Add(this.vsThreeAutoOrManualButton);
+            this.vsThreePanel.Controls.Add(this.vsThreeIpTextBox);
+            this.vsThreePanel.Controls.Add(this.vsThreeControllerIpLabel);
+            this.vsThreePanel.Controls.Add(this.vsThreePortLabel);
+            this.vsThreePanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.vsThreePanel.Location = new System.Drawing.Point(12, 181);
+            this.vsThreePanel.Name = "vsThreePanel";
+            this.vsThreePanel.Size = new System.Drawing.Size(209, 163);
+            this.vsThreePanel.TabIndex = 17;
             // 
-            // label13
+            // vsThreeConnStateLabel
             // 
-            this.label13.AutoSize = true;
-            this.label13.BackColor = System.Drawing.Color.Red;
-            this.label13.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.Color.Black;
-            this.label13.Location = new System.Drawing.Point(0, 0);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(31, 17);
-            this.label13.TabIndex = 13;
-            this.label13.Text = "VS3";
+            this.vsThreeConnStateLabel.AutoSize = true;
+            this.vsThreeConnStateLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(44)))), ((int)(((byte)(31)))));
+            this.vsThreeConnStateLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsThreeConnStateLabel.ForeColor = System.Drawing.Color.White;
+            this.vsThreeConnStateLabel.Location = new System.Drawing.Point(0, 0);
+            this.vsThreeConnStateLabel.Name = "vsThreeConnStateLabel";
+            this.vsThreeConnStateLabel.Size = new System.Drawing.Size(39, 21);
+            this.vsThreeConnStateLabel.TabIndex = 13;
+            this.vsThreeConnStateLabel.Text = "VS3";
             // 
-            // label6
+            // vsThreeToolLabel
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.label6.Location = new System.Drawing.Point(44, 6);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(116, 21);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "ETV STB (Left)";
+            this.vsThreeToolLabel.AutoSize = true;
+            this.vsThreeToolLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsThreeToolLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.vsThreeToolLabel.Location = new System.Drawing.Point(44, 6);
+            this.vsThreeToolLabel.Name = "vsThreeToolLabel";
+            this.vsThreeToolLabel.Size = new System.Drawing.Size(116, 21);
+            this.vsThreeToolLabel.TabIndex = 11;
+            this.vsThreeToolLabel.Text = "ETV STB (Left)";
             // 
-            // textBox3
+            // vsThreePortTextBox
             // 
-            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(30, 93);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(149, 22);
-            this.textBox3.TabIndex = 10;
-            this.textBox3.Text = "4546";
-            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.vsThreePortTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsThreePortTextBox.Location = new System.Drawing.Point(30, 93);
+            this.vsThreePortTextBox.Name = "vsThreePortTextBox";
+            this.vsThreePortTextBox.Size = new System.Drawing.Size(149, 22);
+            this.vsThreePortTextBox.TabIndex = 10;
+            this.vsThreePortTextBox.Text = "4546";
+            this.vsThreePortTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // button4
+            // vsThreeAutoOrManualButton
             // 
-            this.button4.BackColor = System.Drawing.Color.Gainsboro;
-            this.button4.Enabled = false;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.button4.Location = new System.Drawing.Point(15, 120);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(179, 40);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "AUTOMATIC";
-            this.button4.UseVisualStyleBackColor = false;
+            this.vsThreeAutoOrManualButton.BackColor = System.Drawing.Color.Gainsboro;
+            this.vsThreeAutoOrManualButton.Enabled = false;
+            this.vsThreeAutoOrManualButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsThreeAutoOrManualButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.vsThreeAutoOrManualButton.Location = new System.Drawing.Point(15, 120);
+            this.vsThreeAutoOrManualButton.Name = "vsThreeAutoOrManualButton";
+            this.vsThreeAutoOrManualButton.Size = new System.Drawing.Size(179, 40);
+            this.vsThreeAutoOrManualButton.TabIndex = 4;
+            this.vsThreeAutoOrManualButton.Text = "AUTOMATIC";
+            this.vsThreeAutoOrManualButton.UseVisualStyleBackColor = false;
             // 
-            // textBox4
+            // vsThreeIpTextBox
             // 
-            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(30, 48);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(149, 22);
-            this.textBox4.TabIndex = 2;
-            this.textBox4.Text = "10.127.1.21";
-            this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.vsThreeIpTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsThreeIpTextBox.Location = new System.Drawing.Point(30, 48);
+            this.vsThreeIpTextBox.Name = "vsThreeIpTextBox";
+            this.vsThreeIpTextBox.Size = new System.Drawing.Size(149, 22);
+            this.vsThreeIpTextBox.TabIndex = 2;
+            this.vsThreeIpTextBox.Text = "10.127.1.21";
+            this.vsThreeIpTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label7
+            // vsThreeControllerIpLabel
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(55, 27);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(97, 21);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "Controller IP";
+            this.vsThreeControllerIpLabel.AutoSize = true;
+            this.vsThreeControllerIpLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsThreeControllerIpLabel.Location = new System.Drawing.Point(55, 27);
+            this.vsThreeControllerIpLabel.Name = "vsThreeControllerIpLabel";
+            this.vsThreeControllerIpLabel.Size = new System.Drawing.Size(97, 21);
+            this.vsThreeControllerIpLabel.TabIndex = 3;
+            this.vsThreeControllerIpLabel.Text = "Controller IP";
             // 
-            // label8
+            // vsThreePortLabel
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(83, 73);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(39, 21);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "Port";
+            this.vsThreePortLabel.AutoSize = true;
+            this.vsThreePortLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsThreePortLabel.Location = new System.Drawing.Point(83, 73);
+            this.vsThreePortLabel.Name = "vsThreePortLabel";
+            this.vsThreePortLabel.Size = new System.Drawing.Size(39, 21);
+            this.vsThreePortLabel.TabIndex = 6;
+            this.vsThreePortLabel.Text = "Port";
             // 
-            // panel3
+            // vsTwoPanel
             // 
-            this.panel3.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel3.Controls.Add(this.label12);
-            this.panel3.Controls.Add(this.label2);
-            this.panel3.Controls.Add(this.textBox1);
-            this.panel3.Controls.Add(this.button2);
-            this.panel3.Controls.Add(this.textBox2);
-            this.panel3.Controls.Add(this.label4);
-            this.panel3.Controls.Add(this.label5);
-            this.panel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.panel3.Location = new System.Drawing.Point(227, 12);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(209, 163);
-            this.panel3.TabIndex = 18;
+            this.vsTwoPanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.vsTwoPanel.Controls.Add(this.vsTwoConnStateLabel);
+            this.vsTwoPanel.Controls.Add(this.vsTwoToolLabel);
+            this.vsTwoPanel.Controls.Add(this.vsTwoPortTextBox);
+            this.vsTwoPanel.Controls.Add(this.vsTwoAutoOrManualButton);
+            this.vsTwoPanel.Controls.Add(this.vsTwoIpTextBox);
+            this.vsTwoPanel.Controls.Add(this.vsTwoControllerIpLabel);
+            this.vsTwoPanel.Controls.Add(this.vsTwoPortLabel);
+            this.vsTwoPanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.vsTwoPanel.Location = new System.Drawing.Point(227, 12);
+            this.vsTwoPanel.Name = "vsTwoPanel";
+            this.vsTwoPanel.Size = new System.Drawing.Size(209, 163);
+            this.vsTwoPanel.TabIndex = 18;
             // 
-            // label12
+            // vsTwoConnStateLabel
             // 
-            this.label12.AutoSize = true;
-            this.label12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(130)))), ((int)(((byte)(184)))));
-            this.label12.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.Color.Black;
-            this.label12.Location = new System.Drawing.Point(0, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(31, 17);
-            this.label12.TabIndex = 13;
-            this.label12.Text = "VS2";
+            this.vsTwoConnStateLabel.AutoSize = true;
+            this.vsTwoConnStateLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(130)))), ((int)(((byte)(184)))));
+            this.vsTwoConnStateLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsTwoConnStateLabel.ForeColor = System.Drawing.Color.White;
+            this.vsTwoConnStateLabel.Location = new System.Drawing.Point(0, 0);
+            this.vsTwoConnStateLabel.Name = "vsTwoConnStateLabel";
+            this.vsTwoConnStateLabel.Size = new System.Drawing.Size(39, 21);
+            this.vsTwoConnStateLabel.TabIndex = 13;
+            this.vsTwoConnStateLabel.Text = "VS2";
             // 
-            // label2
+            // vsTwoToolLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.label2.Location = new System.Drawing.Point(44, 6);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(129, 21);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "ETD STR (Right)";
+            this.vsTwoToolLabel.AutoSize = true;
+            this.vsTwoToolLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsTwoToolLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.vsTwoToolLabel.Location = new System.Drawing.Point(44, 6);
+            this.vsTwoToolLabel.Name = "vsTwoToolLabel";
+            this.vsTwoToolLabel.Size = new System.Drawing.Size(129, 21);
+            this.vsTwoToolLabel.TabIndex = 11;
+            this.vsTwoToolLabel.Text = "ETD STR (Right)";
             // 
-            // textBox1
+            // vsTwoPortTextBox
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(30, 93);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(149, 22);
-            this.textBox1.TabIndex = 10;
-            this.textBox1.Text = "4545";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.vsTwoPortTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsTwoPortTextBox.Location = new System.Drawing.Point(30, 93);
+            this.vsTwoPortTextBox.Name = "vsTwoPortTextBox";
+            this.vsTwoPortTextBox.Size = new System.Drawing.Size(149, 22);
+            this.vsTwoPortTextBox.TabIndex = 10;
+            this.vsTwoPortTextBox.Text = "4545";
+            this.vsTwoPortTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // button2
+            // vsTwoAutoOrManualButton
             // 
-            this.button2.BackColor = System.Drawing.Color.Gainsboro;
-            this.button2.Enabled = false;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.button2.Location = new System.Drawing.Point(15, 120);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(179, 40);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "AUTOMATIC";
-            this.button2.UseVisualStyleBackColor = false;
+            this.vsTwoAutoOrManualButton.BackColor = System.Drawing.Color.Gainsboro;
+            this.vsTwoAutoOrManualButton.Enabled = false;
+            this.vsTwoAutoOrManualButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsTwoAutoOrManualButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.vsTwoAutoOrManualButton.Location = new System.Drawing.Point(15, 120);
+            this.vsTwoAutoOrManualButton.Name = "vsTwoAutoOrManualButton";
+            this.vsTwoAutoOrManualButton.Size = new System.Drawing.Size(179, 40);
+            this.vsTwoAutoOrManualButton.TabIndex = 4;
+            this.vsTwoAutoOrManualButton.Text = "AUTOMATIC";
+            this.vsTwoAutoOrManualButton.UseVisualStyleBackColor = false;
             // 
-            // textBox2
+            // vsTwoIpTextBox
             // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(30, 48);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(149, 22);
-            this.textBox2.TabIndex = 2;
-            this.textBox2.Text = "10.127.1.22";
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.vsTwoIpTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsTwoIpTextBox.Location = new System.Drawing.Point(30, 48);
+            this.vsTwoIpTextBox.Name = "vsTwoIpTextBox";
+            this.vsTwoIpTextBox.Size = new System.Drawing.Size(149, 22);
+            this.vsTwoIpTextBox.TabIndex = 2;
+            this.vsTwoIpTextBox.Text = "10.127.1.22";
+            this.vsTwoIpTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label4
+            // vsTwoControllerIpLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(55, 27);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(97, 21);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Controller IP";
+            this.vsTwoControllerIpLabel.AutoSize = true;
+            this.vsTwoControllerIpLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsTwoControllerIpLabel.Location = new System.Drawing.Point(55, 27);
+            this.vsTwoControllerIpLabel.Name = "vsTwoControllerIpLabel";
+            this.vsTwoControllerIpLabel.Size = new System.Drawing.Size(97, 21);
+            this.vsTwoControllerIpLabel.TabIndex = 3;
+            this.vsTwoControllerIpLabel.Text = "Controller IP";
             // 
-            // label5
+            // vsTwoPortLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(83, 73);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(39, 21);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Port";
+            this.vsTwoPortLabel.AutoSize = true;
+            this.vsTwoPortLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsTwoPortLabel.Location = new System.Drawing.Point(83, 73);
+            this.vsTwoPortLabel.Name = "vsTwoPortLabel";
+            this.vsTwoPortLabel.Size = new System.Drawing.Size(39, 21);
+            this.vsTwoPortLabel.TabIndex = 6;
+            this.vsTwoPortLabel.Text = "Port";
             // 
-            // panel1
+            // vsOnePanel
             // 
-            this.panel1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel1.Controls.Add(this.label10);
-            this.panel1.Controls.Add(this.nodeOneToolaLabel);
-            this.panel1.Controls.Add(this.portTextBox);
-            this.panel1.Controls.Add(this.btnConnection);
-            this.panel1.Controls.Add(this.ipTextBox);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.portLabel);
-            this.panel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.panel1.Location = new System.Drawing.Point(12, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(209, 163);
-            this.panel1.TabIndex = 16;
+            this.vsOnePanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.vsOnePanel.Controls.Add(this.vsOneConnStateLabel);
+            this.vsOnePanel.Controls.Add(this.vsOneToolLabel);
+            this.vsOnePanel.Controls.Add(this.vsOnePortTextBox);
+            this.vsOnePanel.Controls.Add(this.vsOneAutoOrManualButton);
+            this.vsOnePanel.Controls.Add(this.vsOneIpTextBox);
+            this.vsOnePanel.Controls.Add(this.vsOneControllerIpLabel);
+            this.vsOnePanel.Controls.Add(this.vsOnePortLabel);
+            this.vsOnePanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.vsOnePanel.Location = new System.Drawing.Point(12, 12);
+            this.vsOnePanel.Name = "vsOnePanel";
+            this.vsOnePanel.Size = new System.Drawing.Size(209, 163);
+            this.vsOnePanel.TabIndex = 16;
             // 
-            // label10
+            // vsOneConnStateLabel
             // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.Lime;
-            this.label10.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.Black;
-            this.label10.Location = new System.Drawing.Point(0, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(31, 17);
-            this.label10.TabIndex = 12;
-            this.label10.Text = "VS1";
+            this.vsOneConnStateLabel.AutoSize = true;
+            this.vsOneConnStateLabel.BackColor = System.Drawing.Color.Green;
+            this.vsOneConnStateLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsOneConnStateLabel.ForeColor = System.Drawing.Color.White;
+            this.vsOneConnStateLabel.Location = new System.Drawing.Point(0, 0);
+            this.vsOneConnStateLabel.Name = "vsOneConnStateLabel";
+            this.vsOneConnStateLabel.Size = new System.Drawing.Size(39, 21);
+            this.vsOneConnStateLabel.TabIndex = 12;
+            this.vsOneConnStateLabel.Text = "VS1";
             // 
-            // nodeOneToolaLabel
+            // vsOneToolLabel
             // 
-            this.nodeOneToolaLabel.AutoSize = true;
-            this.nodeOneToolaLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nodeOneToolaLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.nodeOneToolaLabel.Location = new System.Drawing.Point(44, 6);
-            this.nodeOneToolaLabel.Name = "nodeOneToolaLabel";
-            this.nodeOneToolaLabel.Size = new System.Drawing.Size(117, 21);
-            this.nodeOneToolaLabel.TabIndex = 11;
-            this.nodeOneToolaLabel.Text = "ETD STR (Left)";
+            this.vsOneToolLabel.AutoSize = true;
+            this.vsOneToolLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsOneToolLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.vsOneToolLabel.Location = new System.Drawing.Point(44, 6);
+            this.vsOneToolLabel.Name = "vsOneToolLabel";
+            this.vsOneToolLabel.Size = new System.Drawing.Size(117, 21);
+            this.vsOneToolLabel.TabIndex = 11;
+            this.vsOneToolLabel.Text = "ETD STR (Left)";
             // 
-            // portTextBox
+            // vsOnePortTextBox
             // 
-            this.portTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.portTextBox.Location = new System.Drawing.Point(30, 93);
-            this.portTextBox.Name = "portTextBox";
-            this.portTextBox.Size = new System.Drawing.Size(149, 22);
-            this.portTextBox.TabIndex = 10;
-            this.portTextBox.Text = "4545";
-            this.portTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.vsOnePortTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsOnePortTextBox.Location = new System.Drawing.Point(30, 93);
+            this.vsOnePortTextBox.Name = "vsOnePortTextBox";
+            this.vsOnePortTextBox.Size = new System.Drawing.Size(149, 22);
+            this.vsOnePortTextBox.TabIndex = 10;
+            this.vsOnePortTextBox.Text = "4545";
+            this.vsOnePortTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // btnConnection
+            // vsOneAutoOrManualButton
             // 
-            this.btnConnection.BackColor = System.Drawing.Color.Gainsboro;
-            this.btnConnection.Enabled = false;
-            this.btnConnection.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConnection.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.btnConnection.Location = new System.Drawing.Point(15, 120);
-            this.btnConnection.Name = "btnConnection";
-            this.btnConnection.Size = new System.Drawing.Size(179, 40);
-            this.btnConnection.TabIndex = 4;
-            this.btnConnection.Text = "AUTOMATIC";
-            this.btnConnection.UseVisualStyleBackColor = false;
+            this.vsOneAutoOrManualButton.BackColor = System.Drawing.Color.Gainsboro;
+            this.vsOneAutoOrManualButton.Enabled = false;
+            this.vsOneAutoOrManualButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsOneAutoOrManualButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.vsOneAutoOrManualButton.Location = new System.Drawing.Point(15, 120);
+            this.vsOneAutoOrManualButton.Name = "vsOneAutoOrManualButton";
+            this.vsOneAutoOrManualButton.Size = new System.Drawing.Size(179, 40);
+            this.vsOneAutoOrManualButton.TabIndex = 4;
+            this.vsOneAutoOrManualButton.Text = "AUTOMATIC";
+            this.vsOneAutoOrManualButton.UseVisualStyleBackColor = false;
             // 
-            // ipTextBox
+            // vsOneIpTextBox
             // 
-            this.ipTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ipTextBox.Location = new System.Drawing.Point(30, 48);
-            this.ipTextBox.Name = "ipTextBox";
-            this.ipTextBox.Size = new System.Drawing.Size(149, 22);
-            this.ipTextBox.TabIndex = 2;
-            this.ipTextBox.Text = "10.127.1.21";
-            this.ipTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.vsOneIpTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsOneIpTextBox.Location = new System.Drawing.Point(30, 48);
+            this.vsOneIpTextBox.Name = "vsOneIpTextBox";
+            this.vsOneIpTextBox.Size = new System.Drawing.Size(149, 22);
+            this.vsOneIpTextBox.TabIndex = 2;
+            this.vsOneIpTextBox.Text = "10.127.1.21";
+            this.vsOneIpTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label1
+            // vsOneControllerIpLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(55, 27);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(97, 21);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Controller IP";
+            this.vsOneControllerIpLabel.AutoSize = true;
+            this.vsOneControllerIpLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsOneControllerIpLabel.Location = new System.Drawing.Point(55, 27);
+            this.vsOneControllerIpLabel.Name = "vsOneControllerIpLabel";
+            this.vsOneControllerIpLabel.Size = new System.Drawing.Size(97, 21);
+            this.vsOneControllerIpLabel.TabIndex = 3;
+            this.vsOneControllerIpLabel.Text = "Controller IP";
             // 
-            // portLabel
+            // vsOnePortLabel
             // 
-            this.portLabel.AutoSize = true;
-            this.portLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.portLabel.Location = new System.Drawing.Point(83, 73);
-            this.portLabel.Name = "portLabel";
-            this.portLabel.Size = new System.Drawing.Size(39, 21);
-            this.portLabel.TabIndex = 6;
-            this.portLabel.Text = "Port";
+            this.vsOnePortLabel.AutoSize = true;
+            this.vsOnePortLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsOnePortLabel.Location = new System.Drawing.Point(83, 73);
+            this.vsOnePortLabel.Name = "vsOnePortLabel";
+            this.vsOnePortLabel.Size = new System.Drawing.Size(39, 21);
+            this.vsOnePortLabel.TabIndex = 6;
+            this.vsOnePortLabel.Text = "Port";
             // 
             // HomeForm
             // 
@@ -405,20 +405,20 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(445, 356);
             this.Controls.Add(this.panel5);
-            this.Controls.Add(this.panel4);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.vsThreePanel);
+            this.Controls.Add(this.vsTwoPanel);
+            this.Controls.Add(this.vsOnePanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "HomeForm";
             this.Text = "HomeForm";
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.vsThreePanel.ResumeLayout(false);
+            this.vsThreePanel.PerformLayout();
+            this.vsTwoPanel.ResumeLayout(false);
+            this.vsTwoPanel.PerformLayout();
+            this.vsOnePanel.ResumeLayout(false);
+            this.vsOnePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -426,33 +426,33 @@
         #endregion
 
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label nodeOneToolaLabel;
-        private System.Windows.Forms.TextBox portTextBox;
-        private System.Windows.Forms.Button btnConnection;
-        private System.Windows.Forms.TextBox ipTextBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label portLabel;
+        private System.Windows.Forms.Button startOrStopButton;
+        private System.Windows.Forms.Label changeModeLabel;
+        private System.Windows.Forms.Button autoOrManualButton;
+        private System.Windows.Forms.Label controlLabel;
+        private System.Windows.Forms.Panel vsThreePanel;
+        private System.Windows.Forms.Label vsThreeConnStateLabel;
+        private System.Windows.Forms.Label vsThreeToolLabel;
+        private System.Windows.Forms.TextBox vsThreePortTextBox;
+        private System.Windows.Forms.Button vsThreeAutoOrManualButton;
+        private System.Windows.Forms.TextBox vsThreeIpTextBox;
+        private System.Windows.Forms.Label vsThreeControllerIpLabel;
+        private System.Windows.Forms.Label vsThreePortLabel;
+        private System.Windows.Forms.Panel vsTwoPanel;
+        private System.Windows.Forms.Label vsTwoConnStateLabel;
+        private System.Windows.Forms.Label vsTwoToolLabel;
+        private System.Windows.Forms.TextBox vsTwoPortTextBox;
+        private System.Windows.Forms.Button vsTwoAutoOrManualButton;
+        private System.Windows.Forms.TextBox vsTwoIpTextBox;
+        private System.Windows.Forms.Label vsTwoControllerIpLabel;
+        private System.Windows.Forms.Label vsTwoPortLabel;
+        private System.Windows.Forms.Panel vsOnePanel;
+        private System.Windows.Forms.Label vsOneConnStateLabel;
+        private System.Windows.Forms.Label vsOneToolLabel;
+        private System.Windows.Forms.TextBox vsOnePortTextBox;
+        private System.Windows.Forms.Button vsOneAutoOrManualButton;
+        private System.Windows.Forms.TextBox vsOneIpTextBox;
+        private System.Windows.Forms.Label vsOneControllerIpLabel;
+        private System.Windows.Forms.Label vsOnePortLabel;
     }
 }

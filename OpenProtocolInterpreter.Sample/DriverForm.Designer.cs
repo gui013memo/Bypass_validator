@@ -69,16 +69,16 @@
             this.topPanel.Location = new System.Drawing.Point(0, 0);
             this.topPanel.Margin = new System.Windows.Forms.Padding(2);
             this.topPanel.Name = "topPanel";
-            this.topPanel.Size = new System.Drawing.Size(515, 28);
+            this.topPanel.Size = new System.Drawing.Size(515, 35);
             this.topPanel.TabIndex = 8;
             // 
             // yellowStripPanel
             // 
             this.yellowStripPanel.BackColor = System.Drawing.Color.Gold;
-            this.yellowStripPanel.Location = new System.Drawing.Point(0, 25);
+            this.yellowStripPanel.Location = new System.Drawing.Point(0, 30);
             this.yellowStripPanel.Margin = new System.Windows.Forms.Padding(2);
             this.yellowStripPanel.Name = "yellowStripPanel";
-            this.yellowStripPanel.Size = new System.Drawing.Size(600, 2);
+            this.yellowStripPanel.Size = new System.Drawing.Size(515, 7);
             this.yellowStripPanel.TabIndex = 9;
             // 
             // appNameLabel
@@ -86,14 +86,15 @@
             this.appNameLabel.AutoSize = true;
             this.appNameLabel.BackColor = System.Drawing.Color.Transparent;
             this.appNameLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.appNameLabel.Font = new System.Drawing.Font("Microsoft New Tai Lue", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.appNameLabel.Font = new System.Drawing.Font("Microsoft New Tai Lue", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.appNameLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
-            this.appNameLabel.Location = new System.Drawing.Point(0, 0);
+            this.appNameLabel.Location = new System.Drawing.Point(0, 3);
             this.appNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.appNameLabel.Name = "appNameLabel";
-            this.appNameLabel.Size = new System.Drawing.Size(320, 27);
+            this.appNameLabel.Size = new System.Drawing.Size(351, 29);
             this.appNameLabel.TabIndex = 11;
             this.appNameLabel.Text = "Open Protocol Bypass Controller";
+            this.appNameLabel.Click += new System.EventHandler(this.appNameLabel_Click);
             // 
             // closeMainFormButton
             // 
@@ -128,10 +129,10 @@
             // formLoaderPanel
             // 
             this.formLoaderPanel.BackColor = System.Drawing.Color.Silver;
-            this.formLoaderPanel.Location = new System.Drawing.Point(68, 32);
+            this.formLoaderPanel.Location = new System.Drawing.Point(64, 39);
             this.formLoaderPanel.Margin = new System.Windows.Forms.Padding(2);
             this.formLoaderPanel.Name = "formLoaderPanel";
-            this.formLoaderPanel.Size = new System.Drawing.Size(442, 357);
+            this.formLoaderPanel.Size = new System.Drawing.Size(446, 350);
             this.formLoaderPanel.TabIndex = 13;
             // 
             // versionLabel
@@ -157,10 +158,10 @@
             this.sidePanel.Controls.Add(this.homeButton);
             this.sidePanel.Controls.Add(this.versionLabel);
             this.sidePanel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.sidePanel.Location = new System.Drawing.Point(0, 28);
+            this.sidePanel.Location = new System.Drawing.Point(0, 35);
             this.sidePanel.Margin = new System.Windows.Forms.Padding(2);
             this.sidePanel.Name = "sidePanel";
-            this.sidePanel.Size = new System.Drawing.Size(64, 367);
+            this.sidePanel.Size = new System.Drawing.Size(60, 360);
             this.sidePanel.TabIndex = 12;
             // 
             // aboutButton
@@ -175,7 +176,7 @@
             this.aboutButton.Location = new System.Drawing.Point(0, 114);
             this.aboutButton.Margin = new System.Windows.Forms.Padding(2);
             this.aboutButton.Name = "aboutButton";
-            this.aboutButton.Size = new System.Drawing.Size(64, 31);
+            this.aboutButton.Size = new System.Drawing.Size(60, 31);
             this.aboutButton.TabIndex = 16;
             this.aboutButton.UseVisualStyleBackColor = true;
             this.aboutButton.Click += new System.EventHandler(this.AboutButton_Click);
@@ -192,7 +193,7 @@
             this.analysisButton.Location = new System.Drawing.Point(0, 72);
             this.analysisButton.Margin = new System.Windows.Forms.Padding(2);
             this.analysisButton.Name = "analysisButton";
-            this.analysisButton.Size = new System.Drawing.Size(64, 42);
+            this.analysisButton.Size = new System.Drawing.Size(60, 42);
             this.analysisButton.TabIndex = 15;
             this.analysisButton.UseVisualStyleBackColor = true;
             this.analysisButton.Click += new System.EventHandler(this.AnalysisButton_Click);
@@ -209,7 +210,7 @@
             this.settingsButton.Location = new System.Drawing.Point(0, 34);
             this.settingsButton.Margin = new System.Windows.Forms.Padding(2);
             this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(64, 38);
+            this.settingsButton.Size = new System.Drawing.Size(60, 38);
             this.settingsButton.TabIndex = 14;
             this.settingsButton.UseVisualStyleBackColor = true;
             this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
@@ -226,7 +227,7 @@
             this.homeButton.Location = new System.Drawing.Point(0, 0);
             this.homeButton.Margin = new System.Windows.Forms.Padding(2);
             this.homeButton.Name = "homeButton";
-            this.homeButton.Size = new System.Drawing.Size(64, 34);
+            this.homeButton.Size = new System.Drawing.Size(60, 34);
             this.homeButton.TabIndex = 13;
             this.homeButton.UseVisualStyleBackColor = true;
             this.homeButton.Click += new System.EventHandler(this.homeButton_Click);
