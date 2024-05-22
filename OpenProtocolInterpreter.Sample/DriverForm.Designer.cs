@@ -36,7 +36,7 @@
             this.yellowStripPanel = new System.Windows.Forms.Panel();
             this.appNameLabel = new System.Windows.Forms.Label();
             this.closeMainFormButton = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.minimizeMainFormButton = new System.Windows.Forms.Button();
             this.formLoaderPanel = new System.Windows.Forms.Panel();
             this.versionLabel = new System.Windows.Forms.Label();
             this.sidePanel = new System.Windows.Forms.Panel();
@@ -44,6 +44,7 @@
             this.analysisButton = new System.Windows.Forms.Button();
             this.settingsButton = new System.Windows.Forms.Button();
             this.homeButton = new System.Windows.Forms.Button();
+            this.keepAliveTimer = new System.Windows.Forms.Timer(this.components);
             this.topPanel.SuspendLayout();
             this.sidePanel.SuspendLayout();
             this.SuspendLayout();
@@ -64,7 +65,7 @@
             this.topPanel.Controls.Add(this.yellowStripPanel);
             this.topPanel.Controls.Add(this.appNameLabel);
             this.topPanel.Controls.Add(this.closeMainFormButton);
-            this.topPanel.Controls.Add(this.button3);
+            this.topPanel.Controls.Add(this.minimizeMainFormButton);
             this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.topPanel.Location = new System.Drawing.Point(0, 0);
             this.topPanel.Margin = new System.Windows.Forms.Padding(2);
@@ -111,20 +112,20 @@
             this.closeMainFormButton.UseVisualStyleBackColor = true;
             this.closeMainFormButton.Click += new System.EventHandler(this.closeMainFormButton_Click);
             // 
-            // button3
+            // minimizeMainFormButton
             // 
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
-            this.button3.Location = new System.Drawing.Point(459, -5);
-            this.button3.Margin = new System.Windows.Forms.Padding(2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(28, 33);
-            this.button3.TabIndex = 12;
-            this.button3.Text = "_";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.minimizeMainFormButton.FlatAppearance.BorderSize = 0;
+            this.minimizeMainFormButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.minimizeMainFormButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.minimizeMainFormButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
+            this.minimizeMainFormButton.Location = new System.Drawing.Point(459, -5);
+            this.minimizeMainFormButton.Margin = new System.Windows.Forms.Padding(2);
+            this.minimizeMainFormButton.Name = "minimizeMainFormButton";
+            this.minimizeMainFormButton.Size = new System.Drawing.Size(28, 33);
+            this.minimizeMainFormButton.TabIndex = 12;
+            this.minimizeMainFormButton.Text = "_";
+            this.minimizeMainFormButton.UseVisualStyleBackColor = true;
+            this.minimizeMainFormButton.Click += new System.EventHandler(this.minimizeMainForm_Click);
             // 
             // formLoaderPanel
             // 
@@ -232,6 +233,11 @@
             this.homeButton.UseVisualStyleBackColor = true;
             this.homeButton.Click += new System.EventHandler(this.homeButton_Click);
             // 
+            // keepAliveTimer
+            // 
+            this.keepAliveTimer.Interval = 1000;
+            this.keepAliveTimer.Tick += new System.EventHandler(this.KeepAliveTimer_Tick);
+            // 
             // DriverForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -263,7 +269,7 @@
         private System.Windows.Forms.Label appNameLabel;
         private System.Windows.Forms.Label versionLabel;
         private System.Windows.Forms.Panel sidePanel;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button minimizeMainFormButton;
         private System.Windows.Forms.Button homeButton;
         private System.Windows.Forms.Button settingsButton;
         private System.Windows.Forms.Button analysisButton;
@@ -271,6 +277,7 @@
         private System.Windows.Forms.Panel formLoaderPanel;
         public System.Windows.Forms.Timer checkBadgeTimer;
         public System.Windows.Forms.Timer hideCheckingFormTimer;
+        private System.Windows.Forms.Timer keepAliveTimer;
     }
 }
 

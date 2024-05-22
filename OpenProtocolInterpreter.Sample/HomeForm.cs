@@ -16,5 +16,10 @@ namespace OpenProtocolInterpreter.Sample
         {
             InitializeComponent();
         }
+
+        private void startOrStopButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

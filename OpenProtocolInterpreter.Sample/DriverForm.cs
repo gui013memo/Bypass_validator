@@ -18,13 +18,11 @@ namespace OpenProtocolInterpreter.Sample
 {
     public partial class DriverForm : Form
     {
-        private readonly Timer _keepAliveTimer;
         private OpenProtocolDriver driver;
 
         Logger logger = new Logger();
 
         string idLogsPath = "C:\\ProgramData\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
-        //string idLogsPath = "C:\\ProgramData\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
 
         private bool mouseDown;
         private Point lastLocation;
@@ -48,9 +46,6 @@ namespace OpenProtocolInterpreter.Sample
         public DriverForm()
         {
             InitializeComponent();
-            _keepAliveTimer = new Timer();
-            _keepAliveTimer.Tick += KeepAliveTimer_Tick;
-            _keepAliveTimer.Interval = 1000;
 
             checkingForm = new BadgeCheckingForm(this);
             homeForm = new HomeForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
@@ -66,8 +61,6 @@ namespace OpenProtocolInterpreter.Sample
             homeButton_Click(this.driver, EventArgs.Empty);
 
             callBypassForm.Show();
-
-
         }
 
         private void topPanel_MouseDown(object sender, MouseEventArgs e)
@@ -91,47 +84,29 @@ namespace OpenProtocolInterpreter.Sample
             mouseDown = false;
         }
 
-        private void BtnConnection_Click(object sender, EventArgs e)
+        public void StartInterface(object sender, EventArgs e)
         {
             //Added list of mids i want to use in my interpreter, every another will be desconsidered
             driver = new OpenProtocolDriver(new Type[]
             {
-
-                typeof(Mid0211),
                 typeof(Mid0002),
                 typeof(Mid0005),
                 typeof(Mid0004),
                 typeof(Mid0003),
 
-                typeof(ParameterSet.Mid0011),
-                typeof(ParameterSet.Mid0013),
-
-                typeof(Mid0035),
-                typeof(Mid0031),
-
-                typeof(Alarm.Mid0071),
-                typeof(Alarm.Mid0074),
-                typeof(Alarm.Mid0076),
-
-                typeof(Vin.Mid0052),
-
-                typeof(Mid0061),
-                typeof(Mid0065),
-
-                typeof(Time.Mid0081),
-
                 typeof(Mid9999)
-            }); ;
+            });
 
-            //var client = new Ethernet.SimpleTcpClient().Connect(ipTextBox.Text, int.Parse(portTextBox.Text));
-            //if (driver.BeginCommunication(client))
-            //{
-            //    _keepAliveTimer.Start();
-            //}
-            //else
-            //{
-            //    driver = null;
-            //}
+            var client = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
+
+            if (driver.BeginCommunication(client))
+            {
+                keepAliveTimer.Start();
+            }
+            else
+            {
+                driver = null;
+            }
         }
 
         private void KeepAliveTimer_Tick(object sender, EventArgs e)
@@ -210,7 +185,6 @@ namespace OpenProtocolInterpreter.Sample
 
 
         }
-
 
         public void BtnSendJob_Click(object sender, EventArgs e)
         {
@@ -432,7 +406,7 @@ namespace OpenProtocolInterpreter.Sample
             this.Close();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void minimizeMainForm_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
@@ -497,5 +471,6 @@ namespace OpenProtocolInterpreter.Sample
         {
 
         }
+
     }
 }

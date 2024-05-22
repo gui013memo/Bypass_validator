@@ -30,8 +30,8 @@
         {
             this.panel5 = new System.Windows.Forms.Panel();
             this.startOrStopButton = new System.Windows.Forms.Button();
-            this.changeModeLabel = new System.Windows.Forms.Label();
-            this.autoOrManualButton = new System.Windows.Forms.Button();
+            this.startModeLabel = new System.Windows.Forms.Label();
+            this.startModeButton = new System.Windows.Forms.Button();
             this.controlLabel = new System.Windows.Forms.Label();
             this.vsThreePanel = new System.Windows.Forms.Panel();
             this.vsThreeConnStateLabel = new System.Windows.Forms.Label();
@@ -67,8 +67,8 @@
             // 
             this.panel5.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panel5.Controls.Add(this.startOrStopButton);
-            this.panel5.Controls.Add(this.changeModeLabel);
-            this.panel5.Controls.Add(this.autoOrManualButton);
+            this.panel5.Controls.Add(this.startModeLabel);
+            this.panel5.Controls.Add(this.startModeButton);
             this.panel5.Controls.Add(this.controlLabel);
             this.panel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
             this.panel5.Location = new System.Drawing.Point(227, 181);
@@ -88,35 +88,36 @@
             this.startOrStopButton.TabIndex = 12;
             this.startOrStopButton.Text = "START";
             this.startOrStopButton.UseVisualStyleBackColor = false;
+            this.startOrStopButton.Click += new System.EventHandler(this.startOrStopButton_Click);
             // 
-            // changeModeLabel
+            // startModeLabel
             // 
-            this.changeModeLabel.AutoSize = true;
-            this.changeModeLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.changeModeLabel.Location = new System.Drawing.Point(44, 89);
-            this.changeModeLabel.Name = "changeModeLabel";
-            this.changeModeLabel.Size = new System.Drawing.Size(128, 21);
-            this.changeModeLabel.TabIndex = 11;
-            this.changeModeLabel.Text = "CHANGE MODE";
+            this.startModeLabel.AutoSize = true;
+            this.startModeLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startModeLabel.Location = new System.Drawing.Point(50, 89);
+            this.startModeLabel.Name = "startModeLabel";
+            this.startModeLabel.Size = new System.Drawing.Size(110, 21);
+            this.startModeLabel.TabIndex = 11;
+            this.startModeLabel.Text = "START MODE";
             // 
-            // autoOrManualButton
+            // startModeButton
             // 
-            this.autoOrManualButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(130)))), ((int)(((byte)(184)))));
-            this.autoOrManualButton.FlatAppearance.BorderSize = 0;
-            this.autoOrManualButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.autoOrManualButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
-            this.autoOrManualButton.Location = new System.Drawing.Point(17, 109);
-            this.autoOrManualButton.Name = "autoOrManualButton";
-            this.autoOrManualButton.Size = new System.Drawing.Size(179, 40);
-            this.autoOrManualButton.TabIndex = 4;
-            this.autoOrManualButton.Text = "MANUAL";
-            this.autoOrManualButton.UseVisualStyleBackColor = false;
+            this.startModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(130)))), ((int)(((byte)(184)))));
+            this.startModeButton.FlatAppearance.BorderSize = 0;
+            this.startModeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startModeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
+            this.startModeButton.Location = new System.Drawing.Point(17, 109);
+            this.startModeButton.Name = "startModeButton";
+            this.startModeButton.Size = new System.Drawing.Size(179, 40);
+            this.startModeButton.TabIndex = 4;
+            this.startModeButton.Text = "SET MANUAL";
+            this.startModeButton.UseVisualStyleBackColor = false;
             // 
             // controlLabel
             // 
             this.controlLabel.AutoSize = true;
             this.controlLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.controlLabel.Location = new System.Drawing.Point(68, 9);
+            this.controlLabel.Location = new System.Drawing.Point(63, 9);
             this.controlLabel.Name = "controlLabel";
             this.controlLabel.Size = new System.Drawing.Size(84, 21);
             this.controlLabel.TabIndex = 6;
@@ -427,32 +428,32 @@
 
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Button startOrStopButton;
-        private System.Windows.Forms.Label changeModeLabel;
-        private System.Windows.Forms.Button autoOrManualButton;
+        private System.Windows.Forms.Label startModeLabel;
+        private System.Windows.Forms.Button startModeButton;
         private System.Windows.Forms.Label controlLabel;
         private System.Windows.Forms.Panel vsThreePanel;
         private System.Windows.Forms.Label vsThreeConnStateLabel;
         private System.Windows.Forms.Label vsThreeToolLabel;
-        private System.Windows.Forms.TextBox vsThreePortTextBox;
         private System.Windows.Forms.Button vsThreeAutoOrManualButton;
-        private System.Windows.Forms.TextBox vsThreeIpTextBox;
         private System.Windows.Forms.Label vsThreeControllerIpLabel;
         private System.Windows.Forms.Label vsThreePortLabel;
         private System.Windows.Forms.Panel vsTwoPanel;
         private System.Windows.Forms.Label vsTwoConnStateLabel;
         private System.Windows.Forms.Label vsTwoToolLabel;
-        private System.Windows.Forms.TextBox vsTwoPortTextBox;
         private System.Windows.Forms.Button vsTwoAutoOrManualButton;
-        private System.Windows.Forms.TextBox vsTwoIpTextBox;
         private System.Windows.Forms.Label vsTwoControllerIpLabel;
         private System.Windows.Forms.Label vsTwoPortLabel;
         private System.Windows.Forms.Panel vsOnePanel;
         private System.Windows.Forms.Label vsOneConnStateLabel;
         private System.Windows.Forms.Label vsOneToolLabel;
-        private System.Windows.Forms.TextBox vsOnePortTextBox;
         private System.Windows.Forms.Button vsOneAutoOrManualButton;
-        private System.Windows.Forms.TextBox vsOneIpTextBox;
         private System.Windows.Forms.Label vsOneControllerIpLabel;
         private System.Windows.Forms.Label vsOnePortLabel;
+        public System.Windows.Forms.TextBox vsOneIpTextBox;
+        public System.Windows.Forms.TextBox vsOnePortTextBox;
+        public System.Windows.Forms.TextBox vsThreePortTextBox;
+        public System.Windows.Forms.TextBox vsThreeIpTextBox;
+        public System.Windows.Forms.TextBox vsTwoPortTextBox;
+        public System.Windows.Forms.TextBox vsTwoIpTextBox;
     }
 }
