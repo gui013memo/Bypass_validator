@@ -12,6 +12,10 @@ namespace OpenProtocolInterpreter.Sample
 {
     public partial class HomeForm : Form
     {
+        Color _red = Color.FromArgb(201, 44, 31);
+        Color _grey = Color.FromArgb(51, 61, 70);
+        Color _blue = Color.FromArgb(82, 130, 184); 
+
         DriverForm driverForm;
 
         bool vsOneTimerState = false;
@@ -25,15 +29,18 @@ namespace OpenProtocolInterpreter.Sample
             Three
         }
 
-        public enum vsLabelStatus
+        public enum vsStatus
         {
             None,
             Connecting,
             Connected,
             ConnFailed,
-            Disconnected,
             Warning
         }
+
+        public vsStatus vsOneState = vsStatus.None;
+        public vsStatus vsTwoState = vsStatus.None;
+        public vsStatus vsThreeState = vsStatus.None;
 
         public HomeForm(DriverForm driverForm)
         {
@@ -41,43 +48,50 @@ namespace OpenProtocolInterpreter.Sample
             InitializeComponent();
         }
 
-        public void updateConnStatusLabels(VirtualStations vs, vsLabelStatus status)
+        public void updateVsConnStatus(VirtualStations vs, vsStatus status)
         {
             switch (vs)
             {
                 case VirtualStations.One:
                     switch (status)
                     {
-                        case vsLabelStatus.None:
-                            vsOneConnStateLabel.ForeColor = Color.FromArgb(51, 61, 70);
+                        case vsStatus.None:
+                            vsOneState = vsStatus.None;
+                            vsOneConnStateLabel.ForeColor = _grey;
                             vsOneConnStateLabel.BackColor = Color.Transparent;
+                            vsOneTimer.Stop();
                             break;
-                        case vsLabelStatus.Connecting:
-                            vsOneConnectingTimer.Start();
+                        case vsStatus.Connecting:
+                            vsOneState = vsStatus.Connecting;
+                            vsOneTimer.Start();
                             break;
-                        case vsLabelStatus.ConnFailed:
+                        case vsStatus.ConnFailed:
+                            vsOneState = vsStatus.ConnFailed;
+                            vsOneConnStateLabel.ForeColor = Color.Transparent;
+                            vsOneConnStateLabel.BackColor = _red;
+                            vsOneTimer.Stop();
                             break;
-                        case vsLabelStatus.Connected:
-                            vsOneConnectingTimer.Stop();
+                        case vsStatus.Connected:
+                            vsOneState = vsStatus.Connected;
+                            vsOneTimer.Stop();
                             vsOneConnStateLabel.ForeColor = Color.Transparent;
                             vsOneConnStateLabel.BackColor = Color.Green;
                             break;
-                        case vsLabelStatus.Disconnected:
-                            break;
-                        case vsLabelStatus.Warning:
-
+                        case vsStatus.Warning:
+                            vsOneState = vsStatus.Warning;
+                            vsOneTimer.Start();
                             break;
                     }
                     break;
                 case VirtualStations.Two:
                     switch (status)
                     {
-                        case vsLabelStatus.None:
+                        case vsStatus.None:
                             vsOneConnStateLabel.ForeColor = Color.FromArgb(51, 61, 70);
                             vsOneConnStateLabel.BackColor = Color.Transparent;
                             break;
-                        case vsLabelStatus.Connecting:
-                            vsTwoConnectingTimer.Start();
+                        case vsStatus.Connecting:
+                            vsTwoTimer.Start();
                             break;
                     }
                     break;
@@ -94,30 +108,52 @@ namespace OpenProtocolInterpreter.Sample
             driverForm.startInterfaceButton_Click(this, EventArgs.Empty);
         }
 
-        private void vsOneConnectingTimer_Tick(object sender, EventArgs e)
+        private void vsOneTimer_Tick(object sender, EventArgs e)
         {
-            if (!vsOneTimerState)
+
+            switch (vsOneState)
             {
-                vsOneConnStateLabel.ForeColor = Color.Transparent;
-                vsOneConnStateLabel.BackColor = Color.FromArgb(82, 130, 184);
-                this.Update();
-                vsOneTimerState = true;
+                case vsStatus.Connecting:
+                    if (!vsOneTimerState)
+                    {
+                        vsOneConnStateLabel.ForeColor = Color.Transparent;
+                        vsOneConnStateLabel.BackColor = _blue;
+                        this.Update();
+                        vsOneTimerState = true;
+                    }
+                    else
+                    {
+                        vsOneConnStateLabel.ForeColor = _grey;
+                        vsOneConnStateLabel.BackColor = Color.Transparent;
+                        this.Update();
+                        vsOneTimerState = false;
+                    }
+                    break;
+                case vsStatus.Warning:
+                    if (!vsOneTimerState)
+                    {
+                        vsOneConnStateLabel.ForeColor = Color.Transparent;
+                        vsOneConnStateLabel.BackColor = Color.Yellow;
+                        this.Update();
+                        vsOneTimerState = true;
+                    }
+                    else
+                    {
+                        vsOneConnStateLabel.ForeColor = _grey;
+                        vsOneConnStateLabel.BackColor = Color.Transparent;
+                        this.Update();
+                        vsOneTimerState = false;
+                    }
+                    break;
             }
-            else
-            {
-                updateConnStatusLabels(VirtualStations.One, vsLabelStatus.None);
-                this.Update();
-                vsOneTimerState = false;
-            }
+        }
+
+        private void vsTwoTimer_Tick(object sender, EventArgs e)
+        {
 
         }
 
-        private void vsTwoConnectingTimer_Tick(object sender, EventArgs e)
-        {
-
-        }
-
-        private void vsThreeConnectingTimer_Tick(object sender, EventArgs e)
+        private void vsThreeTimer_Tick(object sender, EventArgs e)
         {
 
         }

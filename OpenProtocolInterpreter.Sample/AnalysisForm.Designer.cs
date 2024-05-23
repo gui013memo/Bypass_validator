@@ -36,7 +36,6 @@
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.ipAndPortVS1Label = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -49,7 +48,8 @@
             this.vs3Label = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.errorsTextBox = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -98,7 +98,7 @@
             this.opHistoryVS1Label.Font = new System.Drawing.Font("Microsoft Tai Le", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.opHistoryVS1Label.Location = new System.Drawing.Point(59, 43);
             this.opHistoryVS1Label.Name = "opHistoryVS1Label";
-            this.opHistoryVS1Label.Size = new System.Drawing.Size(63, 15);
+            this.opHistoryVS1Label.Size = new System.Drawing.Size(79, 19);
             this.opHistoryVS1Label.TabIndex = 15;
             this.opHistoryVS1Label.Text = "OP History";
             this.opHistoryVS1Label.Click += new System.EventHandler(this.label3_Click);
@@ -128,24 +128,13 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Controls.Add(this.label9);
+            this.panel2.Controls.Add(this.errorsTextBox);
+            this.panel2.Controls.Add(this.label6);
             this.panel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
             this.panel2.Location = new System.Drawing.Point(225, 181);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(209, 163);
             this.panel2.TabIndex = 22;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.Silver;
-            this.label9.Location = new System.Drawing.Point(53, 58);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(108, 21);
-            this.label9.TabIndex = 19;
-            this.label9.Text = "R = Received";
             // 
             // panel3
             // 
@@ -281,16 +270,28 @@
             this.label8.TabIndex = 3;
             this.label8.Text = "172.16.110.21:4545";
             // 
-            // label2
+            // label6
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Silver;
-            this.label2.Location = new System.Drawing.Point(75, 79);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 21);
-            this.label2.TabIndex = 20;
-            this.label2.Text = "S = Sent";
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.label6.Location = new System.Drawing.Point(26, 6);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(161, 21);
+            this.label6.TabIndex = 16;
+            this.label6.Text = "Errors and warnings";
+            // 
+            // errorsTextBox
+            // 
+            this.errorsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errorsTextBox.Location = new System.Drawing.Point(4, 30);
+            this.errorsTextBox.Multiline = true;
+            this.errorsTextBox.Name = "errorsTextBox";
+            this.errorsTextBox.ReadOnly = true;
+            this.errorsTextBox.Size = new System.Drawing.Size(202, 130);
+            this.errorsTextBox.TabIndex = 16;
+            this.errorsTextBox.Text = "VS1 18:01:22 S MID 0212: Command refused by controller (Client already connected)" +
+    "\r\n";
             // 
             // AnalysisForm
             // 
@@ -326,7 +327,6 @@
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label ipAndPortVS1Label;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
@@ -339,6 +339,7 @@
         private System.Windows.Forms.Label vs3Label;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label6;
+        public System.Windows.Forms.TextBox errorsTextBox;
     }
 }

@@ -189,13 +189,13 @@ namespace OpenProtocolInterpreter.Sample.Driver
             {
                 msg = "Client is already connected";
                 Console.WriteLine(msg);
-                startCommErrorMessage = msg;
+                startCommErrorMessage = msg + "\r\nError code: " + Error.ClientAlreadyConnected.ToString();
             }
             else if (mid.ErrorCode == Error.MidRevisionUnsupported)
             {
                 msg = "MidRevisionUnsupported";
                 Console.WriteLine(msg);
-                startCommErrorMessage = msg;
+                startCommErrorMessage = msg + "\r\nError code: " + Error.MidRevisionUnsupported.ToString();
             }
                 
 

@@ -50,8 +50,6 @@ namespace OpenProtocolInterpreter.Sample
 
         SimpleTcpClient vsOneClient;
 
-        private Thread vsOnetcpThread;
-
         public DriverForm()
         {
             InitializeComponent();
@@ -77,6 +75,7 @@ namespace OpenProtocolInterpreter.Sample
             this.topPanel.MouseMove += new MouseEventHandler(topPanel_MouseMove); this.appNameLabel.MouseMove += new MouseEventHandler(topPanel_MouseMove);
             this.topPanel.MouseUp += new MouseEventHandler(topPanel_MouseUp); this.appNameLabel.MouseUp += new MouseEventHandler(topPanel_MouseUp);
 
+            // MAKE THE GETTERS AND SETTERS TO CHANGE THIS ELEMENTS IN A FUNCTION, THE ELEMENTS MUST BE PRIVATE AND THE FUNCTION PUBLIC
             homeForm.vsOneConnStateLabel.ForeColor = Color.FromArgb(51, 61, 70);
             homeForm.vsOneConnStateLabel.BackColor = Color.Transparent;
             homeForm.vsTwoConnStateLabel.ForeColor = Color.FromArgb(51, 61, 70);
@@ -110,8 +109,9 @@ namespace OpenProtocolInterpreter.Sample
 
         private void connectToController(HomeForm.VirtualStations vs)//PUT THIS ON DOCUMENTATION
         {
-            vsOnetcpThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
-            vsOnetcpThread.Start();
+            Thread tcpThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
+            tcpThread.IsBackground = true;
+            tcpThread.Start();
         }
 
         private void WorkingThreadHandleTcpConnection(HomeForm.VirtualStations vs)//PUT THIS ON DOCUMENTATION
@@ -119,42 +119,56 @@ namespace OpenProtocolInterpreter.Sample
             switch (vs)
             {
                 case HomeForm.VirtualStations.One: //PUT THIS ON DOCUMENTATION
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        homeForm.updateConnStatusLabels(vs, HomeForm.vsLabelStatus.Connecting);
-                    });
-                    try
-                    {
-                        vsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.ToString());
-                        homeForm.updateConnStatusLabels(vs, HomeForm.vsLabelStatus.ConnFailed);
-                    }
-                    if (vsOneDriver.BeginCommunication(vsOneClient))
-                    {
-                        this.Invoke((MethodInvoker)delegate
-                        {
-                            vsOneKeepAliveTimer.Start();
-                            homeForm.updateConnStatusLabels(vs, HomeForm.vsLabelStatus.Connected);
-                        });
-                    }
-                    else
-                    {
-                        //vsOneDriver.startCommErrorMessage
 
-                    }
+                    this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                    {
+                        homeForm.updateVsConnStatus(vs, HomeForm.vsStatus.Connecting);
+                        bool tcpConnDone = false;
+                        try
+                        {
+                            vsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
+                            tcpConnDone = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                            analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " TCP conn failed at VS1 \r\n";
+                            homeForm.updateVsConnStatus(vs, HomeForm.vsStatus.ConnFailed);
+                        }
+
+                        if (tcpConnDone && vsOneDriver.BeginCommunication(vsOneClient))
+                        {
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                vsOneKeepAliveTimer.Start();
+                                homeForm.updateVsConnStatus(vs, HomeForm.vsStatus.Connected);
+                            });
+                        }
+                        else if (tcpConnDone)
+                        {
+                            if (vsOneDriver.startCommErrorMessage.Contains("Client is already connected"))
+                            {
+                                analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " Client is already connected\r\n";
+                            }
+                            else if (vsOneDriver.startCommErrorMessage.Contains("MidRevisionUnsupported"))
+                            {
+                                homeForm.updateVsConnStatus(vs, HomeForm.vsStatus.ConnFailed);
+                                analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " MidRevisionUnsupported\r\n";
+                            }
+                        }
+                    });
                     break;
+
                 case HomeForm.VirtualStations.Two:
                     break;
+
                 case HomeForm.VirtualStations.Three:
                     break;
             }
         }
 
         public void StartInterface(object sender, EventArgs e)
-        {
+        {// Make the handle to start manual or automatic mode @@@
 
             //var vsTwoClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsTwoIpTextBox.Text, int.Parse(homeForm.vsTwoPortTextBox.Text));
             //var vsThreeClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsThreeIpTextBox.Text, int.Parse(homeForm.vsThreePortTextBox.Text));
@@ -204,7 +218,7 @@ namespace OpenProtocolInterpreter.Sample
                 else
                 {
                     Console.WriteLine($"Keep Alive Not Received");
-                    homeForm.updateConnStatusLabels(HomeForm.VirtualStations.One, HomeForm.vsLabelStatus.Disconnected);
+                    homeForm.updateVsConnStatus(HomeForm.VirtualStations.One, HomeForm.vsStatus.ConnFailed);
                     connectToController(HomeForm.VirtualStations.One);
                 }
 

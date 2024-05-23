@@ -58,9 +58,9 @@
             this.vsOneIpTextBox = new System.Windows.Forms.TextBox();
             this.vsOneControllerIpLabel = new System.Windows.Forms.Label();
             this.vsOnePortLabel = new System.Windows.Forms.Label();
-            this.vsOneConnectingTimer = new System.Windows.Forms.Timer(this.components);
-            this.vsTwoConnectingTimer = new System.Windows.Forms.Timer(this.components);
-            this.vsThreeConnectingTimer = new System.Windows.Forms.Timer(this.components);
+            this.vsOneTimer = new System.Windows.Forms.Timer(this.components);
+            this.vsTwoTimer = new System.Windows.Forms.Timer(this.components);
+            this.vsThreeTimer = new System.Windows.Forms.Timer(this.components);
             this.panel5.SuspendLayout();
             this.vsThreePanel.SuspendLayout();
             this.vsTwoPanel.SuspendLayout();
@@ -239,9 +239,9 @@
             // vsTwoConnStateLabel
             // 
             this.vsTwoConnStateLabel.AutoSize = true;
-            this.vsTwoConnStateLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(130)))), ((int)(((byte)(184)))));
+            this.vsTwoConnStateLabel.BackColor = System.Drawing.Color.Transparent;
             this.vsTwoConnStateLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vsTwoConnStateLabel.ForeColor = System.Drawing.Color.Transparent;
+            this.vsTwoConnStateLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
             this.vsTwoConnStateLabel.Location = new System.Drawing.Point(0, 0);
             this.vsTwoConnStateLabel.Name = "vsTwoConnStateLabel";
             this.vsTwoConnStateLabel.Size = new System.Drawing.Size(39, 21);
@@ -404,20 +404,20 @@
             this.vsOnePortLabel.TabIndex = 6;
             this.vsOnePortLabel.Text = "Port";
             // 
-            // vsOneConnectingTimer
+            // vsOneTimer
             // 
-            this.vsOneConnectingTimer.Interval = 150;
-            this.vsOneConnectingTimer.Tick += new System.EventHandler(this.vsOneConnectingTimer_Tick);
+            this.vsOneTimer.Interval = 150;
+            this.vsOneTimer.Tick += new System.EventHandler(this.vsOneTimer_Tick);
             // 
-            // vsTwoConnectingTimer
+            // vsTwoTimer
             // 
-            this.vsTwoConnectingTimer.Interval = 150;
-            this.vsTwoConnectingTimer.Tick += new System.EventHandler(this.vsTwoConnectingTimer_Tick);
+            this.vsTwoTimer.Interval = 150;
+            this.vsTwoTimer.Tick += new System.EventHandler(this.vsTwoTimer_Tick);
             // 
-            // vsThreeConnectingTimer
+            // vsThreeTimer
             // 
-            this.vsThreeConnectingTimer.Interval = 150;
-            this.vsThreeConnectingTimer.Tick += new System.EventHandler(this.vsThreeConnectingTimer_Tick);
+            this.vsThreeTimer.Interval = 150;
+            this.vsThreeTimer.Tick += new System.EventHandler(this.vsThreeTimer_Tick);
             // 
             // HomeForm
             // 
@@ -474,8 +474,8 @@
         public System.Windows.Forms.Button vsOneAutoOrManualButton;
         public System.Windows.Forms.Label vsOneControllerIpLabel;
         public System.Windows.Forms.Label vsOnePortLabel;
-        private System.Windows.Forms.Timer vsOneConnectingTimer;
-        private System.Windows.Forms.Timer vsTwoConnectingTimer;
-        private System.Windows.Forms.Timer vsThreeConnectingTimer;
+        private System.Windows.Forms.Timer vsOneTimer;
+        private System.Windows.Forms.Timer vsTwoTimer;
+        private System.Windows.Forms.Timer vsThreeTimer;
     }
 }
