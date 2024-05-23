@@ -38,7 +38,7 @@ namespace OpenProtocolInterpreter.Sample
 
         private void startModeButton_Click(object sender, EventArgs e)
         {
-
+            driverForm.startInterfaceButton_Click(this, EventArgs.Empty);   
         }
     }
 }

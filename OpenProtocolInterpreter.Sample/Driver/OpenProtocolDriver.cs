@@ -11,7 +11,7 @@ namespace OpenProtocolInterpreter.Sample.Driver
     public class OpenProtocolDriver
     {
         private readonly MidInterpreter _midInterpreter;
-        private SimpleTcpClient simpleTcpClient;
+        public SimpleTcpClient simpleTcpClient;
         public Stopwatch KeepAlive { get; set; }
         public Dictionary<Type, ReceivedCommandActionDelegate> OnReceivedMID { get; private set; }
 

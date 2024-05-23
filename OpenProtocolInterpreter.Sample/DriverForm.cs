@@ -6,12 +6,15 @@ using OpenProtocolInterpreter.Sample.Driver;
 using OpenProtocolInterpreter.Sample.Driver.Commands;
 using OpenProtocolInterpreter.Sample.Driver.Events;
 using OpenProtocolInterpreter.Sample.Driver.Helpers;
+using OpenProtocolInterpreter.Sample.Ethernet;
 using OpenProtocolInterpreter.Tightening;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace OpenProtocolInterpreter.Sample
@@ -45,10 +48,24 @@ namespace OpenProtocolInterpreter.Sample
         CallBypassForm callBypassForm;
         BadgeCheckingForm checkingForm;
 
+        SimpleTcpClient vsOneClient;
+
+        private Thread vsOnetcpThread;
+
+        enum VirtualStations{
+            One,
+            Two,
+            Three
+        }
+
         public DriverForm()
         {
             InitializeComponent();
             DriverFormInit();
+
+            vsOneDriver = new OpenProtocolDriver();
+            vsTwoDriver = new OpenProtocolDriver();
+            vsThreeDriver = new OpenProtocolDriver();
 
             callBypassForm.Show();
         }
@@ -97,83 +114,75 @@ namespace OpenProtocolInterpreter.Sample
             mouseDown = false;
         }
 
+        private void connectToController(VirtualStations vs)//PUT THIS ON DOCUMENTATION
+        {
+            vsOnetcpThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
+            vsOnetcpThread.Start();
+        }
+
+        private void WorkingThreadHandleTcpConnection(VirtualStations vs)//PUT THIS ON DOCUMENTATION
+        {
+            switch (vs)
+            {
+                case VirtualStations.One: //PUT THIS ON DOCUMENTATION
+
+                    vsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
+
+                    if (vsOneDriver.BeginCommunication(vsOneClient))
+                    {
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            vsOneKeepAliveTimer.Start();
+                            homeForm.vsOneConnStateLabel.ForeColor = Color.White; // <--- print out as a DRY example (create a function enum to change label status)
+                            homeForm.vsOneConnStateLabel.BackColor = Color.Green;
+                        });
+                    }
+                    else
+                    {
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            homeForm.vsOneConnStateLabel.ForeColor = Color.White;
+                            homeForm.vsOneConnStateLabel.BackColor = Color.Red;
+                            vsOneDriver = null;
+                        });
+                    }
+                    break;
+            }
+        }
+
         public void StartInterface(object sender, EventArgs e)
         {
-            //Added list of mids i want to use in my interpreter, every another will be desconsidered
-            vsOneDriver = new OpenProtocolDriver(new Type[]
-            {
-                typeof(Mid0002),
-                typeof(Mid0005),
-                typeof(Mid0004),
-                typeof(Mid0003),
 
-                typeof(Mid9999)
-            });
+            //var vsTwoClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsTwoIpTextBox.Text, int.Parse(homeForm.vsTwoPortTextBox.Text));
+            //var vsThreeClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsThreeIpTextBox.Text, int.Parse(homeForm.vsThreePortTextBox.Text));
 
-            vsTwoDriver = new OpenProtocolDriver(new Type[]
-            {
-                typeof(Mid0002),
-                typeof(Mid0005),
-                typeof(Mid0004),
-                typeof(Mid0003),
+            connectToController(VirtualStations.One);
 
-                typeof(Mid9999)
-            });
+            //if (vsTwoDriver.BeginCommunication(vsTwoClient))
+            //{
+            //    vsTwoKeepAliveTimer.Start();
+            //    homeForm.vsTwoConnStateLabel.ForeColor = Color.White;
+            //    homeForm.vsTwoConnStateLabel.BackColor = Color.Green;
+            //}
+            //else
+            //{
+            //    homeForm.vsTwoConnStateLabel.ForeColor = Color.White;
+            //    homeForm.vsTwoConnStateLabel.BackColor = Color.Red;
+            //    vsTwoDriver = null;
+            //}
 
-            vsThreeDriver = new OpenProtocolDriver(new Type[]
-            {
-                typeof(Mid0002),
-                typeof(Mid0005),
-                typeof(Mid0004),
-                typeof(Mid0003),
-
-                typeof(Mid9999)
-            });
-
-
-            var vsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
-            var vsTwoClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsTwoIpTextBox.Text, int.Parse(homeForm.vsTwoPortTextBox.Text));
-            var vsThreeClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsThreeIpTextBox.Text, int.Parse(homeForm.vsThreePortTextBox.Text));
-
-            if (vsOneDriver.BeginCommunication(vsOneClient))
-            {
-                vsOneKeepAliveTimer.Start();
-                homeForm.vsOneConnStateLabel.ForeColor = Color.White; // <--- print out as a DRY example (create a function enum to change label status)
-                homeForm.vsOneConnStateLabel.BackColor = Color.Green;
-            }
-            else
-            {
-                homeForm.vsOneConnStateLabel.ForeColor = Color.White;
-                homeForm.vsOneConnStateLabel.BackColor = Color.Red;
-                vsOneDriver = null;
-            }
-
-
-            if (vsTwoDriver.BeginCommunication(vsTwoClient))
-            {
-                vsTwoKeepAliveTimer.Start();
-                homeForm.vsTwoConnStateLabel.ForeColor = Color.White;
-                homeForm.vsTwoConnStateLabel.BackColor = Color.Green;
-            }
-            else
-            {
-                homeForm.vsTwoConnStateLabel.ForeColor = Color.White;
-                homeForm.vsTwoConnStateLabel.BackColor = Color.Red;
-                vsTwoDriver = null;
-            }
-
-            if (vsThreeDriver.BeginCommunication(vsThreeClient))
-            {
-                vsThreeKeepAliveTimer.Start();
-                homeForm.vsThreeConnStateLabel.ForeColor = Color.White;
-                homeForm.vsThreeConnStateLabel.BackColor = Color.Green;
-            }
-            else
-            {
-                homeForm.vsThreeConnStateLabel.ForeColor = Color.White;
-                homeForm.vsThreeConnStateLabel.BackColor = Color.Red;
-                vsThreeDriver = null;
-            }
+            //if (vsThreeDriver.BeginCommunication(vsThreeClient))
+            //{
+            //    vsThreeKeepAliveTimer.Start();
+            //    homeForm.vsThreeConnStateLabel.ForeColor = Color.White;
+            //    homeForm.vsThreeConnStateLabel.BackColor = Color.Green;
+            //}
+            //else
+            //{
+            //    homeForm.vsThreeConnStateLabel.ForeColor = Color.White;
+            //    homeForm.vsThreeConnStateLabel.BackColor = Color.Red;
+            //    vsThreeDriver = null;
+            //}
 
 
         }
@@ -184,12 +193,16 @@ namespace OpenProtocolInterpreter.Sample
             {
                 Console.WriteLine($"Sending Keep Alive...");
                 var pack = vsOneDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(10));
+
                 if (pack != null && pack.Header.Mid == Mid9999.MID)
                 {
                     Console.WriteLine($"Keep Alive Received");
                 }
                 else
+                {
                     Console.WriteLine($"Keep Alive Not Received");
+                }
+                    
             }
         }
 
@@ -224,7 +237,7 @@ namespace OpenProtocolInterpreter.Sample
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void startInterfaceButton_Click(object sender, EventArgs e)
+        public void startInterfaceButton_Click(object sender, EventArgs e)
         {
             var pack = vsOneDriver.SendAndWaitForResponse(new Mid0210().Pack(), TimeSpan.FromSeconds(5));
 
