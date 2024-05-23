@@ -17,6 +17,8 @@ namespace OpenProtocolInterpreter.Sample.Driver
 
         public bool Connected { get; set; }
 
+        public string startCommErrorMessage = string.Empty;
+
         public delegate void ReceivedCommandActionDelegate(MIDIncome e);
 
         /// <summary>
@@ -180,11 +182,24 @@ namespace OpenProtocolInterpreter.Sample.Driver
 
         protected virtual void OnCommunicationStartError(Mid0004 mid)
         {
+            string msg;
+
             Connected = false;
             if (mid.ErrorCode == Error.ClientAlreadyConnected)
-                Console.WriteLine("Client is already connected!!");
+            {
+                msg = "Client is already connected";
+                Console.WriteLine(msg);
+                startCommErrorMessage = msg;
+            }
             else if (mid.ErrorCode == Error.MidRevisionUnsupported)
-                Console.WriteLine(Error.MidRevisionUnsupported.ToString());
+            {
+                msg = "MidRevisionUnsupported";
+                Console.WriteLine(msg);
+                startCommErrorMessage = msg;
+            }
+                
+
+               
         }
 
         private void KeepConnectionAlive()

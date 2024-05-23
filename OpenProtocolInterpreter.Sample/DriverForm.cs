@@ -52,12 +52,6 @@ namespace OpenProtocolInterpreter.Sample
 
         private Thread vsOnetcpThread;
 
-        enum VirtualStations{
-            One,
-            Two,
-            Three
-        }
-
         public DriverForm()
         {
             InitializeComponent();
@@ -114,38 +108,47 @@ namespace OpenProtocolInterpreter.Sample
             mouseDown = false;
         }
 
-        private void connectToController(VirtualStations vs)//PUT THIS ON DOCUMENTATION
+        private void connectToController(HomeForm.VirtualStations vs)//PUT THIS ON DOCUMENTATION
         {
             vsOnetcpThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
             vsOnetcpThread.Start();
         }
 
-        private void WorkingThreadHandleTcpConnection(VirtualStations vs)//PUT THIS ON DOCUMENTATION
+        private void WorkingThreadHandleTcpConnection(HomeForm.VirtualStations vs)//PUT THIS ON DOCUMENTATION
         {
             switch (vs)
             {
-                case VirtualStations.One: //PUT THIS ON DOCUMENTATION
-
-                    vsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
-
+                case HomeForm.VirtualStations.One: //PUT THIS ON DOCUMENTATION
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        homeForm.updateConnStatusLabels(vs, HomeForm.vsLabelStatus.Connecting);
+                    });
+                    try
+                    {
+                        vsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        homeForm.updateConnStatusLabels(vs, HomeForm.vsLabelStatus.ConnFailed);
+                    }
                     if (vsOneDriver.BeginCommunication(vsOneClient))
                     {
                         this.Invoke((MethodInvoker)delegate
                         {
                             vsOneKeepAliveTimer.Start();
-                            homeForm.vsOneConnStateLabel.ForeColor = Color.White; // <--- print out as a DRY example (create a function enum to change label status)
-                            homeForm.vsOneConnStateLabel.BackColor = Color.Green;
+                            homeForm.updateConnStatusLabels(vs, HomeForm.vsLabelStatus.Connected);
                         });
                     }
                     else
                     {
-                        this.Invoke((MethodInvoker)delegate
-                        {
-                            homeForm.vsOneConnStateLabel.ForeColor = Color.White;
-                            homeForm.vsOneConnStateLabel.BackColor = Color.Red;
-                            vsOneDriver = null;
-                        });
+                        //vsOneDriver.startCommErrorMessage
+
                     }
+                    break;
+                case HomeForm.VirtualStations.Two:
+                    break;
+                case HomeForm.VirtualStations.Three:
                     break;
             }
         }
@@ -156,7 +159,7 @@ namespace OpenProtocolInterpreter.Sample
             //var vsTwoClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsTwoIpTextBox.Text, int.Parse(homeForm.vsTwoPortTextBox.Text));
             //var vsThreeClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsThreeIpTextBox.Text, int.Parse(homeForm.vsThreePortTextBox.Text));
 
-            connectToController(VirtualStations.One);
+            connectToController(HomeForm.VirtualStations.One);
 
             //if (vsTwoDriver.BeginCommunication(vsTwoClient))
             //{
@@ -201,8 +204,10 @@ namespace OpenProtocolInterpreter.Sample
                 else
                 {
                     Console.WriteLine($"Keep Alive Not Received");
+                    homeForm.updateConnStatusLabels(HomeForm.VirtualStations.One, HomeForm.vsLabelStatus.Disconnected);
+                    connectToController(HomeForm.VirtualStations.One);
                 }
-                    
+
             }
         }
 

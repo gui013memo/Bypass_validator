@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel5 = new System.Windows.Forms.Panel();
             this.startOrStopButton = new System.Windows.Forms.Button();
             this.startModeLabel = new System.Windows.Forms.Label();
@@ -57,6 +58,9 @@
             this.vsOneIpTextBox = new System.Windows.Forms.TextBox();
             this.vsOneControllerIpLabel = new System.Windows.Forms.Label();
             this.vsOnePortLabel = new System.Windows.Forms.Label();
+            this.vsOneConnectingTimer = new System.Windows.Forms.Timer(this.components);
+            this.vsTwoConnectingTimer = new System.Windows.Forms.Timer(this.components);
+            this.vsThreeConnectingTimer = new System.Windows.Forms.Timer(this.components);
             this.panel5.SuspendLayout();
             this.vsThreePanel.SuspendLayout();
             this.vsTwoPanel.SuspendLayout();
@@ -400,6 +404,21 @@
             this.vsOnePortLabel.TabIndex = 6;
             this.vsOnePortLabel.Text = "Port";
             // 
+            // vsOneConnectingTimer
+            // 
+            this.vsOneConnectingTimer.Interval = 150;
+            this.vsOneConnectingTimer.Tick += new System.EventHandler(this.vsOneConnectingTimer_Tick);
+            // 
+            // vsTwoConnectingTimer
+            // 
+            this.vsTwoConnectingTimer.Interval = 150;
+            this.vsTwoConnectingTimer.Tick += new System.EventHandler(this.vsTwoConnectingTimer_Tick);
+            // 
+            // vsThreeConnectingTimer
+            // 
+            this.vsThreeConnectingTimer.Interval = 150;
+            this.vsThreeConnectingTimer.Tick += new System.EventHandler(this.vsThreeConnectingTimer_Tick);
+            // 
             // HomeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -455,5 +474,8 @@
         public System.Windows.Forms.Button vsOneAutoOrManualButton;
         public System.Windows.Forms.Label vsOneControllerIpLabel;
         public System.Windows.Forms.Label vsOnePortLabel;
+        private System.Windows.Forms.Timer vsOneConnectingTimer;
+        private System.Windows.Forms.Timer vsTwoConnectingTimer;
+        private System.Windows.Forms.Timer vsThreeConnectingTimer;
     }
 }
