@@ -45,6 +45,8 @@
             this.settingsButton = new System.Windows.Forms.Button();
             this.homeButton = new System.Windows.Forms.Button();
             this.vsOneKeepAliveTimer = new System.Windows.Forms.Timer(this.components);
+            this.vsTwoKeepAliveTimer = new System.Windows.Forms.Timer(this.components);
+            this.vsThreeKeepAliveTimer = new System.Windows.Forms.Timer(this.components);
             this.topPanel.SuspendLayout();
             this.sidePanel.SuspendLayout();
             this.SuspendLayout();
@@ -238,6 +240,16 @@
             this.vsOneKeepAliveTimer.Interval = 1000;
             this.vsOneKeepAliveTimer.Tick += new System.EventHandler(this.vsOneKeepAliveTimer_Tick);
             // 
+            // vsTwoKeepAliveTimer
+            // 
+            this.vsTwoKeepAliveTimer.Interval = 1000;
+            this.vsTwoKeepAliveTimer.Tick += new System.EventHandler(this.vsTwoKeepAliveTimer_Tick);
+            // 
+            // vsThreeKeepAliveTimer
+            // 
+            this.vsThreeKeepAliveTimer.Interval = 1000;
+            this.vsThreeKeepAliveTimer.Tick += new System.EventHandler(this.vsThreeKeepAliveTimer_Tick);
+            // 
             // DriverForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -278,6 +290,8 @@
         public System.Windows.Forms.Timer checkBadgeTimer;
         public System.Windows.Forms.Timer hideCheckingFormTimer;
         private System.Windows.Forms.Timer vsOneKeepAliveTimer;
+        private System.Windows.Forms.Timer vsTwoKeepAliveTimer;
+        private System.Windows.Forms.Timer vsThreeKeepAliveTimer;
     }
 }
 

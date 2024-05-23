@@ -426,35 +426,34 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Button startOrStopButton;
-        private System.Windows.Forms.Label startModeLabel;
-        private System.Windows.Forms.Button startModeButton;
-        private System.Windows.Forms.Label controlLabel;
-        private System.Windows.Forms.Panel vsThreePanel;
-        private System.Windows.Forms.Label vsThreeConnStateLabel;
-        private System.Windows.Forms.Label vsThreeToolLabel;
-        private System.Windows.Forms.Button vsThreeAutoOrManualButton;
-        private System.Windows.Forms.Label vsThreeControllerIpLabel;
-        private System.Windows.Forms.Label vsThreePortLabel;
-        private System.Windows.Forms.Panel vsTwoPanel;
-        private System.Windows.Forms.Label vsTwoConnStateLabel;
-        private System.Windows.Forms.Label vsTwoToolLabel;
-        private System.Windows.Forms.Button vsTwoAutoOrManualButton;
-        private System.Windows.Forms.Label vsTwoControllerIpLabel;
-        private System.Windows.Forms.Label vsTwoPortLabel;
-        private System.Windows.Forms.Panel vsOnePanel;
-        private System.Windows.Forms.Label vsOneConnStateLabel;
-        private System.Windows.Forms.Label vsOneToolLabel;
-        private System.Windows.Forms.Button vsOneAutoOrManualButton;
-        private System.Windows.Forms.Label vsOneControllerIpLabel;
-        private System.Windows.Forms.Label vsOnePortLabel;
         public System.Windows.Forms.TextBox vsOneIpTextBox;
         public System.Windows.Forms.TextBox vsOnePortTextBox;
         public System.Windows.Forms.TextBox vsThreePortTextBox;
         public System.Windows.Forms.TextBox vsThreeIpTextBox;
         public System.Windows.Forms.TextBox vsTwoPortTextBox;
         public System.Windows.Forms.TextBox vsTwoIpTextBox;
+        public System.Windows.Forms.Label vsOneConnStateLabel;
+        public System.Windows.Forms.Panel panel5;
+        public System.Windows.Forms.Button startOrStopButton;
+        public System.Windows.Forms.Label startModeLabel;
+        public System.Windows.Forms.Button startModeButton;
+        public System.Windows.Forms.Label controlLabel;
+        public System.Windows.Forms.Panel vsThreePanel;
+        public System.Windows.Forms.Label vsThreeConnStateLabel;
+        public System.Windows.Forms.Label vsThreeToolLabel;
+        public System.Windows.Forms.Button vsThreeAutoOrManualButton;
+        public System.Windows.Forms.Label vsThreeControllerIpLabel;
+        public System.Windows.Forms.Label vsThreePortLabel;
+        public System.Windows.Forms.Panel vsTwoPanel;
+        public System.Windows.Forms.Label vsTwoConnStateLabel;
+        public System.Windows.Forms.Label vsTwoToolLabel;
+        public System.Windows.Forms.Button vsTwoAutoOrManualButton;
+        public System.Windows.Forms.Label vsTwoControllerIpLabel;
+        public System.Windows.Forms.Label vsTwoPortLabel;
+        public System.Windows.Forms.Panel vsOnePanel;
+        public System.Windows.Forms.Label vsOneToolLabel;
+        public System.Windows.Forms.Button vsOneAutoOrManualButton;
+        public System.Windows.Forms.Label vsOneControllerIpLabel;
+        public System.Windows.Forms.Label vsOnePortLabel;
     }
 }

@@ -48,7 +48,13 @@ namespace OpenProtocolInterpreter.Sample
         public DriverForm()
         {
             InitializeComponent();
+            DriverFormInit();
 
+            callBypassForm.Show();
+        }
+
+        private void DriverFormInit()
+        {
             checkingForm = new BadgeCheckingForm(this);
             homeForm = new HomeForm(this) { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             settingsForm = new SettingsForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
@@ -60,9 +66,14 @@ namespace OpenProtocolInterpreter.Sample
             this.topPanel.MouseMove += new MouseEventHandler(topPanel_MouseMove); this.appNameLabel.MouseMove += new MouseEventHandler(topPanel_MouseMove);
             this.topPanel.MouseUp += new MouseEventHandler(topPanel_MouseUp); this.appNameLabel.MouseUp += new MouseEventHandler(topPanel_MouseUp);
 
-            homeButton_Click(this, EventArgs.Empty);
+            homeForm.vsOneConnStateLabel.ForeColor = Color.FromArgb(51, 61, 70);
+            homeForm.vsOneConnStateLabel.BackColor = Color.Transparent;
+            homeForm.vsTwoConnStateLabel.ForeColor = Color.FromArgb(51, 61, 70);
+            homeForm.vsTwoConnStateLabel.BackColor = Color.Transparent;
+            homeForm.vsThreeConnStateLabel.ForeColor = Color.FromArgb(51, 61, 70);
+            homeForm.vsThreeConnStateLabel.BackColor = Color.Transparent;
 
-            callBypassForm.Show();
+            homeButton_Click(this, EventArgs.Empty);
         }
 
         private void topPanel_MouseDown(object sender, MouseEventArgs e)
@@ -88,6 +99,12 @@ namespace OpenProtocolInterpreter.Sample
 
         public void StartInterface(object sender, EventArgs e)
         {
+            homeForm.vsOneConnStateLabel.ForeColor = Color.FromArgb(82, 130, 184);
+            homeForm.vsOneConnStateLabel.BackColor = Color.White;
+
+            homeForm.vsTwoConnStateLabel.ForeColor = Color.FromArgb(82, 130, 184);
+            homeForm.vsTwoConnStateLabel.BackColor = Color.White;
+
             //Added list of mids i want to use in my interpreter, every another will be desconsidered
             vsOneDriver = new OpenProtocolDriver(new Type[]
             {
@@ -95,20 +112,60 @@ namespace OpenProtocolInterpreter.Sample
                 typeof(Mid0005),
                 typeof(Mid0004),
                 typeof(Mid0003),
-                        
+
                 typeof(Mid9999)
             });
 
+            vsTwoDriver = new OpenProtocolDriver(new Type[]
+            {
+                typeof(Mid0002),
+                typeof(Mid0005),
+                typeof(Mid0004),
+                typeof(Mid0003),
+
+                typeof(Mid9999)
+            });
+
+            vsThreeDriver = new OpenProtocolDriver(new Type[]
+            {
+                typeof(Mid0002),
+                typeof(Mid0005),
+                typeof(Mid0004),
+                typeof(Mid0003),
+
+                typeof(Mid9999)
+            });
+
+
             var vsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
+            var vsTwoClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsThreeIpTextBox.Text, int.Parse(homeForm.vsThreePortTextBox.Text));
 
             if (vsOneDriver.BeginCommunication(vsOneClient))
             {
                 vsOneKeepAliveTimer.Start();
+                homeForm.vsOneConnStateLabel.ForeColor = Color.Green; // <--- print out as a DRY example (create a function enum to change label status)
+                homeForm.vsOneConnStateLabel.BackColor = Color.White;
             }
             else
             {
+                homeForm.vsOneConnStateLabel.ForeColor = Color.Green;
+                homeForm.vsOneConnStateLabel.BackColor = Color.White;
                 vsOneDriver = null;
             }
+
+
+            if (vsThreeDriver.BeginCommunication(vsTwoClient))
+            {
+                vsThreeKeepAliveTimer.Start();
+                homeForm.vsThreeConnStateLabel.ForeColor = Color.Green;
+                homeForm.vsThreeConnStateLabel.BackColor = Color.White;
+            }
+            else
+            {
+                vsThreeDriver = null;
+            }
+
+
         }
 
         private void vsOneKeepAliveTimer_Tick(object sender, EventArgs e)
@@ -474,5 +531,34 @@ namespace OpenProtocolInterpreter.Sample
 
         }
 
+        private void vsTwoKeepAliveTimer_Tick(object sender, EventArgs e)
+        {
+            if (vsTwoDriver.KeepAlive.ElapsedMilliseconds > 10000) //10 sec
+            {
+                Console.WriteLine($"Sending Keep Alive...");
+                var pack = vsTwoDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(10));
+                if (pack != null && pack.Header.Mid == Mid9999.MID)
+                {
+                    Console.WriteLine($"Keep Alive Received");
+                }
+                else
+                    Console.WriteLine($"Keep Alive Not Received");
+            }
+        }
+
+        private void vsThreeKeepAliveTimer_Tick(object sender, EventArgs e)
+        {
+            if (vsThreeDriver.KeepAlive.ElapsedMilliseconds > 10000) //10 sec
+            {
+                Console.WriteLine($"Sending Keep Alive...");
+                var pack = vsThreeDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(10));
+                if (pack != null && pack.Header.Mid == Mid9999.MID)
+                {
+                    Console.WriteLine($"Keep Alive Received");
+                }
+                else
+                    Console.WriteLine($"Keep Alive Not Received");
+            }
+        }
     }
 }
