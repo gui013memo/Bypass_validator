@@ -112,6 +112,7 @@
             this.startModeButton.TabIndex = 4;
             this.startModeButton.Text = "SET MANUAL";
             this.startModeButton.UseVisualStyleBackColor = false;
+            this.startModeButton.Click += new System.EventHandler(this.startModeButton_Click);
             // 
             // controlLabel
             // 

@@ -12,12 +12,20 @@ namespace OpenProtocolInterpreter.Sample
 {
     public partial class HomeForm : Form
     {
-        public HomeForm()
+        DriverForm driverForm;
+
+        public HomeForm(DriverForm driverForm)
         {
+            this.driverForm = driverForm;
             InitializeComponent();
         }
 
         private void startOrStopButton_Click(object sender, EventArgs e)
+        {
+            driverForm.StartInterface(this, EventArgs.Empty);
+        }
+
+        private void startModeButton_Click(object sender, EventArgs e)
         {
 
         }

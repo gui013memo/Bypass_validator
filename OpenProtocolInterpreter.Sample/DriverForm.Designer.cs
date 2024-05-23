@@ -44,7 +44,7 @@
             this.analysisButton = new System.Windows.Forms.Button();
             this.settingsButton = new System.Windows.Forms.Button();
             this.homeButton = new System.Windows.Forms.Button();
-            this.keepAliveTimer = new System.Windows.Forms.Timer(this.components);
+            this.vsOneKeepAliveTimer = new System.Windows.Forms.Timer(this.components);
             this.topPanel.SuspendLayout();
             this.sidePanel.SuspendLayout();
             this.SuspendLayout();
@@ -233,10 +233,10 @@
             this.homeButton.UseVisualStyleBackColor = true;
             this.homeButton.Click += new System.EventHandler(this.homeButton_Click);
             // 
-            // keepAliveTimer
+            // vsOneKeepAliveTimer
             // 
-            this.keepAliveTimer.Interval = 1000;
-            this.keepAliveTimer.Tick += new System.EventHandler(this.KeepAliveTimer_Tick);
+            this.vsOneKeepAliveTimer.Interval = 1000;
+            this.vsOneKeepAliveTimer.Tick += new System.EventHandler(this.vsOneKeepAliveTimer_Tick);
             // 
             // DriverForm
             // 
@@ -277,7 +277,7 @@
         private System.Windows.Forms.Panel formLoaderPanel;
         public System.Windows.Forms.Timer checkBadgeTimer;
         public System.Windows.Forms.Timer hideCheckingFormTimer;
-        private System.Windows.Forms.Timer keepAliveTimer;
+        private System.Windows.Forms.Timer vsOneKeepAliveTimer;
     }
 }
 

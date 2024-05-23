@@ -18,7 +18,9 @@ namespace OpenProtocolInterpreter.Sample
 {
     public partial class DriverForm : Form
     {
-        private OpenProtocolDriver driver;
+        private OpenProtocolDriver vsOneDriver;
+        private OpenProtocolDriver vsTwoDriver;
+        private OpenProtocolDriver vsThreeDriver;
 
         Logger logger = new Logger();
 
@@ -48,7 +50,7 @@ namespace OpenProtocolInterpreter.Sample
             InitializeComponent();
 
             checkingForm = new BadgeCheckingForm(this);
-            homeForm = new HomeForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            homeForm = new HomeForm(this) { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             settingsForm = new SettingsForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             analysisForm = new AnalysisForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             aboutForm = new AboutForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
@@ -58,7 +60,7 @@ namespace OpenProtocolInterpreter.Sample
             this.topPanel.MouseMove += new MouseEventHandler(topPanel_MouseMove); this.appNameLabel.MouseMove += new MouseEventHandler(topPanel_MouseMove);
             this.topPanel.MouseUp += new MouseEventHandler(topPanel_MouseUp); this.appNameLabel.MouseUp += new MouseEventHandler(topPanel_MouseUp);
 
-            homeButton_Click(this.driver, EventArgs.Empty);
+            homeButton_Click(this, EventArgs.Empty);
 
             callBypassForm.Show();
         }
@@ -87,34 +89,34 @@ namespace OpenProtocolInterpreter.Sample
         public void StartInterface(object sender, EventArgs e)
         {
             //Added list of mids i want to use in my interpreter, every another will be desconsidered
-            driver = new OpenProtocolDriver(new Type[]
+            vsOneDriver = new OpenProtocolDriver(new Type[]
             {
                 typeof(Mid0002),
                 typeof(Mid0005),
                 typeof(Mid0004),
                 typeof(Mid0003),
-
+                        
                 typeof(Mid9999)
             });
 
-            var client = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
+            var vsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
 
-            if (driver.BeginCommunication(client))
+            if (vsOneDriver.BeginCommunication(vsOneClient))
             {
-                keepAliveTimer.Start();
+                vsOneKeepAliveTimer.Start();
             }
             else
             {
-                driver = null;
+                vsOneDriver = null;
             }
         }
 
-        private void KeepAliveTimer_Tick(object sender, EventArgs e)
+        private void vsOneKeepAliveTimer_Tick(object sender, EventArgs e)
         {
-            if (driver.KeepAlive.ElapsedMilliseconds > 10000) //10 sec
+            if (vsOneDriver.KeepAlive.ElapsedMilliseconds > 10000) //10 sec
             {
                 Console.WriteLine($"Sending Keep Alive...");
-                var pack = driver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(10));
+                var pack = vsOneDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(10));
                 if (pack != null && pack.Header.Mid == Mid9999.MID)
                 {
                     Console.WriteLine($"Keep Alive Received");
@@ -132,7 +134,7 @@ namespace OpenProtocolInterpreter.Sample
         private void BtnJobInfoSubscribe_Click(object sender, EventArgs e)
         {
             Console.WriteLine($"Sending Job Info Subscribe...");
-            var pack = driver.SendAndWaitForResponse(new Mid0034().Pack(), TimeSpan.FromSeconds(10));
+            var pack = vsOneDriver.SendAndWaitForResponse(new Mid0034().Pack(), TimeSpan.FromSeconds(10));
 
             if (pack != null)
             {
@@ -147,7 +149,7 @@ namespace OpenProtocolInterpreter.Sample
                     Console.WriteLine($"Job Info Subscribe accepted!");
             }
 
-            driver.AddUpdateOnReceivedCommand(typeof(Mid0035), OnJobInfoReceived);
+            vsOneDriver.AddUpdateOnReceivedCommand(typeof(Mid0035), OnJobInfoReceived);
         }
 
         /// <summary>
@@ -157,7 +159,7 @@ namespace OpenProtocolInterpreter.Sample
         /// <param name="e"></param>
         private void startInterfaceButton_Click(object sender, EventArgs e)
         {
-            var pack = driver.SendAndWaitForResponse(new Mid0210().Pack(), TimeSpan.FromSeconds(5));
+            var pack = vsOneDriver.SendAndWaitForResponse(new Mid0210().Pack(), TimeSpan.FromSeconds(5));
 
 
             if (pack != null)
@@ -178,7 +180,7 @@ namespace OpenProtocolInterpreter.Sample
                     logger.Log("MID 0210 accepted");
 
                     //register command
-                    driver.AddUpdateOnReceivedCommand(typeof(Mid0211), OnTighteningReceived);
+                    vsOneDriver.AddUpdateOnReceivedCommand(typeof(Mid0211), OnTighteningReceived);
                 }
 
             }
@@ -188,12 +190,12 @@ namespace OpenProtocolInterpreter.Sample
 
         public void BtnSendJob_Click(object sender, EventArgs e)
         {
-            new SendJobCommand(driver).Execute(true);
+            new SendJobCommand(vsOneDriver).Execute(true);
         }
 
         public void SendJobCommandFunction(bool setReset)
         {
-            new SendJobCommand(driver).Execute(setReset);
+            new SendJobCommand(vsOneDriver).Execute(setReset);
         }
 
         /// <summary>
@@ -202,7 +204,7 @@ namespace OpenProtocolInterpreter.Sample
         /// <param name="e"></param>
         private void OnJobInfoReceived(MIDIncome e)
         {
-            driver.SendMessage(e.Mid.BuildAckPackage());
+            vsOneDriver.SendMessage(e.Mid.BuildAckPackage());
 
             var jobInfo = e.Mid as Mid0035;
             Console.WriteLine($@"JOB INFO RECEIVED (MID 0035): 
@@ -223,7 +225,7 @@ namespace OpenProtocolInterpreter.Sample
         {
             logger.Log("MID211 received");
 
-            driver.SendMessage(e.Mid.BuildAckPackage());
+            vsOneDriver.SendMessage(e.Mid.BuildAckPackage());
 
             var externallyMonitoredRelayStatus = e.Mid as Mid0211;
 
@@ -321,13 +323,13 @@ namespace OpenProtocolInterpreter.Sample
 
                     if (currentOperatorGroup == "Master_Admin" && !bypassAllowed)
                     {
-                        // new SendJobCommand(driver).Execute(true);
+                        // new SendJobCommand(vsOneDriver).Execute(true);
                         bypassAllowed = true;
                         checkingForm.shadeEffectTimer.Start();
                     }
                     else if (currentOperatorGroup == "Operator" && bypassAllowed)
                     {
-                        // new SendJobCommand(driver).Execute(false);
+                        // new SendJobCommand(vsOneDriver).Execute(false);
                         bypassAllowed = false;
                     }
 
@@ -340,7 +342,7 @@ namespace OpenProtocolInterpreter.Sample
                 {
                     if (bypassAllowed)
                     {
-                        new SendJobCommand(driver).Execute(false);
+                        new SendJobCommand(vsOneDriver).Execute(false);
                         bypassAllowed = false;
                     }
                     logger.Log("isSQSLogged = FALSE");
