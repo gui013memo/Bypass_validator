@@ -145,7 +145,7 @@
             this.vsThreeConnStateLabel.AutoSize = true;
             this.vsThreeConnStateLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(44)))), ((int)(((byte)(31)))));
             this.vsThreeConnStateLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vsThreeConnStateLabel.ForeColor = System.Drawing.Color.White;
+            this.vsThreeConnStateLabel.ForeColor = System.Drawing.Color.Transparent;
             this.vsThreeConnStateLabel.Location = new System.Drawing.Point(0, 0);
             this.vsThreeConnStateLabel.Name = "vsThreeConnStateLabel";
             this.vsThreeConnStateLabel.Size = new System.Drawing.Size(39, 21);
@@ -237,7 +237,7 @@
             this.vsTwoConnStateLabel.AutoSize = true;
             this.vsTwoConnStateLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(130)))), ((int)(((byte)(184)))));
             this.vsTwoConnStateLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vsTwoConnStateLabel.ForeColor = System.Drawing.Color.White;
+            this.vsTwoConnStateLabel.ForeColor = System.Drawing.Color.Transparent;
             this.vsTwoConnStateLabel.Location = new System.Drawing.Point(0, 0);
             this.vsTwoConnStateLabel.Name = "vsTwoConnStateLabel";
             this.vsTwoConnStateLabel.Size = new System.Drawing.Size(39, 21);
@@ -262,7 +262,7 @@
             this.vsTwoPortTextBox.Name = "vsTwoPortTextBox";
             this.vsTwoPortTextBox.Size = new System.Drawing.Size(149, 22);
             this.vsTwoPortTextBox.TabIndex = 10;
-            this.vsTwoPortTextBox.Text = "4545";
+            this.vsTwoPortTextBox.Text = "4548";
             this.vsTwoPortTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // vsTwoAutoOrManualButton
@@ -285,7 +285,7 @@
             this.vsTwoIpTextBox.Name = "vsTwoIpTextBox";
             this.vsTwoIpTextBox.Size = new System.Drawing.Size(149, 22);
             this.vsTwoIpTextBox.TabIndex = 2;
-            this.vsTwoIpTextBox.Text = "10.127.1.22";
+            this.vsTwoIpTextBox.Text = "172.16.110.21";
             this.vsTwoIpTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // vsTwoControllerIpLabel
@@ -329,7 +329,7 @@
             this.vsOneConnStateLabel.AutoSize = true;
             this.vsOneConnStateLabel.BackColor = System.Drawing.Color.Green;
             this.vsOneConnStateLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vsOneConnStateLabel.ForeColor = System.Drawing.Color.White;
+            this.vsOneConnStateLabel.ForeColor = System.Drawing.Color.Transparent;
             this.vsOneConnStateLabel.Location = new System.Drawing.Point(0, 0);
             this.vsOneConnStateLabel.Name = "vsOneConnStateLabel";
             this.vsOneConnStateLabel.Size = new System.Drawing.Size(39, 21);

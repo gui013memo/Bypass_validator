@@ -99,12 +99,6 @@ namespace OpenProtocolInterpreter.Sample
 
         public void StartInterface(object sender, EventArgs e)
         {
-            homeForm.vsOneConnStateLabel.ForeColor = Color.FromArgb(82, 130, 184);
-            homeForm.vsOneConnStateLabel.BackColor = Color.White;
-
-            homeForm.vsTwoConnStateLabel.ForeColor = Color.FromArgb(82, 130, 184);
-            homeForm.vsTwoConnStateLabel.BackColor = Color.White;
-
             //Added list of mids i want to use in my interpreter, every another will be desconsidered
             vsOneDriver = new OpenProtocolDriver(new Type[]
             {
@@ -138,30 +132,46 @@ namespace OpenProtocolInterpreter.Sample
 
 
             var vsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
-            var vsTwoClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsThreeIpTextBox.Text, int.Parse(homeForm.vsThreePortTextBox.Text));
+            var vsTwoClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsTwoIpTextBox.Text, int.Parse(homeForm.vsTwoPortTextBox.Text));
+            var vsThreeClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsThreeIpTextBox.Text, int.Parse(homeForm.vsThreePortTextBox.Text));
 
             if (vsOneDriver.BeginCommunication(vsOneClient))
             {
                 vsOneKeepAliveTimer.Start();
-                homeForm.vsOneConnStateLabel.ForeColor = Color.Green; // <--- print out as a DRY example (create a function enum to change label status)
-                homeForm.vsOneConnStateLabel.BackColor = Color.White;
+                homeForm.vsOneConnStateLabel.ForeColor = Color.White; // <--- print out as a DRY example (create a function enum to change label status)
+                homeForm.vsOneConnStateLabel.BackColor = Color.Green;
             }
             else
             {
-                homeForm.vsOneConnStateLabel.ForeColor = Color.Green;
-                homeForm.vsOneConnStateLabel.BackColor = Color.White;
+                homeForm.vsOneConnStateLabel.ForeColor = Color.White;
+                homeForm.vsOneConnStateLabel.BackColor = Color.Red;
                 vsOneDriver = null;
             }
 
 
-            if (vsThreeDriver.BeginCommunication(vsTwoClient))
+            if (vsTwoDriver.BeginCommunication(vsTwoClient))
             {
-                vsThreeKeepAliveTimer.Start();
-                homeForm.vsThreeConnStateLabel.ForeColor = Color.Green;
-                homeForm.vsThreeConnStateLabel.BackColor = Color.White;
+                vsTwoKeepAliveTimer.Start();
+                homeForm.vsTwoConnStateLabel.ForeColor = Color.White;
+                homeForm.vsTwoConnStateLabel.BackColor = Color.Green;
             }
             else
             {
+                homeForm.vsTwoConnStateLabel.ForeColor = Color.White;
+                homeForm.vsTwoConnStateLabel.BackColor = Color.Red;
+                vsTwoDriver = null;
+            }
+
+            if (vsThreeDriver.BeginCommunication(vsThreeClient))
+            {
+                vsThreeKeepAliveTimer.Start();
+                homeForm.vsThreeConnStateLabel.ForeColor = Color.White;
+                homeForm.vsThreeConnStateLabel.BackColor = Color.Green;
+            }
+            else
+            {
+                homeForm.vsThreeConnStateLabel.ForeColor = Color.White;
+                homeForm.vsThreeConnStateLabel.BackColor = Color.Red;
                 vsThreeDriver = null;
             }
 

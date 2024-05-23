@@ -22,6 +22,17 @@ namespace OpenProtocolInterpreter.Sample
 
         private void startOrStopButton_Click(object sender, EventArgs e)
         {
+            vsOneConnStateLabel.ForeColor = Color.FromArgb(82, 130, 184);
+            vsOneConnStateLabel.BackColor = Color.White;
+
+            vsTwoConnStateLabel.ForeColor = Color.FromArgb(82, 130, 184);
+            vsTwoConnStateLabel.BackColor = Color.White;
+
+            vsThreeConnStateLabel.ForeColor = Color.FromArgb(82, 130, 184);
+            vsThreeConnStateLabel.BackColor = Color.White;
+
+            this.Update();
+
             driverForm.StartInterface(this, EventArgs.Empty);
         }
 
