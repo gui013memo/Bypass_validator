@@ -179,6 +179,11 @@ namespace OpenProtocolInterpreter.Sample
                                     analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " MidRevisionUnsupported\r\n";
                                 });
                             }
+                            else if (vsOneDriver.startCommErrorMessage.Contains("TCP Conn done but reply from controller was NULL, probably by TIMEOUT"))
+                            {
+                                homeForm.updateVsConnStatus(vs, VsStatus.ConnFailed);
+                                analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " Reply from controller was NULL, probably by TIMEOUT on MID 0002 answer waiting\r\n";
+                            }
                         }
 
                     }
@@ -243,7 +248,7 @@ namespace OpenProtocolInterpreter.Sample
             driver.StopCommunication();
         }
 
-        private void vsOneKeepAliveTimer_Tick(object sender, EventArgs e)
+        private void vsOneKeepAliveTimer_Tick(object sender, EventArgs e) // I STOPPED HERE -> DISCON WATCH DOG 
         {
             if (vsOneDriver.KeepAlive.ElapsedMilliseconds > 10000) //10 sec
             {

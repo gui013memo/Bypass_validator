@@ -1,4 +1,5 @@
 ﻿using OpenProtocolInterpreter.Communication;
+using OpenProtocolInterpreter.IOInterface;
 using OpenProtocolInterpreter.Sample.Driver.Events;
 using OpenProtocolInterpreter.Sample.Ethernet;
 using System;
@@ -157,6 +158,7 @@ namespace OpenProtocolInterpreter.Sample.Driver
             {
                 var message = SendAndWaitForResponse(new Mid0001(1).Pack(), TimeSpan.FromSeconds(10));
                 if (message != null)
+                {
                     switch (message.Header.Mid)
                     {
                         case Mid0002.MID:
@@ -166,6 +168,13 @@ namespace OpenProtocolInterpreter.Sample.Driver
                             OnCommunicationStartError(message as Mid0004);
                             break;
                     }
+                }
+                else if (message == null)
+                {
+                    Console.WriteLine($"Reply from controller was NULL");
+                    startCommErrorMessage = "Reply from controller was NULL, probably by TIMEOUT";
+                    return false;
+                }
             }
             catch (Exception ex)
             {
