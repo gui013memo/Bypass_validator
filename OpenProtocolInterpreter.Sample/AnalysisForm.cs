@@ -15,6 +15,11 @@ namespace OpenProtocolInterpreter.Sample
         public AnalysisForm()
         {
             InitializeComponent();
+
+            vsOneTrafficTextBox.Text = string.Empty;
+            vsTwoTrafficTextBox.Text = string.Empty;
+            vsThreeTrafficTextBox.Text = string.Empty;
+            errorsTextBox.Text = string.Empty;
         }
 
         private void label3_Click(object sender, EventArgs e)

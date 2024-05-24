@@ -32,13 +32,13 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.startOrStopButton = new System.Windows.Forms.Button();
             this.startModeLabel = new System.Windows.Forms.Label();
-            this.startModeButton = new System.Windows.Forms.Button();
+            this.ModeButton = new System.Windows.Forms.Button();
             this.controlLabel = new System.Windows.Forms.Label();
             this.vsThreePanel = new System.Windows.Forms.Panel();
             this.vsThreeConnStateLabel = new System.Windows.Forms.Label();
             this.vsThreeToolLabel = new System.Windows.Forms.Label();
             this.vsThreePortTextBox = new System.Windows.Forms.TextBox();
-            this.vsThreeAutoOrManualButton = new System.Windows.Forms.Button();
+            this.vsThreeStartOrStopButton = new System.Windows.Forms.Button();
             this.vsThreeIpTextBox = new System.Windows.Forms.TextBox();
             this.vsThreeControllerIpLabel = new System.Windows.Forms.Label();
             this.vsThreePortLabel = new System.Windows.Forms.Label();
@@ -46,7 +46,7 @@
             this.vsTwoConnStateLabel = new System.Windows.Forms.Label();
             this.vsTwoToolLabel = new System.Windows.Forms.Label();
             this.vsTwoPortTextBox = new System.Windows.Forms.TextBox();
-            this.vsTwoAutoOrManualButton = new System.Windows.Forms.Button();
+            this.vsTwoStartOrStopButton = new System.Windows.Forms.Button();
             this.vsTwoIpTextBox = new System.Windows.Forms.TextBox();
             this.vsTwoControllerIpLabel = new System.Windows.Forms.Label();
             this.vsTwoPortLabel = new System.Windows.Forms.Label();
@@ -54,7 +54,7 @@
             this.vsOneConnStateLabel = new System.Windows.Forms.Label();
             this.vsOneToolLabel = new System.Windows.Forms.Label();
             this.vsOnePortTextBox = new System.Windows.Forms.TextBox();
-            this.vsOneAutoOrManualButton = new System.Windows.Forms.Button();
+            this.vsOneStartOrStopButton = new System.Windows.Forms.Button();
             this.vsOneIpTextBox = new System.Windows.Forms.TextBox();
             this.vsOneControllerIpLabel = new System.Windows.Forms.Label();
             this.vsOnePortLabel = new System.Windows.Forms.Label();
@@ -72,7 +72,7 @@
             this.panel5.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panel5.Controls.Add(this.startOrStopButton);
             this.panel5.Controls.Add(this.startModeLabel);
-            this.panel5.Controls.Add(this.startModeButton);
+            this.panel5.Controls.Add(this.ModeButton);
             this.panel5.Controls.Add(this.controlLabel);
             this.panel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
             this.panel5.Location = new System.Drawing.Point(227, 181);
@@ -104,19 +104,19 @@
             this.startModeLabel.TabIndex = 11;
             this.startModeLabel.Text = "START MODE";
             // 
-            // startModeButton
+            // ModeButton
             // 
-            this.startModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(130)))), ((int)(((byte)(184)))));
-            this.startModeButton.FlatAppearance.BorderSize = 0;
-            this.startModeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startModeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
-            this.startModeButton.Location = new System.Drawing.Point(17, 109);
-            this.startModeButton.Name = "startModeButton";
-            this.startModeButton.Size = new System.Drawing.Size(179, 40);
-            this.startModeButton.TabIndex = 4;
-            this.startModeButton.Text = "SET MANUAL";
-            this.startModeButton.UseVisualStyleBackColor = false;
-            this.startModeButton.Click += new System.EventHandler(this.startModeButton_Click);
+            this.ModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(130)))), ((int)(((byte)(184)))));
+            this.ModeButton.FlatAppearance.BorderSize = 0;
+            this.ModeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ModeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
+            this.ModeButton.Location = new System.Drawing.Point(17, 109);
+            this.ModeButton.Name = "ModeButton";
+            this.ModeButton.Size = new System.Drawing.Size(179, 40);
+            this.ModeButton.TabIndex = 4;
+            this.ModeButton.Text = "SET MANUAL";
+            this.ModeButton.UseVisualStyleBackColor = false;
+            this.ModeButton.Click += new System.EventHandler(this.ModeButton_Click);
             // 
             // controlLabel
             // 
@@ -134,7 +134,7 @@
             this.vsThreePanel.Controls.Add(this.vsThreeConnStateLabel);
             this.vsThreePanel.Controls.Add(this.vsThreeToolLabel);
             this.vsThreePanel.Controls.Add(this.vsThreePortTextBox);
-            this.vsThreePanel.Controls.Add(this.vsThreeAutoOrManualButton);
+            this.vsThreePanel.Controls.Add(this.vsThreeStartOrStopButton);
             this.vsThreePanel.Controls.Add(this.vsThreeIpTextBox);
             this.vsThreePanel.Controls.Add(this.vsThreeControllerIpLabel);
             this.vsThreePanel.Controls.Add(this.vsThreePortLabel);
@@ -177,18 +177,18 @@
             this.vsThreePortTextBox.Text = "4546";
             this.vsThreePortTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // vsThreeAutoOrManualButton
+            // vsThreeStartOrStopButton
             // 
-            this.vsThreeAutoOrManualButton.BackColor = System.Drawing.Color.Gainsboro;
-            this.vsThreeAutoOrManualButton.Enabled = false;
-            this.vsThreeAutoOrManualButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vsThreeAutoOrManualButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.vsThreeAutoOrManualButton.Location = new System.Drawing.Point(15, 120);
-            this.vsThreeAutoOrManualButton.Name = "vsThreeAutoOrManualButton";
-            this.vsThreeAutoOrManualButton.Size = new System.Drawing.Size(179, 40);
-            this.vsThreeAutoOrManualButton.TabIndex = 4;
-            this.vsThreeAutoOrManualButton.Text = "AUTOMATIC";
-            this.vsThreeAutoOrManualButton.UseVisualStyleBackColor = false;
+            this.vsThreeStartOrStopButton.BackColor = System.Drawing.Color.Gainsboro;
+            this.vsThreeStartOrStopButton.Enabled = false;
+            this.vsThreeStartOrStopButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsThreeStartOrStopButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.vsThreeStartOrStopButton.Location = new System.Drawing.Point(15, 120);
+            this.vsThreeStartOrStopButton.Name = "vsThreeStartOrStopButton";
+            this.vsThreeStartOrStopButton.Size = new System.Drawing.Size(179, 40);
+            this.vsThreeStartOrStopButton.TabIndex = 4;
+            this.vsThreeStartOrStopButton.Text = "AUTOMATIC";
+            this.vsThreeStartOrStopButton.UseVisualStyleBackColor = false;
             // 
             // vsThreeIpTextBox
             // 
@@ -226,7 +226,7 @@
             this.vsTwoPanel.Controls.Add(this.vsTwoConnStateLabel);
             this.vsTwoPanel.Controls.Add(this.vsTwoToolLabel);
             this.vsTwoPanel.Controls.Add(this.vsTwoPortTextBox);
-            this.vsTwoPanel.Controls.Add(this.vsTwoAutoOrManualButton);
+            this.vsTwoPanel.Controls.Add(this.vsTwoStartOrStopButton);
             this.vsTwoPanel.Controls.Add(this.vsTwoIpTextBox);
             this.vsTwoPanel.Controls.Add(this.vsTwoControllerIpLabel);
             this.vsTwoPanel.Controls.Add(this.vsTwoPortLabel);
@@ -269,18 +269,18 @@
             this.vsTwoPortTextBox.Text = "4548";
             this.vsTwoPortTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // vsTwoAutoOrManualButton
+            // vsTwoStartOrStopButton
             // 
-            this.vsTwoAutoOrManualButton.BackColor = System.Drawing.Color.Gainsboro;
-            this.vsTwoAutoOrManualButton.Enabled = false;
-            this.vsTwoAutoOrManualButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vsTwoAutoOrManualButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.vsTwoAutoOrManualButton.Location = new System.Drawing.Point(15, 120);
-            this.vsTwoAutoOrManualButton.Name = "vsTwoAutoOrManualButton";
-            this.vsTwoAutoOrManualButton.Size = new System.Drawing.Size(179, 40);
-            this.vsTwoAutoOrManualButton.TabIndex = 4;
-            this.vsTwoAutoOrManualButton.Text = "AUTOMATIC";
-            this.vsTwoAutoOrManualButton.UseVisualStyleBackColor = false;
+            this.vsTwoStartOrStopButton.BackColor = System.Drawing.Color.Gainsboro;
+            this.vsTwoStartOrStopButton.Enabled = false;
+            this.vsTwoStartOrStopButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsTwoStartOrStopButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.vsTwoStartOrStopButton.Location = new System.Drawing.Point(15, 120);
+            this.vsTwoStartOrStopButton.Name = "vsTwoStartOrStopButton";
+            this.vsTwoStartOrStopButton.Size = new System.Drawing.Size(179, 40);
+            this.vsTwoStartOrStopButton.TabIndex = 4;
+            this.vsTwoStartOrStopButton.Text = "AUTOMATIC";
+            this.vsTwoStartOrStopButton.UseVisualStyleBackColor = false;
             // 
             // vsTwoIpTextBox
             // 
@@ -318,7 +318,7 @@
             this.vsOnePanel.Controls.Add(this.vsOneConnStateLabel);
             this.vsOnePanel.Controls.Add(this.vsOneToolLabel);
             this.vsOnePanel.Controls.Add(this.vsOnePortTextBox);
-            this.vsOnePanel.Controls.Add(this.vsOneAutoOrManualButton);
+            this.vsOnePanel.Controls.Add(this.vsOneStartOrStopButton);
             this.vsOnePanel.Controls.Add(this.vsOneIpTextBox);
             this.vsOnePanel.Controls.Add(this.vsOneControllerIpLabel);
             this.vsOnePanel.Controls.Add(this.vsOnePortLabel);
@@ -361,18 +361,18 @@
             this.vsOnePortTextBox.Text = "4545";
             this.vsOnePortTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // vsOneAutoOrManualButton
+            // vsOneStartOrStopButton
             // 
-            this.vsOneAutoOrManualButton.BackColor = System.Drawing.Color.Gainsboro;
-            this.vsOneAutoOrManualButton.Enabled = false;
-            this.vsOneAutoOrManualButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vsOneAutoOrManualButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.vsOneAutoOrManualButton.Location = new System.Drawing.Point(15, 120);
-            this.vsOneAutoOrManualButton.Name = "vsOneAutoOrManualButton";
-            this.vsOneAutoOrManualButton.Size = new System.Drawing.Size(179, 40);
-            this.vsOneAutoOrManualButton.TabIndex = 4;
-            this.vsOneAutoOrManualButton.Text = "AUTOMATIC";
-            this.vsOneAutoOrManualButton.UseVisualStyleBackColor = false;
+            this.vsOneStartOrStopButton.BackColor = System.Drawing.Color.Gainsboro;
+            this.vsOneStartOrStopButton.Enabled = false;
+            this.vsOneStartOrStopButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsOneStartOrStopButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.vsOneStartOrStopButton.Location = new System.Drawing.Point(15, 120);
+            this.vsOneStartOrStopButton.Name = "vsOneStartOrStopButton";
+            this.vsOneStartOrStopButton.Size = new System.Drawing.Size(179, 40);
+            this.vsOneStartOrStopButton.TabIndex = 4;
+            this.vsOneStartOrStopButton.Text = "AUTOMATIC";
+            this.vsOneStartOrStopButton.UseVisualStyleBackColor = false;
             // 
             // vsOneIpTextBox
             // 
@@ -455,23 +455,23 @@
         public System.Windows.Forms.Panel panel5;
         public System.Windows.Forms.Button startOrStopButton;
         public System.Windows.Forms.Label startModeLabel;
-        public System.Windows.Forms.Button startModeButton;
+        public System.Windows.Forms.Button ModeButton;
         public System.Windows.Forms.Label controlLabel;
         public System.Windows.Forms.Panel vsThreePanel;
         public System.Windows.Forms.Label vsThreeConnStateLabel;
         public System.Windows.Forms.Label vsThreeToolLabel;
-        public System.Windows.Forms.Button vsThreeAutoOrManualButton;
+        public System.Windows.Forms.Button vsThreeStartOrStopButton;
         public System.Windows.Forms.Label vsThreeControllerIpLabel;
         public System.Windows.Forms.Label vsThreePortLabel;
         public System.Windows.Forms.Panel vsTwoPanel;
         public System.Windows.Forms.Label vsTwoConnStateLabel;
         public System.Windows.Forms.Label vsTwoToolLabel;
-        public System.Windows.Forms.Button vsTwoAutoOrManualButton;
+        public System.Windows.Forms.Button vsTwoStartOrStopButton;
         public System.Windows.Forms.Label vsTwoControllerIpLabel;
         public System.Windows.Forms.Label vsTwoPortLabel;
         public System.Windows.Forms.Panel vsOnePanel;
         public System.Windows.Forms.Label vsOneToolLabel;
-        public System.Windows.Forms.Button vsOneAutoOrManualButton;
+        public System.Windows.Forms.Button vsOneStartOrStopButton;
         public System.Windows.Forms.Label vsOneControllerIpLabel;
         public System.Windows.Forms.Label vsOnePortLabel;
         private System.Windows.Forms.Timer vsOneTimer;

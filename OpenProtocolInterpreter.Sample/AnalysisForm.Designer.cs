@@ -33,18 +33,18 @@
             this.nodeOneToolaLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.opHistoryVS1Label = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.vsOneTrafficTextBox = new System.Windows.Forms.TextBox();
             this.ipAndPortVS1Label = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.vsTwoTrafficTextBox = new System.Windows.Forms.TextBox();
             this.vs2Label = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.vsThreeTrafficTextBox = new System.Windows.Forms.TextBox();
             this.vs3Label = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -82,7 +82,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panel1.Controls.Add(this.opHistoryVS1Label);
-            this.panel1.Controls.Add(this.textBox5);
+            this.panel1.Controls.Add(this.vsOneTrafficTextBox);
             this.panel1.Controls.Add(this.vs1Label);
             this.panel1.Controls.Add(this.nodeOneToolaLabel);
             this.panel1.Controls.Add(this.ipAndPortVS1Label);
@@ -103,17 +103,17 @@
             this.opHistoryVS1Label.Text = "OP History";
             this.opHistoryVS1Label.Click += new System.EventHandler(this.label3_Click);
             // 
-            // textBox5
+            // vsOneTrafficTextBox
             // 
-            this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox5.Location = new System.Drawing.Point(4, 61);
-            this.textBox5.Multiline = true;
-            this.textBox5.Name = "textBox5";
-            this.textBox5.ReadOnly = true;
-            this.textBox5.Size = new System.Drawing.Size(202, 99);
-            this.textBox5.TabIndex = 14;
-            this.textBox5.Text = resources.GetString("textBox5.Text");
-            this.textBox5.Enter += new System.EventHandler(this.textBox5_Enter);
+            this.vsOneTrafficTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsOneTrafficTextBox.Location = new System.Drawing.Point(4, 61);
+            this.vsOneTrafficTextBox.Multiline = true;
+            this.vsOneTrafficTextBox.Name = "vsOneTrafficTextBox";
+            this.vsOneTrafficTextBox.ReadOnly = true;
+            this.vsOneTrafficTextBox.Size = new System.Drawing.Size(202, 99);
+            this.vsOneTrafficTextBox.TabIndex = 14;
+            this.vsOneTrafficTextBox.Text = resources.GetString("vsOneTrafficTextBox.Text");
+            this.vsOneTrafficTextBox.Enter += new System.EventHandler(this.textBox5_Enter);
             // 
             // ipAndPortVS1Label
             // 
@@ -140,7 +140,7 @@
             // 
             this.panel3.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panel3.Controls.Add(this.label1);
-            this.panel3.Controls.Add(this.textBox1);
+            this.panel3.Controls.Add(this.vsTwoTrafficTextBox);
             this.panel3.Controls.Add(this.vs2Label);
             this.panel3.Controls.Add(this.label3);
             this.panel3.Controls.Add(this.label4);
@@ -160,16 +160,16 @@
             this.label1.TabIndex = 15;
             this.label1.Text = "OP History";
             // 
-            // textBox1
+            // vsTwoTrafficTextBox
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(4, 61);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(202, 99);
-            this.textBox1.TabIndex = 14;
-            this.textBox1.Text = resources.GetString("textBox1.Text");
+            this.vsTwoTrafficTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsTwoTrafficTextBox.Location = new System.Drawing.Point(4, 61);
+            this.vsTwoTrafficTextBox.Multiline = true;
+            this.vsTwoTrafficTextBox.Name = "vsTwoTrafficTextBox";
+            this.vsTwoTrafficTextBox.ReadOnly = true;
+            this.vsTwoTrafficTextBox.Size = new System.Drawing.Size(202, 99);
+            this.vsTwoTrafficTextBox.TabIndex = 14;
+            this.vsTwoTrafficTextBox.Text = resources.GetString("vsTwoTrafficTextBox.Text");
             // 
             // vs2Label
             // 
@@ -207,7 +207,7 @@
             // 
             this.panel4.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panel4.Controls.Add(this.label5);
-            this.panel4.Controls.Add(this.textBox2);
+            this.panel4.Controls.Add(this.vsThreeTrafficTextBox);
             this.panel4.Controls.Add(this.vs3Label);
             this.panel4.Controls.Add(this.label7);
             this.panel4.Controls.Add(this.label8);
@@ -227,16 +227,16 @@
             this.label5.TabIndex = 15;
             this.label5.Text = "OP History";
             // 
-            // textBox2
+            // vsThreeTrafficTextBox
             // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(4, 61);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(202, 99);
-            this.textBox2.TabIndex = 14;
-            this.textBox2.Text = resources.GetString("textBox2.Text");
+            this.vsThreeTrafficTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vsThreeTrafficTextBox.Location = new System.Drawing.Point(4, 61);
+            this.vsThreeTrafficTextBox.Multiline = true;
+            this.vsThreeTrafficTextBox.Name = "vsThreeTrafficTextBox";
+            this.vsThreeTrafficTextBox.ReadOnly = true;
+            this.vsThreeTrafficTextBox.Size = new System.Drawing.Size(202, 99);
+            this.vsThreeTrafficTextBox.TabIndex = 14;
+            this.vsThreeTrafficTextBox.Text = resources.GetString("vsThreeTrafficTextBox.Text");
             // 
             // vs3Label
             // 
@@ -324,18 +324,18 @@
         private System.Windows.Forms.Label nodeOneToolaLabel;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label opHistoryVS1Label;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox vsOneTrafficTextBox;
         private System.Windows.Forms.Label ipAndPortVS1Label;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox vsTwoTrafficTextBox;
         private System.Windows.Forms.Label vs2Label;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox vsThreeTrafficTextBox;
         private System.Windows.Forms.Label vs3Label;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;

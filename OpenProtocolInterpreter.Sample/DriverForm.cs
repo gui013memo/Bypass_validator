@@ -16,6 +16,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Windows.Forms;
+using static OpenProtocolInterpreter.Sample.HomeForm;
 
 namespace OpenProtocolInterpreter.Sample
 {
@@ -107,23 +108,27 @@ namespace OpenProtocolInterpreter.Sample
             mouseDown = false;
         }
 
-        private void connectToController(HomeForm.VirtualStations vs)//PUT THIS ON DOCUMENTATION
+        private void connectToController(VirtualStations vs)//PUT THIS ON DOCUMENTATION
         {
             Thread tcpThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
             tcpThread.IsBackground = true;
             tcpThread.Start();
         }
 
-        private void WorkingThreadHandleTcpConnection(HomeForm.VirtualStations vs)//PUT THIS ON DOCUMENTATION
+        private void WorkingThreadHandleTcpConnection(VirtualStations vs)//PUT THIS ON DOCUMENTATION
         {
             switch (vs)
             {
-                case HomeForm.VirtualStations.One: //PUT THIS ON DOCUMENTATION
-
-                    this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                case VirtualStations.One: //PUT THIS ON DOCUMENTATION
+                    if (homeForm.vsOneState != VsStatus.Connected)
                     {
-                        homeForm.updateVsConnStatus(vs, HomeForm.vsStatus.Connecting);
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            homeForm.updateVsConnStatus(vs, VsStatus.Connecting);
+                        });
+
                         bool tcpConnDone = false;
+
                         try
                         {
                             vsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
@@ -132,76 +137,70 @@ namespace OpenProtocolInterpreter.Sample
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.ToString());
-                            analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " TCP conn failed at VS1 \r\n";
-                            homeForm.updateVsConnStatus(vs, HomeForm.vsStatus.ConnFailed);
+                            this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                            {
+                                analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " TCP conn failed at VS1 \r\n";
+                                homeForm.updateVsConnStatus(vs, VsStatus.ConnFailed);
+                            });
                         }
 
                         if (tcpConnDone && vsOneDriver.BeginCommunication(vsOneClient))
                         {
                             this.Invoke((MethodInvoker)delegate
                             {
-                                vsOneKeepAliveTimer.Start();
-                                homeForm.updateVsConnStatus(vs, HomeForm.vsStatus.Connected);
+                                vsOneKeepAliveTimer.Start();//Implement connection watchdog
+                                homeForm.updateVsConnStatus(vs, VsStatus.Connected);
                             });
                         }
                         else if (tcpConnDone)
                         {
-                            if (vsOneDriver.startCommErrorMessage.Contains("Client is already connected"))
+                            if (vsOneDriver.startCommErrorMessage.Contains("Client is already connected")) // Already handling this -> if (homeForm.vsOneState != VsStatus.Connected) 
                             {
-                                analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " Client is already connected\r\n";
+                                this.Invoke((MethodInvoker)delegate
+                                {
+                                    analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " Client is already connected\r\n";
+                                });
                             }
                             else if (vsOneDriver.startCommErrorMessage.Contains("MidRevisionUnsupported"))
                             {
-                                homeForm.updateVsConnStatus(vs, HomeForm.vsStatus.ConnFailed);
-                                analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " MidRevisionUnsupported\r\n";
+                                this.Invoke((MethodInvoker)delegate
+                                {
+                                    homeForm.updateVsConnStatus(vs, VsStatus.Warning);
+                                    analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " MidRevisionUnsupported\r\n";
+                                });
                             }
                         }
-                    });
+
+                    }
                     break;
 
-                case HomeForm.VirtualStations.Two:
+                case VirtualStations.Two:
                     break;
 
-                case HomeForm.VirtualStations.Three:
+                case VirtualStations.Three:
                     break;
             }
         }
 
-        public void StartInterface(object sender, EventArgs e)
+        public void StartInterface()
         {// Make the handle to start manual or automatic mode @@@
+            connectToController(VirtualStations.One);
+            connectToController(VirtualStations.Two);
+            connectToController(VirtualStations.Three);
 
-            //var vsTwoClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsTwoIpTextBox.Text, int.Parse(homeForm.vsTwoPortTextBox.Text));
-            //var vsThreeClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsThreeIpTextBox.Text, int.Parse(homeForm.vsThreePortTextBox.Text));
+            
+        }
 
-            connectToController(HomeForm.VirtualStations.One);
+        public void StopAllInterfaces()
+        {
+            vsOneDriver.StopCommunication();
+            vsThreeDriver.StopCommunication();
+            vsThreeDriver.StopCommunication();
+        }
 
-            //if (vsTwoDriver.BeginCommunication(vsTwoClient))
-            //{
-            //    vsTwoKeepAliveTimer.Start();
-            //    homeForm.vsTwoConnStateLabel.ForeColor = Color.White;
-            //    homeForm.vsTwoConnStateLabel.BackColor = Color.Green;
-            //}
-            //else
-            //{
-            //    homeForm.vsTwoConnStateLabel.ForeColor = Color.White;
-            //    homeForm.vsTwoConnStateLabel.BackColor = Color.Red;
-            //    vsTwoDriver = null;
-            //}
-
-            //if (vsThreeDriver.BeginCommunication(vsThreeClient))
-            //{
-            //    vsThreeKeepAliveTimer.Start();
-            //    homeForm.vsThreeConnStateLabel.ForeColor = Color.White;
-            //    homeForm.vsThreeConnStateLabel.BackColor = Color.Green;
-            //}
-            //else
-            //{
-            //    homeForm.vsThreeConnStateLabel.ForeColor = Color.White;
-            //    homeForm.vsThreeConnStateLabel.BackColor = Color.Red;
-            //    vsThreeDriver = null;
-            //}
-
-
+        public void StopInterface(OpenProtocolDriver driver)
+        {
+            driver.StopCommunication();
         }
 
         private void vsOneKeepAliveTimer_Tick(object sender, EventArgs e)
@@ -218,8 +217,8 @@ namespace OpenProtocolInterpreter.Sample
                 else
                 {
                     Console.WriteLine($"Keep Alive Not Received");
-                    homeForm.updateVsConnStatus(HomeForm.VirtualStations.One, HomeForm.vsStatus.ConnFailed);
-                    connectToController(HomeForm.VirtualStations.One);
+                    homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.ConnFailed);
+                    //connectToController(VirtualStations.One);
                 }
 
             }

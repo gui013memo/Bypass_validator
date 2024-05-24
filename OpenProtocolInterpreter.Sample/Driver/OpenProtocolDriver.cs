@@ -47,6 +47,11 @@ namespace OpenProtocolInterpreter.Sample.Driver
             return StartCommunication();
         }
 
+        public void StopCommunication()
+        {
+            simpleTcpClient.Disconnect();
+        }
+
         /// <summary>
         /// Add or update a command for a specific Mid type
         /// </summary>
