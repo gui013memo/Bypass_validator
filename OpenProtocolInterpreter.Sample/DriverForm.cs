@@ -185,10 +185,10 @@ namespace OpenProtocolInterpreter.Sample
         public void StartInterface()
         {// Make the handle to start manual or automatic mode @@@
             connectToController(VirtualStations.One);
-            connectToController(VirtualStations.Two);
-            connectToController(VirtualStations.Three);
+            //connectToController(VirtualStations.Two);
+            //connectToController(VirtualStations.Three);
 
-            
+
         }
 
         public void StopAllInterfaces()

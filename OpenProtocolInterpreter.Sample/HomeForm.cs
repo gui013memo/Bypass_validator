@@ -174,6 +174,19 @@ namespace OpenProtocolInterpreter.Sample
             {
                 driverForm.StopAllInterfaces();
                 startOrStopButton.Text = "START";
+                startOrStopButton.BackColor = Color.Green;
+                startOrStopButton.ForeColor = Color.Transparent;
+            }
+            else if(startOrStopButton.Text == "CONNECTING")
+            {
+                DialogResult result = MessageBox.Show("Do you want to cancel the connection attempt?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            
+                if(result == DialogResult.Yes)
+                {
+                    startOrStopButton.Text = "START";
+                    startOrStopButton.BackColor = Color.Green;
+                    startOrStopButton.ForeColor = Color.Transparent;
+                }
             }
         }
 
