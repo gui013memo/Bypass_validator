@@ -55,7 +55,11 @@ namespace OpenProtocolInterpreter.Sample.Ethernet
             }
 
             _client = new TcpClient();
+            //_client.SendTimeout = 3;
+            //_client.ReceiveTimeout = 3;
             _client.Connect(hostNameOrIpAddress, port);
+
+            
 
             StartRxThread();
 

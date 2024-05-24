@@ -49,7 +49,8 @@ namespace OpenProtocolInterpreter.Sample.Driver
 
         public void StopCommunication()
         {
-            simpleTcpClient.Disconnect();
+            if (simpleTcpClient != null)
+                simpleTcpClient.Disconnect();
         }
 
         /// <summary>
@@ -202,9 +203,9 @@ namespace OpenProtocolInterpreter.Sample.Driver
                 Console.WriteLine(msg);
                 startCommErrorMessage = msg + "\r\nError code: " + Error.MidRevisionUnsupported.ToString();
             }
-                
 
-               
+
+
         }
 
         private void KeepConnectionAlive()

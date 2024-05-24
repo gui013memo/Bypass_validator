@@ -14,6 +14,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using static OpenProtocolInterpreter.Sample.HomeForm;
@@ -50,6 +51,10 @@ namespace OpenProtocolInterpreter.Sample
         BadgeCheckingForm checkingForm;
 
         SimpleTcpClient vsOneClient;
+
+        Thread _vsOneThread;
+        Thread _vsTwoThread;
+        Thread _vsThreeThread;
 
         public DriverForm()
         {
@@ -110,9 +115,14 @@ namespace OpenProtocolInterpreter.Sample
 
         private void connectToController(VirtualStations vs)//PUT THIS ON DOCUMENTATION
         {
-            Thread tcpThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
-            tcpThread.IsBackground = true;
-            tcpThread.Start();
+            switch (vs)
+            {
+                case VirtualStations.One:
+                    _vsOneThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
+                    _vsOneThread.IsBackground = true;
+                    _vsOneThread.Start();
+                    break;
+            }
         }
 
         private void WorkingThreadHandleTcpConnection(VirtualStations vs)//PUT THIS ON DOCUMENTATION
@@ -172,12 +182,37 @@ namespace OpenProtocolInterpreter.Sample
                         }
 
                     }
+
                     break;
 
                 case VirtualStations.Two:
                     break;
 
                 case VirtualStations.Three:
+                    break;
+            }
+        }
+
+        //Not working
+        public void AbortTcpThread(VirtualStations vs)
+        {
+            switch (vs)
+            {
+                case VirtualStations.One:
+                    if (_vsOneThread != null && _vsOneThread.IsAlive)
+                    {
+                        try
+                        {
+                            _vsOneThread.Abort();
+                            _vsOneThread = null;
+                            MessageBox.Show("Thread aborted.");
+                        }
+                        catch (ThreadAbortException ex)
+                        {
+                            // Handle ThreadAbortException
+                            MessageBox.Show("Thread abort failed: " + ex.Message);
+                        }
+                    }
                     break;
             }
         }
@@ -194,6 +229,11 @@ namespace OpenProtocolInterpreter.Sample
         public void StopAllInterfaces()
         {
             vsOneDriver.StopCommunication();
+            vsOneKeepAliveTimer.Stop();
+            homeForm.vsOneState = VsStatus.None;
+            homeForm.vsOneConnStateLabel.ForeColor = homeForm._grey;
+            homeForm.vsOneConnStateLabel.BackColor = Color.Transparent;
+
             vsThreeDriver.StopCommunication();
             vsThreeDriver.StopCommunication();
         }

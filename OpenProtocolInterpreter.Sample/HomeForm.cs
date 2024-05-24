@@ -173,21 +173,29 @@ namespace OpenProtocolInterpreter.Sample
             else if (startOrStopButton.Text == "STOP")
             {
                 driverForm.StopAllInterfaces();
+
                 startOrStopButton.Text = "START";
                 startOrStopButton.BackColor = Color.Green;
                 startOrStopButton.ForeColor = Color.Transparent;
             }
-            else if(startOrStopButton.Text == "CONNECTING")
+
+            //Not working
             {
-                DialogResult result = MessageBox.Show("Do you want to cancel the connection attempt?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            
-                if(result == DialogResult.Yes)
-                {
-                    startOrStopButton.Text = "START";
-                    startOrStopButton.BackColor = Color.Green;
-                    startOrStopButton.ForeColor = Color.Transparent;
-                }
+                //else if(startOrStopButton.Text == "CONNECTING")
+                //{
+                //    DialogResult result = MessageBox.Show("Do you want to cancel the connection attempt?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                //    if(result == DialogResult.Yes)
+                //    {
+                //        driverForm.AbortTcpThread(VirtualStations.One);
+
+                //        startOrStopButton.Text = "START";
+                //        startOrStopButton.BackColor = Color.Green;
+                //        startOrStopButton.ForeColor = Color.Transparent;
+                //    }
+                //}
             }
+
         }
 
         private void ModeButton_Click(object sender, EventArgs e)
