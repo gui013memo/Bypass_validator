@@ -59,7 +59,7 @@ namespace OpenProtocolInterpreter.Sample.Ethernet
             //_client.ReceiveTimeout = 3;
             _client.Connect(hostNameOrIpAddress, port);
 
-            
+
 
             StartRxThread();
 

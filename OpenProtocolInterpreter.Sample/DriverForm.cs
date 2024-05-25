@@ -169,7 +169,9 @@ namespace OpenProtocolInterpreter.Sample
                                 if(homeForm.vsOneState == VsStatus.ConnDropped)
                                 {
                                     Console.WriteLine("THE EXCEP: " + ex.ToString());
-                                    Console.WriteLine("The conn has been dropped, the system is trying to reconnect...");
+                                    Console.WriteLine("The conn has been dropped at XXX date/time, the system is trying to reconnect...");
+                                    StopAllInterfaces();
+                                    
                                 }
                                 else
                                 {
@@ -290,7 +292,7 @@ namespace OpenProtocolInterpreter.Sample
             vsOneDriver.StopCommunication();
             vsOneKeepAliveTimer.Stop();
             
-            //homeForm.vsOneStopRequest = true;    // <-- Cursed as a fuck
+            //homeForm.vsOneStopRequest = true;    // <-- Cursed as a fuck // Check how to make an cancelation token source to stop reconnection auto attempts
 
 
             if (!homeForm.vsOneThreadRunning)
@@ -334,6 +336,14 @@ namespace OpenProtocolInterpreter.Sample
                     homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.ConnDropped);
 
                     Console.WriteLine($"Stopping keepAliveTimer and trying to connect again by StartInterface method");
+
+                    //vsOneClient = null;
+                    //vsOneDriver = null;
+
+                    //vsOneDriver = new OpenProtocolDriver();
+
+                    StopAllInterfaces();
+
                     vsOneKeepAliveTimer.Stop();
                     StartInterface();
 

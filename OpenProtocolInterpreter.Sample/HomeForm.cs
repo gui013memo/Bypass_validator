@@ -196,15 +196,6 @@ namespace OpenProtocolInterpreter.Sample
                 startOrStopButton.BackColor = Color.Yellow;
                 startOrStopButton.ForeColor = Color.Black;
 
-                //updateVsConnStatus(VirtualStations.One, VsStatus.Connecting);
-
-                //i++;
-                //while(i > 1)
-                //{
-
-                //}
-
-
                 driverForm.StartInterface();
             }
             else if (startOrStopButton.Text == "STOP")
