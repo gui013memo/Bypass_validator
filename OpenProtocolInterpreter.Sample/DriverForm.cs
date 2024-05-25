@@ -38,6 +38,8 @@ namespace OpenProtocolInterpreter.Sample
         bool bypassAllowed = false;
         public bool idLogsPathOK;
 
+        bool cancelReconnToken = false;
+
         public bool isSQSLogged = false;
         public string currentOperatorId = string.Empty;
         public string currentOperatorName = string.Empty;
@@ -123,10 +125,10 @@ namespace OpenProtocolInterpreter.Sample
                     {
                         do
                         {
-                            _vsOneThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
-                            _vsOneThread.IsBackground = true;
-                            homeForm.vsOneThreadRunning = true;
-                            _vsOneThread.Start();
+                        _vsOneThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
+                        _vsOneThread.IsBackground = true;
+                        homeForm.vsOneThreadRunning = true;
+                        _vsOneThread.Start();
                         } while (vsOneClient != null && homeForm.vsOneState == VsStatus.ConnDropped && !homeForm.vsOneStopRequest && !homeForm.vsOneThreadRunning);
                     }
                     break;
@@ -178,7 +180,10 @@ namespace OpenProtocolInterpreter.Sample
                             {
                                 Console.WriteLine("THE EXCEP: " + ex.ToString());
                                 Console.WriteLine("The conn has been dropped at XXX<- get from disconnection timestamp at keepalive timer date/time, the system is trying to reconnect...");
-                                WorkingThreadHandleTcpConnection(vs);
+                                if (!cancelReconnToken)
+                                {
+                                    WorkingThreadHandleTcpConnection(vs);
+                                }
                             }
                             else
                             {
@@ -292,7 +297,7 @@ namespace OpenProtocolInterpreter.Sample
             //connectToController(VirtualStations.Two);
             //connectToController(VirtualStations.Three);
 
-
+            cancelReconnToken = false;
         }
 
         public void StopAllInterfaces()
@@ -300,19 +305,10 @@ namespace OpenProtocolInterpreter.Sample
             vsOneDriver.StopCommunication();
             vsOneKeepAliveTimer.Stop();
 
-            //homeForm.vsOneStopRequest = true;    // <-- Cursed as a fuck // Check how to make an cancelation token source to stop reconnection auto attempts
-
-
-
-            //if (homeForm.vsOneState != VsStatus.ConnDropped || homeForm.vsOneState != VsStatus.Reconnecting)
-            //{
-            //    homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.None);
-            //}
-
-
-
-            //vsThreeDriver.StopCommunication();
-            //vsThreeDriver.StopCommunication();
+            if (homeForm.vsOneState == VsStatus.Reconnecting || homeForm.vsOneState == VsStatus.ConnDropped)
+            {
+                cancelReconnToken = true;
+            }
         }
 
         public void StopInterface(OpenProtocolDriver driver)
