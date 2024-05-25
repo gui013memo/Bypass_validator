@@ -146,7 +146,7 @@ namespace OpenProtocolInterpreter.Sample
 
                     if (homeForm.vsOneState != VsStatus.Connected)
                     {
-                        if (homeForm.vsOneState == VsStatus.ConnDropped)
+                        if (homeForm.vsOneState == VsStatus.ConnDropped || homeForm.vsOneState == VsStatus.Reconnecting)
                         {
                             this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
                             {
