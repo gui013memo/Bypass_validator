@@ -291,15 +291,16 @@ namespace OpenProtocolInterpreter.Sample
         {
             vsOneDriver.StopCommunication();
             vsOneKeepAliveTimer.Stop();
-            
+
             //homeForm.vsOneStopRequest = true;    // <-- Cursed as a fuck // Check how to make an cancelation token source to stop reconnection auto attempts
 
 
             if (!homeForm.vsOneThreadRunning)
             {
-                homeForm.vsOneState = VsStatus.None;
-                homeForm.vsOneConnStateLabel.ForeColor = homeForm._grey;
-                homeForm.vsOneConnStateLabel.BackColor = Color.Transparent;
+                //homeForm.vsOneState = VsStatus.None;
+                homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.None);
+                //homeForm.vsOneConnStateLabel.ForeColor = homeForm._grey;
+                //homeForm.vsOneConnStateLabel.BackColor = Color.Transparent;
             }
 
 

@@ -64,10 +64,10 @@ namespace OpenProtocolInterpreter.Sample
         public bool vsTwoStopRequest;
         public bool vsThreeStopRequest;
 
-        public VsStatus vsOneState
+        public VsStatus vsOneState 
         {
             get { return _vsOneState; }
-            set
+            private set
             {
                 _vsOneState = value;
                 updateManualVsButtons();
