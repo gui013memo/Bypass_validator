@@ -56,6 +56,7 @@ namespace OpenProtocolInterpreter.Sample
         Thread _vsTwoThread;
         Thread _vsThreeThread;
 
+
         public DriverForm()
         {
             InitializeComponent();
@@ -118,40 +119,76 @@ namespace OpenProtocolInterpreter.Sample
             switch (vs)
             {
                 case VirtualStations.One:
-                    _vsOneThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
-                    _vsOneThread.IsBackground = true;
-                    _vsOneThread.Start();
+                    if (!homeForm.vsOneThreadRunning)
+                    {
+                        _vsOneThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
+                        _vsOneThread.IsBackground = true;
+                        _vsOneThread.Start();
+                    }
+                    break;
+                case VirtualStations.Two:
+                    break;
+                case VirtualStations.Three:
                     break;
             }
         }
 
         private void WorkingThreadHandleTcpConnection(VirtualStations vs)//PUT THIS ON DOCUMENTATION
         {
+            Console.WriteLine("NEW WorkingTHread started!");
             switch (vs)
             {
                 case VirtualStations.One: //PUT THIS ON DOCUMENTATION
+
+                    homeForm.vsOneThreadRunning = true;
+
                     if (homeForm.vsOneState != VsStatus.Connected)
                     {
-                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        if (homeForm.vsOneState != VsStatus.ConnDropped)
                         {
-                            homeForm.updateVsConnStatus(vs, VsStatus.Connecting);
-                        });
+                            this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                            {
+                                homeForm.updateVsConnStatus(vs, VsStatus.Connecting);
+                            });
+                        }
 
                         bool tcpConnDone = false;
 
-                        try
+                        do
                         {
-                            vsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
-                            tcpConnDone = true;
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.ToString());
-                            this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                            try
                             {
-                                analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " TCP conn failed at VS1 \r\n";
-                                homeForm.updateVsConnStatus(vs, VsStatus.ConnFailed);
-                            });
+                                vsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
+
+                                if (vsOneClient != null)
+                                    tcpConnDone = true;
+
+                            }
+                            catch (Exception ex)
+                            {
+                                if(homeForm.vsOneState == VsStatus.ConnDropped)
+                                {
+                                    Console.WriteLine("THE EXCEP: " + ex.ToString());
+                                    Console.WriteLine("The conn has been dropped, the system is trying to reconnect...");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("THE EXCEP: " + ex.ToString());
+                                    this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                                    {
+                                        analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " TCP conn failed at VS1 \r\n";
+                                        MessageBox.Show("The connection has been refused at Virtual Station One\r\nCheck the Open Protocol settings on controller", "CONNECTION REFUSED", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                                        homeForm.updateVsConnStatus(vs, VsStatus.ConnFailed);
+                                    });
+                                }
+                                
+                            }
+                        } while (vsOneClient != null && homeForm.vsOneState == VsStatus.ConnDropped && !homeForm.vsOneStopRequest);
+
+                        if (homeForm.vsOneStopRequest)
+                        {
+                            homeForm.updateVsConnStatus(vs, VsStatus.None);
                         }
 
                         if (tcpConnDone && vsOneDriver.BeginCommunication(vsOneClient))
@@ -175,19 +212,34 @@ namespace OpenProtocolInterpreter.Sample
                             {
                                 this.Invoke((MethodInvoker)delegate
                                 {
-                                    homeForm.updateVsConnStatus(vs, VsStatus.Warning);
+                                    homeForm.updateVsConnStatus(vs, VsStatus.ConnDropped);
                                     analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " MidRevisionUnsupported\r\n";
+
+                                    vsOneDriver.StopCommunication();
+                                    StartInterface();
+                                    analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " Reply from controller was MidRevisionUnsupported, restarting connection attempt\r\n";
                                 });
                             }
                             else if (vsOneDriver.startCommErrorMessage.Contains("TCP Conn done but reply from controller was NULL, probably by TIMEOUT"))
                             {
-                                homeForm.updateVsConnStatus(vs, VsStatus.ConnFailed);
-                                analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " Reply from controller was NULL, probably by TIMEOUT on MID 0002 answer waiting\r\n";
+                                homeForm.updateVsConnStatus(vs, VsStatus.ConnDropped);
+
+                                vsOneDriver.StopCommunication();
+                                StartInterface();
+                                analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " Reply from controller was NULL, probably by TIMEOUT on MID 0002 answer waiting, restarting connection attempt\r\n";
+                            }
+                            else
+                            {
+                                homeForm.updateVsConnStatus(vs, VsStatus.ConnDropped);
+
+                                vsOneDriver.StopCommunication();
+                                StartInterface();
+                                analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + "TCP OK, but Open Protocol comm not started by unknow reason, restarting connection attempt\r\n";
                             }
                         }
 
                     }
-
+                    homeForm.vsOneThreadRunning = false;
                     break;
 
                 case VirtualStations.Two:
@@ -196,6 +248,8 @@ namespace OpenProtocolInterpreter.Sample
                 case VirtualStations.Three:
                     break;
             }
+
+
         }
 
         //Not working
@@ -235,12 +289,17 @@ namespace OpenProtocolInterpreter.Sample
         {
             vsOneDriver.StopCommunication();
             vsOneKeepAliveTimer.Stop();
-            homeForm.vsOneState = VsStatus.None;
-            homeForm.vsOneConnStateLabel.ForeColor = homeForm._grey;
-            homeForm.vsOneConnStateLabel.BackColor = Color.Transparent;
+            homeForm.vsOneStopRequest = true;
+            if (!homeForm.vsOneThreadRunning)
+            {
+                homeForm.vsOneState = VsStatus.None;
+                homeForm.vsOneConnStateLabel.ForeColor = homeForm._grey;
+                homeForm.vsOneConnStateLabel.BackColor = Color.Transparent;
+            }
 
-            vsThreeDriver.StopCommunication();
-            vsThreeDriver.StopCommunication();
+
+            //vsThreeDriver.StopCommunication();
+            //vsThreeDriver.StopCommunication();
         }
 
         public void StopInterface(OpenProtocolDriver driver)
@@ -248,12 +307,12 @@ namespace OpenProtocolInterpreter.Sample
             driver.StopCommunication();
         }
 
-        private void vsOneKeepAliveTimer_Tick(object sender, EventArgs e) // I STOPPED HERE -> DISCON WATCH DOG 
+        private void vsOneKeepAliveTimer_Tick(object sender, EventArgs e)
         {
-            if (vsOneDriver.KeepAlive.ElapsedMilliseconds > 10000) //10 sec
+            if (vsOneDriver.KeepAlive.ElapsedMilliseconds > 5000) //10 sec
             {
                 Console.WriteLine($"Sending Keep Alive...");
-                var pack = vsOneDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(10));
+                var pack = vsOneDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(5));
 
                 if (pack != null && pack.Header.Mid == Mid9999.MID)
                 {
@@ -261,38 +320,24 @@ namespace OpenProtocolInterpreter.Sample
                 }
                 else
                 {
-                    Console.WriteLine($"Keep Alive Not Received");
+                    Console.WriteLine($"Keep Alive Not Received, connection lost");
                     homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.ConnFailed);
+                    if (vsOneDriver.simpleTcpClient != null)
+                    {
+                        vsOneDriver.StopCommunication();
+                        Console.WriteLine($"vsOneDriver.simpleTcpClient DISCONNECTED");
+                    }
+
+                    homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.ConnDropped);
+
+                    Console.WriteLine($"Stopping keepAliveTimer and trying to connect again by StartInterface method");
+                    vsOneKeepAliveTimer.Stop();
+                    StartInterface();
+
                     //connectToController(VirtualStations.One);
                 }
 
             }
-        }
-
-        /// <summary>
-        /// Job info subscribe
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnJobInfoSubscribe_Click(object sender, EventArgs e)
-        {
-            Console.WriteLine($"Sending Job Info Subscribe...");
-            var pack = vsOneDriver.SendAndWaitForResponse(new Mid0034().Pack(), TimeSpan.FromSeconds(10));
-
-            if (pack != null)
-            {
-                if (pack.Header.Mid == Mid0004.MID)
-                {
-                    var mid04 = pack as Mid0004;
-                    Console.WriteLine($@"Error while subscribing (MID 0004):
-                                         Error Code: <{mid04.ErrorCode}>
-                                         Failed MID: <{mid04.FailedMid}>");
-                }
-                else
-                    Console.WriteLine($"Job Info Subscribe accepted!");
-            }
-
-            vsOneDriver.AddUpdateOnReceivedCommand(typeof(Mid0035), OnJobInfoReceived);
         }
 
         /// <summary>
@@ -339,24 +384,6 @@ namespace OpenProtocolInterpreter.Sample
         public void SendJobCommandFunction(bool setReset)
         {
             new SendJobCommand(vsOneDriver).Execute(setReset);
-        }
-
-        /// <summary>
-        /// Async method from controller, MID 0035 (Job Info)
-        /// </summary>
-        /// <param name="e"></param>
-        private void OnJobInfoReceived(MIDIncome e)
-        {
-            vsOneDriver.SendMessage(e.Mid.BuildAckPackage());
-
-            var jobInfo = e.Mid as Mid0035;
-            Console.WriteLine($@"JOB INFO RECEIVED (MID 0035): 
-                                 Job ID: <{jobInfo.JobId}>
-                                 Job Status: <{(int)jobInfo.JobStatus}> ({jobInfo.JobStatus.ToString()})
-                                 Job Batch Mode: <{(int)jobInfo.JobBatchMode}> ({jobInfo.JobBatchMode.ToString()})
-                                 Job Batch Size: <{jobInfo.JobBatchSize}>
-                                 Job Batch Counter: <{jobInfo.JobBatchCounter}>
-                                 TimeStamp: <{jobInfo.TimeStamp.ToString("yyyy-MM-dd:HH:mm:ss")}>");
         }
 
         /// <summary>

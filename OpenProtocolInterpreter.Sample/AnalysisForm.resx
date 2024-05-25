@@ -128,6 +128,29 @@
 18:01:18 R - MID 0002 Comm Ack
 18:01:18 S - MID 0001 Comm Ack</value>
   </data>
+  <data name="errorsTextBox.Text" xml:space="preserve">
+    <value>VS1 18:01:22 S MID 0212: Command refused by controller (Client already connected)
+
+VS1 18:01:22 S MID 0212: Command refused by controller (Client already connected)
+
+VS1 18:01:22 S MID 0212: Command refused by controller (Client already connected)
+
+VS1 18:01:22 S MID 0212: Command refused by controller (Client already connected)
+
+VS1 18:01:22 S MID 0212: Command refused by controller (Client already connected)
+
+VS1 18:01:22 S MID 0212: Command refused by controller (Client already connected)
+
+VS1 18:01:22 S MID 0212: Command refused by controller (Client already connected)
+
+VS1 18:01:22 S MID 0212: Command refused by controller (Client already connected)
+
+VS1 18:01:22 S MID 0212: Command refused by controller (Client already connected)
+
+VS1 18:01:22 S MID 0212: Command refused by controller (Client already connected)
+
+</value>
+  </data>
   <data name="vsTwoTrafficTextBox.Text" xml:space="preserve">
     <value>18:01:22 S - MID 0212 Set Relays
 18:01:20 R - MID 0211 Relays info

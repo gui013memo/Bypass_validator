@@ -68,7 +68,7 @@ namespace OpenProtocolInterpreter.Sample.Driver
         }
 
         /// <summary>
-        /// Send an Async message to controller without waiting for response
+        /// Send an Async message to controller without waiting for response, usually used to send ack to controller
         /// </summary>
         /// <param name="message">Message to be sent</param>
         public void SendMessage(string message)

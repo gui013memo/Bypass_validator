@@ -58,7 +58,6 @@
             this.vsOneIpTextBox = new System.Windows.Forms.TextBox();
             this.vsOneControllerIpLabel = new System.Windows.Forms.Label();
             this.vsOnePortLabel = new System.Windows.Forms.Label();
-            this.vsOneTimer = new System.Windows.Forms.Timer(this.components);
             this.vsTwoTimer = new System.Windows.Forms.Timer(this.components);
             this.vsThreeTimer = new System.Windows.Forms.Timer(this.components);
             this.panel5.SuspendLayout();
@@ -147,7 +146,7 @@
             // vsThreeConnStateLabel
             // 
             this.vsThreeConnStateLabel.AutoSize = true;
-            this.vsThreeConnStateLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(44)))), ((int)(((byte)(31)))));
+            this.vsThreeConnStateLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.vsThreeConnStateLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.vsThreeConnStateLabel.ForeColor = System.Drawing.Color.Transparent;
             this.vsThreeConnStateLabel.Location = new System.Drawing.Point(0, 0);
@@ -404,11 +403,6 @@
             this.vsOnePortLabel.TabIndex = 6;
             this.vsOnePortLabel.Text = "Port";
             // 
-            // vsOneTimer
-            // 
-            this.vsOneTimer.Interval = 150;
-            this.vsOneTimer.Tick += new System.EventHandler(this.vsOneTimer_Tick);
-            // 
             // vsTwoTimer
             // 
             this.vsTwoTimer.Interval = 150;
@@ -474,7 +468,6 @@
         public System.Windows.Forms.Button vsOneStartOrStopButton;
         public System.Windows.Forms.Label vsOneControllerIpLabel;
         public System.Windows.Forms.Label vsOnePortLabel;
-        private System.Windows.Forms.Timer vsOneTimer;
         private System.Windows.Forms.Timer vsTwoTimer;
         private System.Windows.Forms.Timer vsThreeTimer;
     }

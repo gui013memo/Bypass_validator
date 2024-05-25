@@ -36,6 +36,8 @@
             this.vsOneTrafficTextBox = new System.Windows.Forms.TextBox();
             this.ipAndPortVS1Label = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.errorsTextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.vsTwoTrafficTextBox = new System.Windows.Forms.TextBox();
@@ -48,8 +50,6 @@
             this.vs3Label = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.errorsTextBox = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -135,6 +135,29 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(209, 163);
             this.panel2.TabIndex = 22;
+            // 
+            // errorsTextBox
+            // 
+            this.errorsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errorsTextBox.Location = new System.Drawing.Point(4, 30);
+            this.errorsTextBox.Multiline = true;
+            this.errorsTextBox.Name = "errorsTextBox";
+            this.errorsTextBox.ReadOnly = true;
+            this.errorsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.errorsTextBox.Size = new System.Drawing.Size(202, 130);
+            this.errorsTextBox.TabIndex = 16;
+            this.errorsTextBox.Text = resources.GetString("errorsTextBox.Text");
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.label6.Location = new System.Drawing.Point(26, 6);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(161, 21);
+            this.label6.TabIndex = 16;
+            this.label6.Text = "Errors and warnings";
             // 
             // panel3
             // 
@@ -269,29 +292,6 @@
             this.label8.Size = new System.Drawing.Size(148, 21);
             this.label8.TabIndex = 3;
             this.label8.Text = "172.16.110.21:4545";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
-            this.label6.Location = new System.Drawing.Point(26, 6);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(161, 21);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "Errors and warnings";
-            // 
-            // errorsTextBox
-            // 
-            this.errorsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errorsTextBox.Location = new System.Drawing.Point(4, 30);
-            this.errorsTextBox.Multiline = true;
-            this.errorsTextBox.Name = "errorsTextBox";
-            this.errorsTextBox.ReadOnly = true;
-            this.errorsTextBox.Size = new System.Drawing.Size(202, 130);
-            this.errorsTextBox.TabIndex = 16;
-            this.errorsTextBox.Text = "VS1 18:01:22 S MID 0212: Command refused by controller (Client already connected)" +
-    "\r\n";
             // 
             // AnalysisForm
             // 

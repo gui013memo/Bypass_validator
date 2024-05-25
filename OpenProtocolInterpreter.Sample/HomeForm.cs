@@ -13,6 +13,7 @@ namespace OpenProtocolInterpreter.Sample
 {
     public partial class HomeForm : Form
     {
+        public Color _orange = Color.FromArgb(255, 128, 0);
         public Color _red = Color.FromArgb(201, 44, 31);
         public Color _grey = Color.FromArgb(51, 61, 70);
         public Color _blue = Color.FromArgb(82, 130, 184);
@@ -22,6 +23,9 @@ namespace OpenProtocolInterpreter.Sample
         bool vsOneTimerState = false;
         bool vsTwoTimerState = false;
         bool vsThreeTimerState = false;
+
+        System.Timers.Timer vsOneTimer;
+        
 
         public enum StartMode
         {
@@ -44,12 +48,21 @@ namespace OpenProtocolInterpreter.Sample
             Connecting,
             Connected,
             ConnFailed,
-            Warning
+            Warning,
+            ConnDropped
         }
 
-        VsStatus _vsOneState;
-        VsStatus _vsTwoState;
-        VsStatus _vsThreeState;
+        VsStatus _vsOneState = VsStatus.None;
+        VsStatus _vsTwoState = VsStatus.None;
+        VsStatus _vsThreeState = VsStatus.None;
+
+        public bool vsOneThreadRunning = false;
+        public bool vsTwoThreadRunning = false;
+        public bool vsThreeThreadRunning = false;
+
+        public bool vsOneStopRequest;
+        public bool vsTwoStopRequest;
+        public bool vsThreeStopRequest;
 
         public VsStatus vsOneState
         {
@@ -79,12 +92,21 @@ namespace OpenProtocolInterpreter.Sample
             }
         }
 
+        int i = 0;
+
         public HomeForm(DriverForm driverForm)
         {
             this.driverForm = driverForm;
             InitializeComponent();
+
+
+            vsOneTimer = new System.Timers.Timer();
+            vsOneTimer.Enabled = false;
+            vsOneTimer.Interval = 150;
+            vsOneTimer.Elapsed += vsOneTimer_Tick;
         }
 
+        //Used for automatic mode
         private void updateStartOrStopButton()
         {
             if (vsOneState != VsStatus.Connecting && vsTwoState != VsStatus.Connecting && vsThreeState != VsStatus.Connecting)
@@ -143,6 +165,12 @@ namespace OpenProtocolInterpreter.Sample
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
                             break;
+                        case VsStatus.ConnDropped:
+                            vsOneState = VsStatus.ConnDropped;
+                            vsOneTimer.Start();
+                            if (currentMode == StartMode.Automatic)
+                                updateStartOrStopButton();
+                            break;
                     }
                     break;
                 case VirtualStations.Two:
@@ -164,9 +192,18 @@ namespace OpenProtocolInterpreter.Sample
         {
             if (startOrStopButton.Text == "START")
             {
-                startOrStopButton.Text = "CONNECTING";
+                startOrStopButton.Text = "CONNECTING";//TESTING
                 startOrStopButton.BackColor = Color.Yellow;
                 startOrStopButton.ForeColor = Color.Black;
+
+                //updateVsConnStatus(VirtualStations.One, VsStatus.Connecting);
+
+                //i++;
+                //while(i > 1)
+                //{
+
+                //}
+
 
                 driverForm.StartInterface();
             }
@@ -331,7 +368,6 @@ namespace OpenProtocolInterpreter.Sample
 
         private void vsOneTimer_Tick(object sender, EventArgs e)
         {
-
             switch (vsOneState)
             {
                 case VsStatus.Connecting:
@@ -339,15 +375,23 @@ namespace OpenProtocolInterpreter.Sample
                     {
                         vsOneConnStateLabel.ForeColor = Color.Transparent;
                         vsOneConnStateLabel.BackColor = _blue;
-                        this.Update();
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
                         vsOneTimerState = true;
+                        Console.WriteLine("Tick as False at connecting");
                     }
                     else
                     {
                         vsOneConnStateLabel.ForeColor = _grey;
                         vsOneConnStateLabel.BackColor = Color.Transparent;
-                        this.Update();
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
                         vsOneTimerState = false;
+                        Console.WriteLine("Tick as True at connecting");
                     }
                     break;
                 case VsStatus.Warning:
@@ -355,14 +399,44 @@ namespace OpenProtocolInterpreter.Sample
                     {
                         vsOneConnStateLabel.ForeColor = Color.Transparent;
                         vsOneConnStateLabel.BackColor = Color.Yellow;
-                        this.Update();
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        }); ;
                         vsOneTimerState = true;
+                        Console.WriteLine("Tick as False at Warning");
                     }
                     else
                     {
                         vsOneConnStateLabel.ForeColor = _grey;
                         vsOneConnStateLabel.BackColor = Color.Transparent;
-                        this.Update();
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsOneTimerState = false;
+                    }
+                    break;
+                case VsStatus.ConnDropped:
+                    if (!vsOneTimerState)
+                    {
+                        vsOneConnStateLabel.ForeColor = Color.Transparent;
+                        vsOneConnStateLabel.BackColor = _orange;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsOneTimerState = true;
+                        Console.WriteLine("Tick as False at connecting");
+                    }
+                    else
+                    {
+                        vsOneConnStateLabel.ForeColor = _grey;
+                        vsOneConnStateLabel.BackColor = Color.Transparent;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
                         vsOneTimerState = false;
                     }
                     break;
