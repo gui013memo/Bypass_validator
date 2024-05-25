@@ -46,6 +46,7 @@ namespace OpenProtocolInterpreter.Sample
         {
             None,
             Connecting,
+            Reconnecting,
             Connected,
             ConnFailed,
             Warning,
@@ -64,7 +65,7 @@ namespace OpenProtocolInterpreter.Sample
         public bool vsTwoStopRequest;
         public bool vsThreeStopRequest;
 
-        public VsStatus vsOneState 
+        public VsStatus vsOneState
         {
             get { return _vsOneState; }
             private set
@@ -138,10 +139,17 @@ namespace OpenProtocolInterpreter.Sample
                             vsOneConnStateLabel.ForeColor = _grey;
                             vsOneConnStateLabel.BackColor = Color.Transparent;
                             vsOneTimer.Stop();
+                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
                             break;
                         case VsStatus.Connecting:
                             vsOneState = VsStatus.Connecting;
                             vsOneTimer.Start();
+                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
+                            break;
+                        case VsStatus.Reconnecting:
+                            vsOneState = VsStatus.Reconnecting;
+                            vsOneTimer.Start();
+                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
                             break;
                         case VsStatus.ConnFailed:
                             vsOneState = VsStatus.ConnFailed;
@@ -150,6 +158,7 @@ namespace OpenProtocolInterpreter.Sample
                             vsOneTimer.Stop();
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
+                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
                             break;
                         case VsStatus.Connected:
                             vsOneState = VsStatus.Connected;
@@ -158,18 +167,21 @@ namespace OpenProtocolInterpreter.Sample
                             vsOneConnStateLabel.BackColor = Color.Green;
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
+                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
                             break;
                         case VsStatus.Warning:
                             vsOneState = VsStatus.Warning;
                             vsOneTimer.Start();
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
+                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
                             break;
                         case VsStatus.ConnDropped:
                             vsOneState = VsStatus.ConnDropped;
                             vsOneTimer.Start();
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
+                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
                             break;
                     }
                     break;
@@ -366,6 +378,28 @@ namespace OpenProtocolInterpreter.Sample
                     {
                         vsOneConnStateLabel.ForeColor = Color.Transparent;
                         vsOneConnStateLabel.BackColor = _blue;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsOneTimerState = true;
+                    }
+                    else
+                    {
+                        vsOneConnStateLabel.ForeColor = _grey;
+                        vsOneConnStateLabel.BackColor = Color.Transparent;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsOneTimerState = false;
+                    }
+                    break;
+                case VsStatus.Reconnecting:
+                    if (!vsOneTimerState)
+                    {
+                        vsOneConnStateLabel.ForeColor = Color.Transparent;
+                        vsOneConnStateLabel.BackColor = _orange;
                         this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
                         {
                             this.Update();
