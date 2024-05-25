@@ -178,7 +178,7 @@ namespace OpenProtocolInterpreter.Sample
                             {
                                 Console.WriteLine("THE EXCEP: " + ex.ToString());
                                 Console.WriteLine("The conn has been dropped at XXX<- get from disconnection timestamp at keepalive timer date/time, the system is trying to reconnect...");
-                               // WorkingThreadHandleTcpConnection(vs);
+                                WorkingThreadHandleTcpConnection(vs);
                             }
                             else
                             {
