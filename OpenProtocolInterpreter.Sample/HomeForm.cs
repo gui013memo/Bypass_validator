@@ -214,6 +214,8 @@ namespace OpenProtocolInterpreter.Sample
             {
                 updateVsConnStatus(VirtualStations.One, VsStatus.None);
 
+                vsOneThreadRunning = false; // <-- atention
+
                 driverForm.StopAllInterfaces();
 
                 startOrStopButton.Text = "START";
