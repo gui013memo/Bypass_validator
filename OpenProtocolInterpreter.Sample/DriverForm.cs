@@ -289,7 +289,10 @@ namespace OpenProtocolInterpreter.Sample
         {
             vsOneDriver.StopCommunication();
             vsOneKeepAliveTimer.Stop();
-            homeForm.vsOneStopRequest = true;
+            
+            //homeForm.vsOneStopRequest = true;    // <-- Cursed as a fuck
+
+
             if (!homeForm.vsOneThreadRunning)
             {
                 homeForm.vsOneState = VsStatus.None;

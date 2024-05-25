@@ -25,7 +25,7 @@ namespace OpenProtocolInterpreter.Sample
         bool vsThreeTimerState = false;
 
         System.Timers.Timer vsOneTimer;
-        
+
 
         public enum StartMode
         {
@@ -380,7 +380,6 @@ namespace OpenProtocolInterpreter.Sample
                             this.Update();
                         });
                         vsOneTimerState = true;
-                        Console.WriteLine("Tick as False at connecting");
                     }
                     else
                     {
@@ -391,7 +390,6 @@ namespace OpenProtocolInterpreter.Sample
                             this.Update();
                         });
                         vsOneTimerState = false;
-                        Console.WriteLine("Tick as True at connecting");
                     }
                     break;
                 case VsStatus.Warning:
@@ -404,7 +402,6 @@ namespace OpenProtocolInterpreter.Sample
                             this.Update();
                         }); ;
                         vsOneTimerState = true;
-                        Console.WriteLine("Tick as False at Warning");
                     }
                     else
                     {
@@ -427,7 +424,6 @@ namespace OpenProtocolInterpreter.Sample
                             this.Update();
                         });
                         vsOneTimerState = true;
-                        Console.WriteLine("Tick as False at connecting");
                     }
                     else
                     {
