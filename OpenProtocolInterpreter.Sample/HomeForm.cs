@@ -212,6 +212,8 @@ namespace OpenProtocolInterpreter.Sample
             }
             else if (startOrStopButton.Text == "STOP")
             {
+                updateVsConnStatus(VirtualStations.One, VsStatus.None);
+
                 driverForm.StopAllInterfaces();
 
                 startOrStopButton.Text = "START";

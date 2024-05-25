@@ -121,9 +121,13 @@ namespace OpenProtocolInterpreter.Sample
                 case VirtualStations.One:
                     if (!homeForm.vsOneThreadRunning)
                     {
-                        _vsOneThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
-                        _vsOneThread.IsBackground = true;
-                        _vsOneThread.Start();
+                        do
+                        {
+                            _vsOneThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
+                            _vsOneThread.IsBackground = true;
+                            homeForm.vsOneThreadRunning = true;
+                            _vsOneThread.Start();
+                        } while (vsOneClient != null && homeForm.vsOneState == VsStatus.ConnDropped && !homeForm.vsOneStopRequest && !homeForm.vsOneThreadRunning);
                     }
                     break;
                 case VirtualStations.Two:
@@ -139,8 +143,6 @@ namespace OpenProtocolInterpreter.Sample
             switch (vs)
             {
                 case VirtualStations.One: //PUT THIS ON DOCUMENTATION
-
-                    //homeForm.vsOneThreadRunning = true;
 
                     if (homeForm.vsOneState != VsStatus.Connected)
                     {
@@ -161,40 +163,38 @@ namespace OpenProtocolInterpreter.Sample
 
                         bool tcpConnDone = false;
 
-                        do
+                        try
                         {
-                            try
+                            Console.WriteLine("trying to conn SimpleTcp on WorkingThread function");
+                            vsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
+
+                            if (vsOneClient != null)
+                                tcpConnDone = true;
+
+                        }
+                        catch (Exception ex)
+                        {
+                            if (homeForm.vsOneState == VsStatus.Reconnecting)
                             {
-                                vsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
-
-                                if (vsOneClient != null)
-                                    tcpConnDone = true;
-
+                                Console.WriteLine("THE EXCEP: " + ex.ToString());
+                                Console.WriteLine("The conn has been dropped at XXX<- get from disconnection timestamp at keepalive timer date/time, the system is trying to reconnect...");
+                               // WorkingThreadHandleTcpConnection(vs);
                             }
-                            catch (Exception ex)
+                            else
                             {
-                                if (homeForm.vsOneState == VsStatus.Reconnecting)
+                                Console.WriteLine("THE EXCEP: " + ex.ToString());
+                                this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
                                 {
-                                    Console.WriteLine("THE EXCEP: " + ex.ToString());
-                                    Console.WriteLine("The conn has been dropped at XXX date/time, the system is trying to reconnect...");
-                                    //StopAllInterfaces();
-                                }
-                                else
-                                {
-                                    Console.WriteLine("THE EXCEP: " + ex.ToString());
-                                    this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                                    if (ex.Message.Contains("refused"))
                                     {
-                                        if (ex.Message.Contains("refused"))
-                                        {
-                                            analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " TCP conn failed at VS1 \r\n";
-                                            MessageBox.Show("The connection has been refused at Virtual Station One\r\nCheck the Open Protocol settings on controller", "CONNECTION REFUSED", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                        }
-                                        homeForm.updateVsConnStatus(vs, VsStatus.ConnFailed);
-                                    });
-                                }
-
+                                        analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " TCP conn failed at VS1 \r\n";
+                                        MessageBox.Show("The connection has been refused at Virtual Station One\r\nCheck the Open Protocol settings on controller", "CONNECTION REFUSED", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    }
+                                    homeForm.updateVsConnStatus(vs, VsStatus.ConnFailed);
+                                });
                             }
-                        } while (vsOneClient != null && homeForm.vsOneState == VsStatus.ConnDropped && !homeForm.vsOneStopRequest);
+
+                        }
 
                         //if (homeForm.vsOneStopRequest)
                         //{
@@ -249,7 +249,7 @@ namespace OpenProtocolInterpreter.Sample
                         }
 
                     }
-                    //homeForm.vsOneThreadRunning = false;
+                    homeForm.vsOneThreadRunning = false;
                     break;
 
                 case VirtualStations.Two:
@@ -303,14 +303,12 @@ namespace OpenProtocolInterpreter.Sample
             //homeForm.vsOneStopRequest = true;    // <-- Cursed as a fuck // Check how to make an cancelation token source to stop reconnection auto attempts
 
 
-            //if (homeForm.vsOneState == VsStatus.ConnDropped)
+
+            //if (homeForm.vsOneState != VsStatus.ConnDropped || homeForm.vsOneState != VsStatus.Reconnecting)
             //{
-            //    homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.ConnDropped);
+            //    homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.None);
             //}
-            //else
-            //{
-            // homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.None);
-            //}
+
 
 
             //vsThreeDriver.StopCommunication();
