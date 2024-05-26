@@ -1,0 +1,4 @@
+﻿
+1. Connection attempt stopped before be done
+	App starts - START btn is hitted - (Connecting is happening) - startOrStopButton goes to "CONNECTING" - before the connection attempt occurs the startOrStopButton is hitted -
+	Virtual Stations must go to None state, stop blinking - the running thread must be finished with no more actions by the cancelation flag "vsOneCancelReconn" for vsOne in this example.

@@ -203,6 +203,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <Content Include="Notes\mid200_message.txt" />
+    <Content Include="Notes\States.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="NewFolder1\" />

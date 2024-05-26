@@ -192,6 +192,8 @@ namespace OpenProtocolInterpreter.Sample
                                 break;
                             }
 
+                            vsOneThreadQueue = 0;
+
                             Console.WriteLine("vsOne not connected");
 
                             if (homeForm.vsOneState == VsStatus.Reconnecting)
@@ -223,13 +225,10 @@ namespace OpenProtocolInterpreter.Sample
                             break;
                         }
 
-                        //if (homeForm.vsOneStopRequest)
-                        //{
-                        //    homeForm.updateVsConnStatus(vs, VsStatus.None);
-                        //}
-
                         if (vsOneDriver.BeginCommunication(localClient))
                         {
+                            vsOneThreadQueue = 0;
+
                             this.Invoke((MethodInvoker)delegate
                             {
                                 vsOneKeepAliveTimer.Start();//Implement connection watchdog
