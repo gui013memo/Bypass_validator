@@ -222,23 +222,21 @@ namespace OpenProtocolInterpreter.Sample
                 startOrStopButton.BackColor = Color.Green;
                 startOrStopButton.ForeColor = Color.Transparent;
             }
-
-            //Not working
+            else if (startOrStopButton.Text == "CONNECTING")
             {
-                //else if(startOrStopButton.Text == "CONNECTING")
-                //{
-                //    DialogResult result = MessageBox.Show("Do you want to cancel the connection attempt?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("Do you want to cancel the connection attempt?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                //    if(result == DialogResult.Yes)
-                //    {
-                //        driverForm.AbortTcpThread(VirtualStations.One);
+                if (result == DialogResult.Yes)
+                {
+                    driverForm.StopConnAttempt(VirtualStations.One);
+                    updateVsConnStatus(VirtualStations.One, VsStatus.None);
 
-                //        startOrStopButton.Text = "START";
-                //        startOrStopButton.BackColor = Color.Green;
-                //        startOrStopButton.ForeColor = Color.Transparent;
-                //    }
-                //}
+                    startOrStopButton.Text = "START";
+                    startOrStopButton.BackColor = Color.Green;
+                    startOrStopButton.ForeColor = Color.Transparent;
+                }
             }
+
 
         }
 

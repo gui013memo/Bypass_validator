@@ -125,10 +125,10 @@ namespace OpenProtocolInterpreter.Sample
                     {
                         do
                         {
-                        _vsOneThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
-                        _vsOneThread.IsBackground = true;
-                        homeForm.vsOneThreadRunning = true;
-                        _vsOneThread.Start();
+                            _vsOneThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
+                            _vsOneThread.IsBackground = true;
+                            homeForm.vsOneThreadRunning = true;
+                            _vsOneThread.Start();
                         } while (vsOneClient != null && homeForm.vsOneState == VsStatus.ConnDropped && !homeForm.vsOneStopRequest && !homeForm.vsOneThreadRunning);
                     }
                     break;
@@ -142,6 +142,7 @@ namespace OpenProtocolInterpreter.Sample
         private void WorkingThreadHandleTcpConnection(VirtualStations vs)//PUT THIS ON DOCUMENTATION
         {
             Console.WriteLine("NEW WorkingTHread started!");
+
             switch (vs)
             {
                 case VirtualStations.One: //PUT THIS ON DOCUMENTATION
@@ -179,7 +180,7 @@ namespace OpenProtocolInterpreter.Sample
                             if (homeForm.vsOneState == VsStatus.Reconnecting)
                             {
                                 Console.WriteLine("THE EXCEP: " + ex.ToString());
-                                Console.WriteLine("The conn has been dropped at XXX<- get from disconnection timestamp at keepalive timer date/time, the system is trying to reconnect...");
+                                Console.WriteLine("The conn has been dropped at XXX(<- get from disconnection timestamp at keepalive timer date/time), the system is trying to reconnect...");
                                 if (!cancelReconnToken)
                                 {
                                     WorkingThreadHandleTcpConnection(vs);
@@ -195,7 +196,11 @@ namespace OpenProtocolInterpreter.Sample
                                         analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " TCP conn failed at VS1 \r\n";
                                         MessageBox.Show("The connection has been refused at Virtual Station One\r\nCheck the Open Protocol settings on controller", "CONNECTION REFUSED", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     }
-                                    homeForm.updateVsConnStatus(vs, VsStatus.ConnFailed);
+
+                                    this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                                    {
+                                        homeForm.updateVsConnStatus(vs, VsStatus.ConnFailed);
+                                    });
                                 });
                             }
 
@@ -237,19 +242,23 @@ namespace OpenProtocolInterpreter.Sample
                             }
                             else if (vsOneDriver.startCommErrorMessage.Contains("TCP Conn done but reply from controller was NULL, probably by TIMEOUT"))
                             {
-                                homeForm.updateVsConnStatus(vs, VsStatus.ConnDropped);
-
+                                this.Invoke((MethodInvoker)delegate
+                                {
+                                    homeForm.updateVsConnStatus(vs, VsStatus.ConnDropped);
+                                    analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " Reply from controller was NULL, probably by TIMEOUT on MID 0002 answer waiting, restarting connection attempt\r\n";
+                                });
                                 vsOneDriver.StopCommunication();
                                 StartInterface();
-                                analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " Reply from controller was NULL, probably by TIMEOUT on MID 0002 answer waiting, restarting connection attempt\r\n";
                             }
                             else
                             {
-                                homeForm.updateVsConnStatus(vs, VsStatus.ConnDropped);
-
+                                this.Invoke((MethodInvoker)delegate
+                                {
+                                    homeForm.updateVsConnStatus(vs, VsStatus.ConnDropped);
+                                    analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + "TCP OK, but Open Protocol comm not started by unknow reason, restarting connection attempt\r\n";
+                                });
                                 vsOneDriver.StopCommunication();
                                 StartInterface();
-                                analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + "TCP OK, but Open Protocol comm not started by unknow reason, restarting connection attempt\r\n";
                             }
                         }
 
@@ -263,33 +272,18 @@ namespace OpenProtocolInterpreter.Sample
                 case VirtualStations.Three:
                     break;
             }
-
-
         }
 
-        //Not working
-        public void AbortTcpThread(VirtualStations vs)
+        public void StopConnAttempt(VirtualStations vs)
         {
             switch (vs)
             {
                 case VirtualStations.One:
-                    if (_vsOneThread != null && _vsOneThread.IsAlive)
-                    {
-                        try
-                        {
-                            _vsOneThread.Abort();
-                            _vsOneThread = null;
-                            MessageBox.Show("Thread aborted.");
-                        }
-                        catch (ThreadAbortException ex)
-                        {
-                            // Handle ThreadAbortException
-                            MessageBox.Show("Thread abort failed: " + ex.Message);
-                        }
-                    }
+                    _vsOneThread = null;
                     break;
             }
         }
+
 
         public void StartInterface()
         {// Make the handle to start manual or automatic mode @@@

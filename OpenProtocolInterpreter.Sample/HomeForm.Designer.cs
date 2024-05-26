@@ -380,7 +380,7 @@
             this.vsOneIpTextBox.Name = "vsOneIpTextBox";
             this.vsOneIpTextBox.Size = new System.Drawing.Size(149, 22);
             this.vsOneIpTextBox.TabIndex = 2;
-            this.vsOneIpTextBox.Text = "10.127.1.21";
+            this.vsOneIpTextBox.Text = "192.168.1.17";
             this.vsOneIpTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // vsOneControllerIpLabel
