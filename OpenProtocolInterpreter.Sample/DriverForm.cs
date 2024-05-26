@@ -38,12 +38,14 @@ namespace OpenProtocolInterpreter.Sample
         bool bypassAllowed = false;
         public bool idLogsPathOK;
 
-        bool cancelReconnToken = false;
+        bool vsOneCancelReconn = false;
 
         public bool isSQSLogged = false;
         public string currentOperatorId = string.Empty;
         public string currentOperatorName = string.Empty;
         public string currentOperatorGroup = string.Empty;
+
+        DateTime vsOneConnLostTimeStamp;
 
         HomeForm homeForm;
         SettingsForm settingsForm;
@@ -57,6 +59,8 @@ namespace OpenProtocolInterpreter.Sample
         Thread _vsOneThread;
         Thread _vsTwoThread;
         Thread _vsThreeThread;
+
+        uint vsOneThreadQueue = 0;
 
 
         public DriverForm()
@@ -121,16 +125,11 @@ namespace OpenProtocolInterpreter.Sample
             switch (vs)
             {
                 case VirtualStations.One:
-                    if (!homeForm.vsOneThreadRunning)
-                    {
-                        do
-                        {
-                            _vsOneThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
-                            _vsOneThread.IsBackground = true;
-                            homeForm.vsOneThreadRunning = true;
-                            _vsOneThread.Start();
-                        } while (vsOneClient != null && homeForm.vsOneState == VsStatus.ConnDropped && !homeForm.vsOneStopRequest && !homeForm.vsOneThreadRunning);
-                    }
+                    vsOneThreadQueue++;
+                    _vsOneThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
+                    _vsOneThread.IsBackground = true;
+                    homeForm.vsOneThreadRunning = true;
+                    _vsOneThread.Start();
                     break;
                 case VirtualStations.Two:
                     break;
@@ -141,11 +140,14 @@ namespace OpenProtocolInterpreter.Sample
 
         private void WorkingThreadHandleTcpConnection(VirtualStations vs)//PUT THIS ON DOCUMENTATION
         {
-            Console.WriteLine("NEW WorkingTHread started!");
+            Console.WriteLine("New WorkingThread started for vs: " + vs.ToString());
 
             switch (vs)
             {
                 case VirtualStations.One: //PUT THIS ON DOCUMENTATION
+                    
+                    uint localThreadQueue = vsOneThreadQueue;
+                    SimpleTcpClient localClient = null;
 
                     if (homeForm.vsOneState != VsStatus.Connected)
                     {
@@ -156,39 +158,58 @@ namespace OpenProtocolInterpreter.Sample
                                 homeForm.updateVsConnStatus(vs, VsStatus.Reconnecting); // this call must happen to auto reconnection work
                             });
                         }
-                        else
-                        {
-                            this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
-                            {
-                                homeForm.updateVsConnStatus(vs, VsStatus.Connecting); // this call must happen to auto reconnection work
-                            });
-                        }
-
-                        bool tcpConnDone = false;
 
                         try
                         {
-                            Console.WriteLine("trying to conn SimpleTcp on WorkingThread function");
-                            vsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
+                            Console.WriteLine("trying to conn localClient for vsOne inside of WorkingThread function");
+                            localClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
+                            Console.WriteLine("vsOne Connected");
 
-                            if (vsOneClient != null)
-                                tcpConnDone = true;
+                            if (vsOneCancelReconn)
+                            {
+                                Console.WriteLine("vsOneCancelReconn was TRUE on TRY block inside of WorkingThreadHandleTcpConnection, exiting from thread");
+                                break;
+                            }
+
+                            if (localThreadQueue != vsOneThreadQueue)
+                            {
+                                Console.WriteLine($"localThreadQueue is different from vsOneThreadQueue, this thread is not the latest, exiting from thread. localThreadQueue: {localThreadQueue}, vsOneThreadQueue: {vsOneThreadQueue}");
+                                break;
+                            }
 
                         }
                         catch (Exception ex)
                         {
+                            if (vsOneCancelReconn)
+                            {
+                                Console.WriteLine("vsOneCancelReconn was TRUE on CATCH block inside of WorkingThreadHandleTcpConnection, exiting from thread");
+                                break;
+                            }
+
+                            if (localThreadQueue != vsOneThreadQueue)
+                            {
+                                Console.WriteLine($"localThreadQueue is different from vsOneThreadQueue, this thread is not the latest, exiting from thread. localThreadQueue: {localThreadQueue}, vsOneThreadQueue: {vsOneThreadQueue}");
+                                break;
+                            }
+
+                            Console.WriteLine("vsOne not connected");
+
                             if (homeForm.vsOneState == VsStatus.Reconnecting)
                             {
-                                Console.WriteLine("THE EXCEP: " + ex.ToString());
-                                Console.WriteLine("The conn has been dropped at XXX(<- get from disconnection timestamp at keepalive timer date/time), the system is trying to reconnect...");
-                                if (!cancelReconnToken)
+                                Console.WriteLine("The system is on RECONNECTING MODE for vsOne. The conn has been dropped at " + vsOneConnLostTimeStamp.ToString("HH:mm:ss") + " - The system is trying to reconnect...");
+                                if (!vsOneCancelReconn)
                                 {
                                     WorkingThreadHandleTcpConnection(vs);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("vsOneCancelReconn was TRUE at WorkingThreadHandleTcpConnection reconn attempt, stopping the reconnection attempt");
+                                    break;
                                 }
                             }
                             else
                             {
-                                Console.WriteLine("THE EXCEP: " + ex.ToString());
+                                Console.WriteLine("THE EXCEPTION: " + ex.ToString());
                                 this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
                                 {
                                     if (ex.Message.Contains("refused"))
@@ -196,14 +217,10 @@ namespace OpenProtocolInterpreter.Sample
                                         analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " TCP conn failed at VS1 \r\n";
                                         MessageBox.Show("The connection has been refused at Virtual Station One\r\nCheck the Open Protocol settings on controller", "CONNECTION REFUSED", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     }
-
-                                    this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
-                                    {
-                                        homeForm.updateVsConnStatus(vs, VsStatus.ConnFailed);
-                                    });
+                                    homeForm.updateVsConnStatus(vs, VsStatus.ConnFailed);
                                 });
                             }
-
+                            break;
                         }
 
                         //if (homeForm.vsOneStopRequest)
@@ -211,7 +228,7 @@ namespace OpenProtocolInterpreter.Sample
                         //    homeForm.updateVsConnStatus(vs, VsStatus.None);
                         //}
 
-                        if (tcpConnDone && vsOneDriver.BeginCommunication(vsOneClient))
+                        if (vsOneDriver.BeginCommunication(localClient))
                         {
                             this.Invoke((MethodInvoker)delegate
                             {
@@ -219,7 +236,7 @@ namespace OpenProtocolInterpreter.Sample
                                 homeForm.updateVsConnStatus(vs, VsStatus.Connected);
                             });
                         }
-                        else if (tcpConnDone)
+                        else
                         {
                             if (vsOneDriver.startCommErrorMessage.Contains("Client is already connected")) // Already handling this -> if (homeForm.vsOneState != VsStatus.Connected) 
                             {
@@ -240,7 +257,7 @@ namespace OpenProtocolInterpreter.Sample
                                     analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " Reply from controller was MidRevisionUnsupported, restarting connection attempt\r\n";
                                 });
                             }
-                            else if (vsOneDriver.startCommErrorMessage.Contains("TCP Conn done but reply from controller was NULL, probably by TIMEOUT"))
+                            else if (vsOneDriver.startCommErrorMessage.Contains("Reply from controller was NULL, probably by TIMEOUT"))
                             {
                                 this.Invoke((MethodInvoker)delegate
                                 {
@@ -263,7 +280,6 @@ namespace OpenProtocolInterpreter.Sample
                         }
 
                     }
-                    homeForm.vsOneThreadRunning = false;
                     break;
 
                 case VirtualStations.Two:
@@ -280,6 +296,7 @@ namespace OpenProtocolInterpreter.Sample
             {
                 case VirtualStations.One:
                     _vsOneThread = null;
+                    vsOneCancelReconn = true;
                     break;
             }
         }
@@ -291,7 +308,7 @@ namespace OpenProtocolInterpreter.Sample
             //connectToController(VirtualStations.Two);
             //connectToController(VirtualStations.Three);
 
-            cancelReconnToken = false;
+            vsOneCancelReconn = false;
         }
 
         public void StopAllInterfaces()
@@ -301,7 +318,7 @@ namespace OpenProtocolInterpreter.Sample
 
             if (homeForm.vsOneState == VsStatus.Reconnecting || homeForm.vsOneState == VsStatus.ConnDropped)
             {
-                cancelReconnToken = true;
+                vsOneCancelReconn = true; 
             }
         }
 
@@ -323,29 +340,18 @@ namespace OpenProtocolInterpreter.Sample
                 }
                 else
                 {
-                    Console.WriteLine($"Keep Alive Not Received, connection lost");
-                    //homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.ConnFailed);
-                    //if (vsOneDriver.simpleTcpClient != null)
-                    //{
-                    //    vsOneDriver.StopCommunication();
-                    //    Console.WriteLine($"vsOneDriver.simpleTcpClient DISCONNECTED");
-                    //}
+                    Console.WriteLine($"Keep Alive Not Received, connection lost. Stopping keepAliveTimer and trying to connect again by StartInterface method");
 
-                    homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.ConnDropped);
-
-                    Console.WriteLine($"Stopping keepAliveTimer and trying to connect again by StartInterface method");
-
-                    //vsOneClient = null;
-                    //vsOneDriver = null;
-
-                    //vsOneDriver = new OpenProtocolDriver();
+                    if (pack.Header != null)
+                        Console.WriteLine($"Pack: {pack.Header.ToString()}");
 
                     StopAllInterfaces();
+                    homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.ConnDropped);
+
+                    vsOneConnLostTimeStamp = DateTime.Now;
 
                     vsOneKeepAliveTimer.Stop();
                     StartInterface();
-
-                    //connectToController(VirtualStations.One);
                 }
 
             }

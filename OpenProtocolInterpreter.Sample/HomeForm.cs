@@ -208,13 +208,13 @@ namespace OpenProtocolInterpreter.Sample
                 startOrStopButton.BackColor = Color.Yellow;
                 startOrStopButton.ForeColor = Color.Black;
 
+                updateVsConnStatus(VirtualStations.One, VsStatus.Connecting);
+
                 driverForm.StartInterface();
             }
             else if (startOrStopButton.Text == "STOP")
             {
                 updateVsConnStatus(VirtualStations.One, VsStatus.None);
-
-                vsOneThreadRunning = false; // <-- atention
 
                 driverForm.StopAllInterfaces();
 
@@ -472,6 +472,11 @@ namespace OpenProtocolInterpreter.Sample
         }
 
         private void vsThreeTimer_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void vsOneIpTextBox_TextChanged(object sender, EventArgs e)
         {
 
         }

@@ -382,6 +382,7 @@
             this.vsOneIpTextBox.TabIndex = 2;
             this.vsOneIpTextBox.Text = "192.168.1.17";
             this.vsOneIpTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.vsOneIpTextBox.TextChanged += new System.EventHandler(this.vsOneIpTextBox_TextChanged);
             // 
             // vsOneControllerIpLabel
             // 
