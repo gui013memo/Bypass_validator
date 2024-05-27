@@ -120,15 +120,15 @@ namespace OpenProtocolInterpreter.Sample
             mouseDown = false;
         }
 
-        private void connectToController(VirtualStations vs)//PUT THIS ON DOCUMENTATION
+        public void connectToController(VirtualStations vs)//PUT THIS ON DOCUMENTATION
         {
             switch (vs)
             {
                 case VirtualStations.One:
+                    vsOneCancelReconn = false;
                     vsOneThreadQueue++;
                     _vsOneThread = new Thread(() => WorkingThreadHandleTcpConnection(vs));//PUT THIS ON DOCUMENTATION
                     _vsOneThread.IsBackground = true;
-                    homeForm.vsOneThreadRunning = true;
                     _vsOneThread.Start();
                     break;
                 case VirtualStations.Two:
@@ -145,7 +145,7 @@ namespace OpenProtocolInterpreter.Sample
             switch (vs)
             {
                 case VirtualStations.One: //PUT THIS ON DOCUMENTATION
-                    
+
                     uint localThreadQueue = vsOneThreadQueue;
                     SimpleTcpClient localClient = null;
 
@@ -216,10 +216,13 @@ namespace OpenProtocolInterpreter.Sample
                                 {
                                     if (ex.Message.Contains("refused"))
                                     {
+                                        this.TopMost = true; // To ensure that the user will see the warning
+
                                         analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " TCP conn failed at VS1 \r\n";
                                         MessageBox.Show("The connection has been refused at Virtual Station One\r\nCheck the Open Protocol settings on controller", "CONNECTION REFUSED", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     }
                                     homeForm.updateVsConnStatus(vs, VsStatus.ConnFailed);
+                                    this.TopMost = false;
                                 });
                             }
                             break;
@@ -231,7 +234,7 @@ namespace OpenProtocolInterpreter.Sample
 
                             this.Invoke((MethodInvoker)delegate
                             {
-                                vsOneKeepAliveTimer.Start();//Implement connection watchdog
+                                vsOneKeepAliveTimer.Start();
                                 homeForm.updateVsConnStatus(vs, VsStatus.Connected);
                             });
                         }
@@ -252,7 +255,7 @@ namespace OpenProtocolInterpreter.Sample
                                     analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " MidRevisionUnsupported\r\n";
 
                                     vsOneDriver.StopCommunication();
-                                    StartInterface();
+                                    StartAllInterfaces();
                                     analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " Reply from controller was MidRevisionUnsupported, restarting connection attempt\r\n";
                                 });
                             }
@@ -264,7 +267,7 @@ namespace OpenProtocolInterpreter.Sample
                                     analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + " Reply from controller was NULL, probably by TIMEOUT on MID 0002 answer waiting, restarting connection attempt\r\n";
                                 });
                                 vsOneDriver.StopCommunication();
-                                StartInterface();
+                                StartAllInterfaces();
                             }
                             else
                             {
@@ -274,7 +277,7 @@ namespace OpenProtocolInterpreter.Sample
                                     analysisForm.errorsTextBox.Text += DateTime.Now.ToString("HH:mm:ss") + "TCP OK, but Open Protocol comm not started by unknow reason, restarting connection attempt\r\n";
                                 });
                                 vsOneDriver.StopCommunication();
-                                StartInterface();
+                                StartAllInterfaces();
                             }
                         }
 
@@ -301,29 +304,40 @@ namespace OpenProtocolInterpreter.Sample
         }
 
 
-        public void StartInterface()
-        {// Make the handle to start manual or automatic mode @@@
+        public void StartAllInterfaces()
+        {
             connectToController(VirtualStations.One);
             //connectToController(VirtualStations.Two);
             //connectToController(VirtualStations.Three);
 
-            vsOneCancelReconn = false;
+            
         }
 
         public void StopAllInterfaces()
         {
-            vsOneDriver.StopCommunication();
-            vsOneKeepAliveTimer.Stop();
-
-            if (homeForm.vsOneState == VsStatus.Reconnecting || homeForm.vsOneState == VsStatus.ConnDropped)
-            {
-                vsOneCancelReconn = true; 
-            }
+            StopInterface(VirtualStations.One);
+            //StopInterface(VirtualStations.Two);
+            //StopInterface(VirtualStations.Three);
         }
 
-        public void StopInterface(OpenProtocolDriver driver)
+        public void StopInterface(VirtualStations vs)
         {
-            driver.StopCommunication();
+            switch (vs)
+            {
+                case VirtualStations.One:
+                    vsOneDriver.StopCommunication();
+                    vsOneKeepAliveTimer.Stop();
+
+                    if (homeForm.vsOneState == VsStatus.Reconnecting || homeForm.vsOneState == VsStatus.ConnDropped)
+                    {
+                        vsOneCancelReconn = true;
+                    }
+                    break;
+                case VirtualStations.Two:
+                    break;
+                case VirtualStations.Three:
+                    break;
+            }
         }
 
         private void vsOneKeepAliveTimer_Tick(object sender, EventArgs e)
@@ -341,8 +355,8 @@ namespace OpenProtocolInterpreter.Sample
                 {
                     Console.WriteLine($"Keep Alive Not Received, connection lost. Stopping keepAliveTimer and trying to connect again by StartInterface method");
 
-                    if (pack.Header != null)
-                        Console.WriteLine($"Pack: {pack.Header.ToString()}");
+                    //if (pack.Header != null)
+                    //    Console.WriteLine($"Pack: {pack.Header.ToString()}");
 
                     StopAllInterfaces();
                     homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.ConnDropped);
@@ -350,7 +364,7 @@ namespace OpenProtocolInterpreter.Sample
                     vsOneConnLostTimeStamp = DateTime.Now;
 
                     vsOneKeepAliveTimer.Stop();
-                    StartInterface();
+                    StartAllInterfaces();
                 }
 
             }

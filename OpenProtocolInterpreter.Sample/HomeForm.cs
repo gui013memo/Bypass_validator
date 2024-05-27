@@ -110,20 +110,40 @@ namespace OpenProtocolInterpreter.Sample
         //Used for automatic mode
         private void updateStartOrStopButton()
         {
-            if (vsOneState != VsStatus.Connecting && vsTwoState != VsStatus.Connecting && vsThreeState != VsStatus.Connecting)
+            if (currentMode == StartMode.Automatic)
             {
-                if (vsOneState != VsStatus.ConnFailed || vsTwoState == VsStatus.ConnFailed || vsThreeState == VsStatus.ConnFailed)
+                startOrStopButton.Enabled = true;
+                if (_vsOneState == VsStatus.Connected || _vsOneState == VsStatus.Warning ||
+                    _vsTwoState == VsStatus.Connected || _vsTwoState == VsStatus.Warning ||
+                    _vsTwoState == VsStatus.Connected || _vsTwoState == VsStatus.Warning)
                 {
-                    startOrStopButton.Text = "STOP";
                     startOrStopButton.BackColor = _red;
                     startOrStopButton.ForeColor = Color.Transparent;
+                    startOrStopButton.Text = "STOP";
+                }
+                else if (_vsOneState == VsStatus.Connecting || _vsTwoState == VsStatus.Connecting || _vsThreeState == VsStatus.Connecting)
+                {
+                    startOrStopButton.Text = "CONNECTING";
+                    startOrStopButton.BackColor = Color.Yellow;
+                    startOrStopButton.ForeColor = Color.Black;
                 }
                 else
                 {
-                    startOrStopButton.Text = "START";
                     startOrStopButton.BackColor = Color.Green;
                     startOrStopButton.ForeColor = Color.Transparent;
+                    startOrStopButton.Text = "START";
                 }
+
+
+            }
+            else //Manual mode
+            {
+                startOrStopButton.Enabled = false;
+                startOrStopButton.Text = "MANUAL ON";
+                startOrStopButton.BackColor = Color.Gainsboro;
+                startOrStopButton.ForeColor = _grey;
+
+
             }
         }
 
@@ -181,7 +201,7 @@ namespace OpenProtocolInterpreter.Sample
                             vsOneTimer.Start();
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
-                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
+                                Console.WriteLine("NEW vsOneStatus: " + status.ToString());
                             break;
                     }
                     break;
@@ -204,13 +224,13 @@ namespace OpenProtocolInterpreter.Sample
         {
             if (startOrStopButton.Text == "START")
             {
-                startOrStopButton.Text = "CONNECTING";//TESTING
+                startOrStopButton.Text = "CONNECTING";
                 startOrStopButton.BackColor = Color.Yellow;
                 startOrStopButton.ForeColor = Color.Black;
 
                 updateVsConnStatus(VirtualStations.One, VsStatus.Connecting);
 
-                driverForm.StartInterface();
+                driverForm.StartAllInterfaces();
             }
             else if (startOrStopButton.Text == "STOP")
             {
@@ -244,52 +264,21 @@ namespace OpenProtocolInterpreter.Sample
         {
             if (ModeButton.Text == "SET MANUAL")
             {
+                ModeButton.Text = "SET AUTOMATIC";
+
                 currentMode = StartMode.Manual;
-                startOrStopButton.Enabled = false;
-                ModeButton.BackColor = Color.Gainsboro;
-                ModeButton.ForeColor = _grey;
 
-                vsOneStartOrStopButton.Enabled = true;
-                vsTwoStartOrStopButton.Enabled = true;
-                vsThreeStartOrStopButton.Enabled = true;
-
+                updateStartOrStopButton();
                 updateManualVsButtons();
             }
             else if (ModeButton.Text == "SET AUTOMATIC")
             {
+                ModeButton.Text = "SET MANUAL";
+
                 currentMode = StartMode.Automatic;
 
-                startOrStopButton.Enabled = true;
-                if (_vsOneState == VsStatus.Connected || _vsOneState == VsStatus.Warning ||
-                    _vsTwoState == VsStatus.Connected || _vsTwoState == VsStatus.Warning ||
-                    _vsTwoState == VsStatus.Connected || _vsTwoState == VsStatus.Warning)
-                {
-                    startOrStopButton.Text = "STOP";
-                }
-                else if (_vsOneState == VsStatus.Connecting || _vsTwoState == VsStatus.Connecting || _vsThreeState == VsStatus.Connecting)
-                {
-                    startOrStopButton.Text = "CONNECTING";
-                }
-                else
-                {
-                    startOrStopButton.Text = "START";
-                }
-
-                vsOneStartOrStopButton.Enabled = false;
-                vsTwoStartOrStopButton.Enabled = false;
-                vsThreeStartOrStopButton.Enabled = false;
-
-                vsOneStartOrStopButton.BackColor = Color.Gainsboro;
-                vsOneStartOrStopButton.ForeColor = _grey;
-                vsOneStartOrStopButton.Text = "AUTOMATIC";
-
-                vsTwoStartOrStopButton.BackColor = Color.Gainsboro;
-                vsTwoStartOrStopButton.ForeColor = _grey;
-                vsTwoStartOrStopButton.Text = "AUTOMATIC";
-
-                vsThreeStartOrStopButton.BackColor = Color.Gainsboro;
-                vsThreeStartOrStopButton.ForeColor = _grey;
-                vsThreeStartOrStopButton.Text = "AUTOMATIC";
+                updateStartOrStopButton();
+                updateManualVsButtons();
             }
         }
 
@@ -297,6 +286,10 @@ namespace OpenProtocolInterpreter.Sample
         {
             if (currentMode == StartMode.Manual)
             {
+                vsOneStartOrStopButton.Enabled = true;
+                vsTwoStartOrStopButton.Enabled = true;
+                vsThreeStartOrStopButton.Enabled = true;
+
                 switch (_vsOneState)
                 {
                     case VsStatus.None:
@@ -315,8 +308,8 @@ namespace OpenProtocolInterpreter.Sample
                         vsOneStartOrStopButton.Text = "START";
                         break;
                     case VsStatus.Connecting:
-                        vsOneStartOrStopButton.BackColor = Color.Gainsboro;
-                        vsOneStartOrStopButton.ForeColor = _grey;
+                        vsOneStartOrStopButton.BackColor = Color.Yellow;
+                        vsOneStartOrStopButton.ForeColor = Color.Black;
                         vsOneStartOrStopButton.Text = "CONNECTING";
                         break;
                 }
@@ -339,8 +332,8 @@ namespace OpenProtocolInterpreter.Sample
                         vsTwoStartOrStopButton.Text = "START";
                         break;
                     case VsStatus.Connecting:
-                        vsTwoStartOrStopButton.BackColor = Color.Gainsboro;
-                        vsTwoStartOrStopButton.ForeColor = _grey;
+                        vsTwoStartOrStopButton.BackColor = Color.Yellow;
+                        vsTwoStartOrStopButton.ForeColor = Color.Black;
                         vsTwoStartOrStopButton.Text = "CONNECTING";
                         break;
                 }
@@ -363,11 +356,29 @@ namespace OpenProtocolInterpreter.Sample
                         vsThreeStartOrStopButton.Text = "START";
                         break;
                     case VsStatus.Connecting:
-                        vsThreeStartOrStopButton.BackColor = Color.Gainsboro;
-                        vsThreeStartOrStopButton.ForeColor = _grey;
+                        vsThreeStartOrStopButton.BackColor = Color.Yellow;
+                        vsThreeStartOrStopButton.ForeColor = Color.Black;
                         vsThreeStartOrStopButton.Text = "CONNECTING";
                         break;
                 }
+            }
+            else
+            {
+                vsOneStartOrStopButton.Enabled = false;
+                vsTwoStartOrStopButton.Enabled = false;
+                vsThreeStartOrStopButton.Enabled = false;
+
+                vsOneStartOrStopButton.BackColor = Color.Gainsboro;
+                vsOneStartOrStopButton.ForeColor = _grey;
+                vsOneStartOrStopButton.Text = "AUTOMATIC";
+
+                vsTwoStartOrStopButton.BackColor = Color.Gainsboro;
+                vsTwoStartOrStopButton.ForeColor = _grey;
+                vsTwoStartOrStopButton.Text = "AUTOMATIC";
+
+                vsThreeStartOrStopButton.BackColor = Color.Gainsboro;
+                vsThreeStartOrStopButton.ForeColor = _grey;
+                vsThreeStartOrStopButton.Text = "AUTOMATIC";
             }
         }
 
@@ -476,9 +487,32 @@ namespace OpenProtocolInterpreter.Sample
 
         }
 
-        private void vsOneIpTextBox_TextChanged(object sender, EventArgs e)
+        private void vsOneStartOrStopButton_Click(object sender, EventArgs e)
         {
+            if (vsOneStartOrStopButton.Text == "START")
+            {
+                updateVsConnStatus(VirtualStations.One, VsStatus.Connecting);
+                driverForm.connectToController(VirtualStations.One);
+            }
+            else if (vsOneStartOrStopButton.Text == "STOP")
+            {
+                updateVsConnStatus(VirtualStations.One, VsStatus.None);
+                driverForm.StopInterface(VirtualStations.One);
+            }
+            else if (vsOneStartOrStopButton.Text == "CONNECTING")
+            {
+                DialogResult result = MessageBox.Show("Do you want to cancel the connection attempt?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+                if (result == DialogResult.Yes)
+                {
+                    driverForm.StopConnAttempt(VirtualStations.One);
+                    updateVsConnStatus(VirtualStations.One, VsStatus.None);
+
+                    //startOrStopButton.Text = "START";
+                    //startOrStopButton.BackColor = Color.Green;
+                    //startOrStopButton.ForeColor = Color.Transparent;
+                }
+            }
         }
     }
 }

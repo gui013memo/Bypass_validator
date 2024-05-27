@@ -372,6 +372,7 @@
             this.vsOneStartOrStopButton.TabIndex = 4;
             this.vsOneStartOrStopButton.Text = "AUTOMATIC";
             this.vsOneStartOrStopButton.UseVisualStyleBackColor = false;
+            this.vsOneStartOrStopButton.Click += new System.EventHandler(this.vsOneStartOrStopButton_Click);
             // 
             // vsOneIpTextBox
             // 
@@ -380,9 +381,8 @@
             this.vsOneIpTextBox.Name = "vsOneIpTextBox";
             this.vsOneIpTextBox.Size = new System.Drawing.Size(149, 22);
             this.vsOneIpTextBox.TabIndex = 2;
-            this.vsOneIpTextBox.Text = "192.168.1.17";
+            this.vsOneIpTextBox.Text = "127.0.0.1";
             this.vsOneIpTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.vsOneIpTextBox.TextChanged += new System.EventHandler(this.vsOneIpTextBox_TextChanged);
             // 
             // vsOneControllerIpLabel
             // 
