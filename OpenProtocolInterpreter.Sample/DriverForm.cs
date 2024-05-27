@@ -738,12 +738,12 @@ namespace OpenProtocolInterpreter.Sample
 
         public void BtnSendJob_Click(object sender, EventArgs e)
         {
-            new SendJobCommand(vsOneDriver).Execute(true);
+            new SendCommand(vsOneDriver).Execute(true);
         }
 
-        public void SendJobCommandFunction(bool setReset)
+        public void SendJobCommandFunction(bool setReset)   
         {
-            new SendJobCommand(vsOneDriver).Execute(setReset);
+            new SendCommand(vsOneDriver).Execute(setReset);
         }
 
         /// <summary>
@@ -872,7 +872,7 @@ namespace OpenProtocolInterpreter.Sample
                 {
                     if (bypassAllowed)
                     {
-                        new SendJobCommand(vsOneDriver).Execute(false);
+                        new SendCommand(vsOneDriver).Execute(false);
                         bypassAllowed = false;
                     }
                     logger.Log("isSQSLogged = FALSE");
