@@ -28,7 +28,7 @@ namespace OpenProtocolInterpreter.Sample
 
         private void SetRoundedRegion()
         {
-            int radius = 15;  // Adjust the radius to your preference
+            int radius = 18;  // Adjust the radius to your preference
             GraphicsPath path = new GraphicsPath();
             path.StartFigure();
             path.AddArc(new Rectangle(0, 0, radius, radius), 180, 90);
@@ -88,7 +88,7 @@ namespace OpenProtocolInterpreter.Sample
 
         private void cancelBypassButton_Click(object sender, EventArgs e)
         {
-            shadeEffectTimer.Start(); // make a method "shade" instead of this ON/OFF timer method with tick
+            shadeEffectTimer.Start(); 
         }
 
         private void shadeEffectTimer_Tick(object sender, EventArgs e)

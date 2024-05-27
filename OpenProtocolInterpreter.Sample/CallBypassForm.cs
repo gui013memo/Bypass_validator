@@ -54,19 +54,28 @@ namespace OpenProtocolInterpreter.Sample
 
         private void bypassRequestButton_Click(object sender, EventArgs e)
         {
-            this.Invoke((MethodInvoker)delegate
+            if (bypassRequestButton.Text == "BYPASS OFF")
             {
-                driverForm.CheckSQSBadge();
-            });
-            this.Invoke((MethodInvoker)delegate
+                this.Invoke((MethodInvoker)delegate
+                {
+                    driverForm.CheckSQSBadge();
+               
+                    checkingForm.Show();
+                    checkingForm.TopMost = true;
+                    checkingForm.TopMost = false;
+                               
+                    driverForm.checkBadgeTimer.Start();
+
+                    bypassRequestButton.Text = "BYPASS ON";
+                    bypassRequestButton.ForeColor = Color.Lime;
+                });
+            }
+            else if (bypassRequestButton.Text == "BYPASS ON")
             {
                 checkingForm.Show();
-            });
-
-            this.Invoke((MethodInvoker)delegate
-            {
-                driverForm.checkBadgeTimer.Start();
-            });
+                checkingForm.TopMost = true;
+                checkingForm.TopMost = false;
+            }
         }
     }
 }

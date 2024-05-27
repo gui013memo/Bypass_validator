@@ -39,13 +39,13 @@ namespace OpenProtocolInterpreter.Sample
             this.bypassRequestButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(94)))), ((int)(((byte)(107)))));
             this.bypassRequestButton.FlatAppearance.BorderSize = 0;
             this.bypassRequestButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bypassRequestButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bypassRequestButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bypassRequestButton.ForeColor = System.Drawing.Color.Yellow;
             this.bypassRequestButton.Location = new System.Drawing.Point(5, 2);
             this.bypassRequestButton.Name = "bypassRequestButton";
             this.bypassRequestButton.Size = new System.Drawing.Size(120, 35);
             this.bypassRequestButton.TabIndex = 0;
-            this.bypassRequestButton.Text = "BYPASS";
+            this.bypassRequestButton.Text = "BYPASS OFF";
             this.bypassRequestButton.UseVisualStyleBackColor = true;
             this.bypassRequestButton.Click += new System.EventHandler(this.bypassRequestButton_Click);
             // 
@@ -67,6 +67,6 @@ namespace OpenProtocolInterpreter.Sample
 
         #endregion
 
-        private Button bypassRequestButton;
+        public Button bypassRequestButton;
     }
 }

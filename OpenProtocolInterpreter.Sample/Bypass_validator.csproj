@@ -58,11 +58,13 @@
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="BadgeCheckingForm.cs">
+    <Compile Include="..\..\..\..\..\..\..\..\..\Desktop\bugVS\BadgeCheckingForm.cs">
       <SubType>Form</SubType>
+      <Link>BadgeCheckingForm.cs</Link>
     </Compile>
-    <Compile Include="BadgeCheckingForm.Designer.cs">
+    <Compile Include="..\..\..\..\..\..\..\..\..\Desktop\bugVS\BadgeCheckingForm.Designer.cs">
       <DependentUpon>BadgeCheckingForm.cs</DependentUpon>
+      <Link>BadgeCheckingForm.Designer.cs</Link>
     </Compile>
     <Compile Include="CallBypassForm.cs">
       <SubType>Form</SubType>
@@ -78,11 +80,13 @@
     <Compile Include="Driver\OpenProtocolDriver.cs" />
     <Compile Include="Ethernet\SimpleTcpClient.cs" />
     <Compile Include="Ethernet\Message.cs" />
-    <Compile Include="DriverForm.cs">
+    <Compile Include="..\..\..\..\..\..\..\..\..\Desktop\bugVS\DriverForm.cs">
       <SubType>Form</SubType>
+      <Link>DriverForm.cs</Link>
     </Compile>
-    <Compile Include="DriverForm.Designer.cs">
+    <Compile Include="..\..\..\..\..\..\..\..\..\Desktop\bugVS\DriverForm.Designer.cs">
       <DependentUpon>DriverForm.cs</DependentUpon>
+      <Link>DriverForm.Designer.cs</Link>
     </Compile>
     <Compile Include="AnalysisForm.cs">
       <SubType>Form</SubType>
@@ -114,14 +118,16 @@
     <EmbeddedResource Include="AnalysisForm.resx">
       <DependentUpon>AnalysisForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BadgeCheckingForm.resx">
+    <EmbeddedResource Include="..\..\..\..\..\..\..\..\..\Desktop\bugVS\BadgeCheckingForm.resx">
       <DependentUpon>BadgeCheckingForm.cs</DependentUpon>
+      <Link>BadgeCheckingForm.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="CallBypassForm.resx">
       <DependentUpon>CallBypassForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DriverForm.resx">
+    <EmbeddedResource Include="..\..\..\..\..\..\..\..\..\Desktop\bugVS\DriverForm.resx">
       <DependentUpon>DriverForm.cs</DependentUpon>
+      <Link>DriverForm.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="HomeForm.resx">
       <DependentUpon>HomeForm.cs</DependentUpon>

@@ -32,7 +32,6 @@
             this.bypassRequestedLabel = new System.Windows.Forms.Label();
             this.operatorStatusLabel = new System.Windows.Forms.Label();
             this.operatorNameLabel = new System.Windows.Forms.Label();
-            this.OperatorIdLabel = new System.Windows.Forms.Label();
             this.shadeEffectTimer = new System.Windows.Forms.Timer(this.components);
             this.cancelBypassButton = new CustomControls.RJControls.RJButton();
             this.SuspendLayout();
@@ -76,13 +75,6 @@
             this.operatorNameLabel.Text = "Operador sem Cadas:2";
             this.operatorNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // OperatorIdLabel
-            // 
-            this.OperatorIdLabel.Location = new System.Drawing.Point(0, 0);
-            this.OperatorIdLabel.Name = "OperatorIdLabel";
-            this.OperatorIdLabel.Size = new System.Drawing.Size(100, 23);
-            this.OperatorIdLabel.TabIndex = 5;
-            // 
             // shadeEffectTimer
             // 
             this.shadeEffectTimer.Interval = 50;
@@ -117,7 +109,6 @@
             this.Controls.Add(this.bypassRequestedLabel);
             this.Controls.Add(this.cancelBypassButton);
             this.Controls.Add(this.operatorStatusLabel);
-            this.Controls.Add(this.OperatorIdLabel);
             this.Controls.Add(this.operatorNameLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Location = new System.Drawing.Point(350, 500);
@@ -136,7 +127,6 @@
         private System.Windows.Forms.Label bypassRequestedLabel;
         private System.Windows.Forms.Label operatorStatusLabel;
         private System.Windows.Forms.Label operatorNameLabel;
-        private System.Windows.Forms.Label OperatorIdLabel;
         private CustomControls.RJControls.RJButton cancelBypassButton;
         public System.Windows.Forms.Timer shadeEffectTimer;
     }
