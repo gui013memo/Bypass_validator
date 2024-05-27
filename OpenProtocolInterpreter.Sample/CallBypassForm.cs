@@ -23,13 +23,10 @@ namespace OpenProtocolInterpreter.Sample
             InitializeComponent();
             this.Paint += new PaintEventHandler(Form1_Paint);
         }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            //SetRoundedRegion();
-        }
+
         private void SetRoundedRegion()
         {
-            int radius = 10;  // Adjust the radius to your preference
+            int radius = 10;
             GraphicsPath path = new GraphicsPath();
             path.StartFigure();
             path.AddArc(new Rectangle(0, 0, radius, radius), 180, 90);
@@ -48,29 +45,28 @@ namespace OpenProtocolInterpreter.Sample
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            //SetRoundedRegion(); // Ensure the region updates when resizing
 
             this.Width = 130;
             this.Height = 38;
         }
 
-       
+
 
         private void bypassRequestButton_Click(object sender, EventArgs e)
         {
-           // this.Invoke((MethodInvoker)delegate
-            //{
+            this.Invoke((MethodInvoker)delegate
+            {
                 driverForm.CheckSQSBadge();
-            //});
-           // this.Invoke((MethodInvoker)delegate
-           // {
+            });
+            this.Invoke((MethodInvoker)delegate
+            {
                 checkingForm.Show();
-           // });
+            });
 
-           // this.Invoke((MethodInvoker)delegate
-           // {
+            this.Invoke((MethodInvoker)delegate
+            {
                 driverForm.checkBadgeTimer.Start();
-           // });
+            });
         }
     }
 }

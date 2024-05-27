@@ -201,7 +201,7 @@ namespace OpenProtocolInterpreter.Sample
                             vsOneTimer.Start();
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
-                                Console.WriteLine("NEW vsOneStatus: " + status.ToString());
+                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
                             break;
                     }
                     break;
@@ -209,11 +209,107 @@ namespace OpenProtocolInterpreter.Sample
                     switch (status)
                     {
                         case VsStatus.None:
-                            vsOneConnStateLabel.ForeColor = Color.FromArgb(51, 61, 70);
-                            vsOneConnStateLabel.BackColor = Color.Transparent;
+                            vsTwoState = VsStatus.None;
+                            vsTwoConnStateLabel.ForeColor = _grey;
+                            vsTwoConnStateLabel.BackColor = Color.Transparent;
+                            vsTwoTimer.Stop();
+                            Console.WriteLine("NEW vsTwoStatus: " + status.ToString());
                             break;
                         case VsStatus.Connecting:
+                            vsTwoState = VsStatus.Connecting;
                             vsTwoTimer.Start();
+                            Console.WriteLine("NEW vsTwoStatus: " + status.ToString());
+                            break;
+                        case VsStatus.Reconnecting:
+                            vsTwoState = VsStatus.Reconnecting;
+                            vsTwoTimer.Start();
+                            Console.WriteLine("NEW vsTwoStatus: " + status.ToString());
+                            break;
+                        case VsStatus.ConnFailed:
+                            vsTwoState = VsStatus.ConnFailed;
+                            vsTwoConnStateLabel.ForeColor = Color.Transparent;
+                            vsTwoConnStateLabel.BackColor = _red;
+                            vsTwoTimer.Stop();
+                            if (currentMode == StartMode.Automatic)
+                                updateStartOrStopButton();
+                            Console.WriteLine("NEW vsTwoStatus: " + status.ToString());
+                            break;
+                        case VsStatus.Connected:
+                            vsTwoState = VsStatus.Connected;
+                            vsTwoTimer.Stop();
+                            vsTwoConnStateLabel.ForeColor = Color.Transparent;
+                            vsTwoConnStateLabel.BackColor = Color.Green;
+                            if (currentMode == StartMode.Automatic)
+                                updateStartOrStopButton();
+                            Console.WriteLine("NEW vsTwoStatus: " + status.ToString());
+                            break;
+                        case VsStatus.Warning:
+                            vsTwoState = VsStatus.Warning;
+                            vsTwoTimer.Start();
+                            if (currentMode == StartMode.Automatic)
+                                updateStartOrStopButton();
+                            Console.WriteLine("NEW vsTwoStatus: " + status.ToString());
+                            break;
+                        case VsStatus.ConnDropped:
+                            vsTwoState = VsStatus.ConnDropped;
+                            vsTwoTimer.Start();
+                            if (currentMode == StartMode.Automatic)
+                                updateStartOrStopButton();
+                            Console.WriteLine("NEW vsTwoStatus: " + status.ToString());
+                            break;
+                    }
+                    break;
+                case VirtualStations.Three:
+                    switch (status)
+                    {
+                        case VsStatus.None:
+                            vsThreeState = VsStatus.None;
+                            vsThreeConnStateLabel.ForeColor = _grey;
+                            vsThreeConnStateLabel.BackColor = Color.Transparent;
+                            vsThreeTimer.Stop();
+                            Console.WriteLine("NEW vsThreeStatus: " + status.ToString());
+                            break;
+                        case VsStatus.Connecting:
+                            vsThreeState = VsStatus.Connecting;
+                            vsThreeTimer.Start();
+                            Console.WriteLine("NEW vsThreeStatus: " + status.ToString());
+                            break;
+                        case VsStatus.Reconnecting:
+                            vsThreeState = VsStatus.Reconnecting;
+                            vsThreeTimer.Start();
+                            Console.WriteLine("NEW vsThreeStatus: " + status.ToString());
+                            break;
+                        case VsStatus.ConnFailed:
+                            vsThreeState = VsStatus.ConnFailed;
+                            vsThreeConnStateLabel.ForeColor = Color.Transparent;
+                            vsThreeConnStateLabel.BackColor = _red;
+                            vsThreeTimer.Stop();
+                            if (currentMode == StartMode.Automatic)
+                                updateStartOrStopButton();
+                            Console.WriteLine("NEW vsThreeStatus: " + status.ToString());
+                            break;
+                        case VsStatus.Connected:
+                            vsThreeState = VsStatus.Connected;
+                            vsThreeTimer.Stop();
+                            vsThreeConnStateLabel.ForeColor = Color.Transparent;
+                            vsThreeConnStateLabel.BackColor = Color.Green;
+                            if (currentMode == StartMode.Automatic)
+                                updateStartOrStopButton();
+                            Console.WriteLine("NEW vsThreeStatus: " + status.ToString());
+                            break;
+                        case VsStatus.Warning:
+                            vsThreeState = VsStatus.Warning;
+                            vsThreeTimer.Start();
+                            if (currentMode == StartMode.Automatic)
+                                updateStartOrStopButton();
+                            Console.WriteLine("NEW vsThreeStatus: " + status.ToString());
+                            break;
+                        case VsStatus.ConnDropped:
+                            vsThreeState = VsStatus.ConnDropped;
+                            vsThreeTimer.Start();
+                            if (currentMode == StartMode.Automatic)
+                                updateStartOrStopButton();
+                            Console.WriteLine("NEW vsThreeStatus: " + status.ToString());
                             break;
                     }
                     break;
@@ -229,12 +325,16 @@ namespace OpenProtocolInterpreter.Sample
                 startOrStopButton.ForeColor = Color.Black;
 
                 updateVsConnStatus(VirtualStations.One, VsStatus.Connecting);
+                updateVsConnStatus(VirtualStations.Two, VsStatus.Connecting);
+                updateVsConnStatus(VirtualStations.Three, VsStatus.Connecting);
 
                 driverForm.StartAllInterfaces();
             }
             else if (startOrStopButton.Text == "STOP")
             {
                 updateVsConnStatus(VirtualStations.One, VsStatus.None);
+                updateVsConnStatus(VirtualStations.Two, VsStatus.None);
+                updateVsConnStatus(VirtualStations.Three, VsStatus.None);
 
                 driverForm.StopAllInterfaces();
 
@@ -249,15 +349,18 @@ namespace OpenProtocolInterpreter.Sample
                 if (result == DialogResult.Yes)
                 {
                     driverForm.StopConnAttempt(VirtualStations.One);
+                    driverForm.StopConnAttempt(VirtualStations.Two);
+                    driverForm.StopConnAttempt(VirtualStations.Three);
+
                     updateVsConnStatus(VirtualStations.One, VsStatus.None);
+                    updateVsConnStatus(VirtualStations.Two, VsStatus.None);
+                    updateVsConnStatus(VirtualStations.Three, VsStatus.None);
 
                     startOrStopButton.Text = "START";
                     startOrStopButton.BackColor = Color.Green;
                     startOrStopButton.ForeColor = Color.Transparent;
                 }
             }
-
-
         }
 
         private void ModeButton_Click(object sender, EventArgs e)
@@ -479,12 +582,192 @@ namespace OpenProtocolInterpreter.Sample
 
         private void vsTwoTimer_Tick(object sender, EventArgs e)
         {
-
+            switch (vsTwoState)
+            {
+                case VsStatus.Connecting:
+                    if (!vsTwoTimerState)
+                    {
+                        vsTwoConnStateLabel.ForeColor = Color.Transparent;
+                        vsTwoConnStateLabel.BackColor = _blue;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsTwoTimerState = true;
+                    }
+                    else
+                    {
+                        vsTwoConnStateLabel.ForeColor = _grey;
+                        vsTwoConnStateLabel.BackColor = Color.Transparent;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsTwoTimerState = false;
+                    }
+                    break;
+                case VsStatus.Reconnecting:
+                    if (!vsTwoTimerState)
+                    {
+                        vsTwoConnStateLabel.ForeColor = Color.Transparent;
+                        vsTwoConnStateLabel.BackColor = _orange;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsTwoTimerState = true;
+                    }
+                    else
+                    {
+                        vsTwoConnStateLabel.ForeColor = _grey;
+                        vsTwoConnStateLabel.BackColor = Color.Transparent;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsTwoTimerState = false;
+                    }
+                    break;
+                case VsStatus.Warning:
+                    if (!vsTwoTimerState)
+                    {
+                        vsTwoConnStateLabel.ForeColor = Color.Transparent;
+                        vsTwoConnStateLabel.BackColor = Color.Yellow;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        }); ;
+                        vsTwoTimerState = true;
+                    }
+                    else
+                    {
+                        vsTwoConnStateLabel.ForeColor = _grey;
+                        vsTwoConnStateLabel.BackColor = Color.Transparent;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsTwoTimerState = false;
+                    }
+                    break;
+                case VsStatus.ConnDropped:
+                    if (!vsTwoTimerState)
+                    {
+                        vsTwoConnStateLabel.ForeColor = Color.Transparent;
+                        vsTwoConnStateLabel.BackColor = _orange;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsTwoTimerState = true;
+                    }
+                    else
+                    {
+                        vsTwoConnStateLabel.ForeColor = _grey;
+                        vsTwoConnStateLabel.BackColor = Color.Transparent;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsTwoTimerState = false;
+                    }
+                    break;
+            }
         }
 
         private void vsThreeTimer_Tick(object sender, EventArgs e)
         {
-
+            switch (vsThreeState)
+            {
+                case VsStatus.Connecting:
+                    if (!vsThreeTimerState)
+                    {
+                        vsThreeConnStateLabel.ForeColor = Color.Transparent;
+                        vsThreeConnStateLabel.BackColor = _blue;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsThreeTimerState = true;
+                    }
+                    else
+                    {
+                        vsThreeConnStateLabel.ForeColor = _grey;
+                        vsThreeConnStateLabel.BackColor = Color.Transparent;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsThreeTimerState = false;
+                    }
+                    break;
+                case VsStatus.Reconnecting:
+                    if (!vsThreeTimerState)
+                    {
+                        vsThreeConnStateLabel.ForeColor = Color.Transparent;
+                        vsThreeConnStateLabel.BackColor = _orange;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsThreeTimerState = true;
+                    }
+                    else
+                    {
+                        vsThreeConnStateLabel.ForeColor = _grey;
+                        vsThreeConnStateLabel.BackColor = Color.Transparent;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsThreeTimerState = false;
+                    }
+                    break;
+                case VsStatus.Warning:
+                    if (!vsThreeTimerState)
+                    {
+                        vsThreeConnStateLabel.ForeColor = Color.Transparent;
+                        vsThreeConnStateLabel.BackColor = Color.Yellow;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        }); ;
+                        vsThreeTimerState = true;
+                    }
+                    else
+                    {
+                        vsThreeConnStateLabel.ForeColor = _grey;
+                        vsThreeConnStateLabel.BackColor = Color.Transparent;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsThreeTimerState = false;
+                    }
+                    break;
+                case VsStatus.ConnDropped:
+                    if (!vsThreeTimerState)
+                    {
+                        vsThreeConnStateLabel.ForeColor = Color.Transparent;
+                        vsThreeConnStateLabel.BackColor = _orange;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsThreeTimerState = true;
+                    }
+                    else
+                    {
+                        vsThreeConnStateLabel.ForeColor = _grey;
+                        vsThreeConnStateLabel.BackColor = Color.Transparent;
+                        this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
+                        {
+                            this.Update();
+                        });
+                        vsThreeTimerState = false;
+                    }
+                    break;
+            }
         }
 
         private void vsOneStartOrStopButton_Click(object sender, EventArgs e)
@@ -501,16 +784,60 @@ namespace OpenProtocolInterpreter.Sample
             }
             else if (vsOneStartOrStopButton.Text == "CONNECTING")
             {
-                DialogResult result = MessageBox.Show("Do you want to cancel the connection attempt?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("Do you want to cancel the connection attempt at VS 1?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
                     driverForm.StopConnAttempt(VirtualStations.One);
                     updateVsConnStatus(VirtualStations.One, VsStatus.None);
+                }
+            }
+        }
 
-                    //startOrStopButton.Text = "START";
-                    //startOrStopButton.BackColor = Color.Green;
-                    //startOrStopButton.ForeColor = Color.Transparent;
+        private void vsTwoStartOrStopButton_Click(object sender, EventArgs e)
+        {
+            if (vsTwoStartOrStopButton.Text == "START")
+            {
+                updateVsConnStatus(VirtualStations.Two, VsStatus.Connecting);
+                driverForm.connectToController(VirtualStations.Two);
+            }
+            else if (vsTwoStartOrStopButton.Text == "STOP")
+            {
+                updateVsConnStatus(VirtualStations.Two, VsStatus.None);
+                driverForm.StopInterface(VirtualStations.Two);
+            }
+            else if (vsTwoStartOrStopButton.Text == "CONNECTING")
+            {
+                DialogResult result = MessageBox.Show("Do you want to cancel the connection attemptat VS 2?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    driverForm.StopConnAttempt(VirtualStations.Two);
+                    updateVsConnStatus(VirtualStations.Two, VsStatus.None);
+                }
+            }
+        }
+
+        private void vsThreeStartOrStopButton_Click(object sender, EventArgs e)
+        {
+            if (vsThreeStartOrStopButton.Text == "START")
+            {
+                updateVsConnStatus(VirtualStations.Three, VsStatus.Connecting);
+                driverForm.connectToController(VirtualStations.Three);
+            }
+            else if (vsThreeStartOrStopButton.Text == "STOP")
+            {
+                updateVsConnStatus(VirtualStations.Three, VsStatus.None);
+                driverForm.StopInterface(VirtualStations.Three);
+            }
+            else if (vsThreeStartOrStopButton.Text == "CONNECTING")
+            {
+                DialogResult result = MessageBox.Show("Do you want to cancel the connection attempt at VS 3?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    driverForm.StopConnAttempt(VirtualStations.Three);
+                    updateVsConnStatus(VirtualStations.Three, VsStatus.None);
                 }
             }
         }

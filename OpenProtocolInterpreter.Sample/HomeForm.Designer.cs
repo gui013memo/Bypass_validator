@@ -188,6 +188,7 @@
             this.vsThreeStartOrStopButton.TabIndex = 4;
             this.vsThreeStartOrStopButton.Text = "AUTOMATIC";
             this.vsThreeStartOrStopButton.UseVisualStyleBackColor = false;
+            this.vsThreeStartOrStopButton.Click += new System.EventHandler(this.vsThreeStartOrStopButton_Click);
             // 
             // vsThreeIpTextBox
             // 
@@ -280,6 +281,7 @@
             this.vsTwoStartOrStopButton.TabIndex = 4;
             this.vsTwoStartOrStopButton.Text = "AUTOMATIC";
             this.vsTwoStartOrStopButton.UseVisualStyleBackColor = false;
+            this.vsTwoStartOrStopButton.Click += new System.EventHandler(this.vsTwoStartOrStopButton_Click);
             // 
             // vsTwoIpTextBox
             // 
