@@ -44,9 +44,11 @@ namespace OpenProtocolInterpreter.Sample
         bool vsThreeCancelReconn = false;
 
         public bool isSQSLogged = false;
+        public bool isSQSLoggedMemory = true;
         public string currentOperatorId = string.Empty;
         public string currentOperatorName = string.Empty;
         public string currentOperatorGroup = string.Empty;
+        public string currentOperatorGroupMemory = string.Empty;
 
         DateTime vsOneConnLostTimeStamp;
         DateTime vsTwoConnLostTimeStamp;
@@ -56,7 +58,7 @@ namespace OpenProtocolInterpreter.Sample
         SettingsForm settingsForm;
         AnalysisForm analysisForm;
         AboutForm aboutForm;
-        CallBypassForm callBypassForm;
+        public CallBypassForm callBypassForm;
         BadgeCheckingForm checkingForm;
 
         SimpleTcpClient vsOneClient;
@@ -68,7 +70,9 @@ namespace OpenProtocolInterpreter.Sample
         uint vsOneThreadQueue = 0;
         uint vsTwoThreadQueue = 0;
         uint vsThreeThreadQueue = 0;
-
+        public bool firstTickDone = false;
+        public bool firstBadgeReadingAux = true;
+        private bool stateChanged = false;
 
         public DriverForm()
         {
@@ -632,8 +636,8 @@ namespace OpenProtocolInterpreter.Sample
         public void StopAllInterfaces()
         {
             StopInterface(VirtualStations.One);
-            //StopInterface(VirtualStations.Two);
-            //StopInterface(VirtualStations.Three);
+            StopInterface(VirtualStations.Two);
+            StopInterface(VirtualStations.Three);
         }
 
         public void StopInterface(VirtualStations vs)
@@ -670,6 +674,29 @@ namespace OpenProtocolInterpreter.Sample
             }
         }
 
+        public void SendCommandAllStations(bool setOrReset)
+        {
+            new SendCommand(vsOneDriver).Execute(setOrReset);
+            new SendCommand(vsTwoDriver).Execute(setOrReset);
+            new SendCommand(vsThreeDriver).Execute(setOrReset);
+        }
+
+        public void SendCommand(VirtualStations vs, bool setOrReset)
+        {
+            switch (vs)
+            {
+                case VirtualStations.One:
+                    new SendCommand(vsOneDriver).Execute(setOrReset);
+                    break;
+                case VirtualStations.Two:
+                    new SendCommand(vsTwoDriver).Execute(setOrReset);
+                    break;
+                case VirtualStations.Three:
+                    new SendCommand(vsThreeDriver).Execute(setOrReset);
+                    break;
+            }
+
+        }
         private void vsOneKeepAliveTimer_Tick(object sender, EventArgs e)
         {
             if (vsOneDriver.KeepAlive.ElapsedMilliseconds > 5000) //10 sec
@@ -688,13 +715,13 @@ namespace OpenProtocolInterpreter.Sample
                     //if (pack.Header != null)
                     //    Console.WriteLine($"Pack: {pack.Header.ToString()}");
 
-                    StopAllInterfaces();
+                    StopInterface(VirtualStations.One);
                     homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.ConnDropped);
 
                     vsOneConnLostTimeStamp = DateTime.Now;
 
                     vsOneKeepAliveTimer.Stop();
-                    StartAllInterfaces();
+                    connectToController(VirtualStations.One);
                 }
 
             }
@@ -734,16 +761,6 @@ namespace OpenProtocolInterpreter.Sample
             }
 
 
-        }
-
-        public void BtnSendJob_Click(object sender, EventArgs e)
-        {
-            new SendCommand(vsOneDriver).Execute(true);
-        }
-
-        public void SendJobCommandFunction(bool setReset)   
-        {
-            new SendCommand(vsOneDriver).Execute(setReset);
         }
 
         /// <summary>
@@ -804,19 +821,12 @@ namespace OpenProtocolInterpreter.Sample
         {
             logger.Log("CheckSQSBadge func called");
 
-            CheckSQSBadgeRunning = true;
-
             string targetKeyOut = "[WorkerIdent.1.1] SendKeyOut - Command [OperatorCode] Destination [Ident.1] Value [] - Worker";
 
             string targetKeyIn = "[WorkerIdent.1.1] SetOperatorGrid - [FisPdaStatus.1][Device1] [True]";
 
-
             if (idLogsPath != null)
             {
-                idLogsPathOK = true;
-                isSQSLogged = true;
-                logger.Log("isSQSLogged = TRUE");
-
                 string[] files = Directory.GetFiles(idLogsPath);
                 var latestFile = files.OrderByDescending(file => new FileInfo(file).LastWriteTime).FirstOrDefault();
 
@@ -840,6 +850,8 @@ namespace OpenProtocolInterpreter.Sample
 
                 if (keyOutBaseIndex > keyInBaseIndex)
                 {
+                    isSQSLogged = true;
+
                     string rawOperatorKeyAndKeyGroup = lines.ElementAt(keyInBaseIndex + 1);
                     string rawOperatorName = lines.ElementAt(keyInBaseIndex + 8);
 
@@ -851,50 +863,72 @@ namespace OpenProtocolInterpreter.Sample
                     currentOperatorGroup = rawOperatorKeyAndKeyGroup.Substring(operatorGroupOffset, (rawOperatorKeyAndKeyGroup.LastIndexOf("]") - operatorGroupOffset));
                     currentOperatorName = rawOperatorName.Substring(operatorNameOffset, (rawOperatorName.LastIndexOf("]") - operatorNameOffset));
 
-                    if (currentOperatorGroup == "Master_Admin" && !bypassAllowed)
+                    if (firstTickDone)
                     {
-                        // new SendJobCommand(vsOneDriver).Execute(true);
-                        bypassAllowed = true;
-                        checkingForm.shadeEffectTimer.Start();
-                    }
-                    else if (currentOperatorGroup == "Operator" && bypassAllowed)
-                    {
-                        // new SendJobCommand(vsOneDriver).Execute(false);
-                        bypassAllowed = false;
+                        if (currentOperatorGroupMemory != currentOperatorGroup)
+                        {
+                            stateChanged = true;
+                            Console.WriteLine($"NEW state detected, oldStateMemory: {currentOperatorGroupMemory} / currentOperator {currentOperatorGroup}");
+                        }
                     }
 
-                    //MessageBox.Show("keyInBaseIndex: " + keyInBaseIndex);
-                    //MessageBox.Show("currentOperatorId: " + currentOperatorId);
-                    //MessageBox.Show("currentOperatorId: " + currentOperatorGroup);
-                    //MessageBox.Show("currentOperatorName: " + currentOperatorName);
+
+                    if (currentOperatorGroup == "Master_Admin" && stateChanged)
+                    {
+                        stateChanged = false;
+                        SendCommandAllStations(true);
+                        bypassAllowed = true;
+                        checkingForm.UpdateSQSStatus();
+                        checkingForm.Show();
+                        checkingForm.retationAllowed = true;
+                        checkingForm.shadeEffectTimer.Start();
+
+                        Console.WriteLine("NEW badge state: Master_Admin");
+                    }
+                    else if (currentOperatorGroup == "Operator" && stateChanged)
+                    {
+                        stateChanged = false;
+                        SendCommandAllStations(false);
+                        bypassAllowed = false;
+                        checkingForm.UpdateSQSStatus();
+                        checkingForm.Show();
+
+                        Console.WriteLine("NEW badge state: Operator");
+                    }
                 }
                 else
                 {
-                    if (bypassAllowed)
-                    {
-                        new SendCommand(vsOneDriver).Execute(false);
-                        bypassAllowed = false;
-                    }
-                    logger.Log("isSQSLogged = FALSE");
                     isSQSLogged = false;
-                    //MessageBox.Show("KeyOut first than KeyIn! \r\nKeyOut: " + keyOutBaseIndex + "\r\nKeyIn: " + keyInBaseIndex);
+
+                    if (isSQSLoggedMemory != isSQSLogged)
+                    {
+                        Console.WriteLine($"IsSQSLoggedMemory: {isSQSLoggedMemory} / isSQSLogged: {isSQSLogged}");
+
+                        currentOperatorGroup = "NotLogged";
+                        SendCommandAllStations(false);
+                        bypassAllowed = false;
+                        checkingForm.UpdateSQSStatus();
+                        checkingForm.Show();
+
+                        Console.WriteLine("NEW badge state: NotLogged");
+                        
+                    }
                 }
             }
             else
             {
-                checkBadgeTimer.Stop();
-                idLogsPathOK = false;
+                //checkBadgeTimer.Stop();
                 MessageBox.Show("idLogsPath is NULL");
                 logger.Log("idLogsPath is null");
                 return;
             }
 
-            this.Invoke((MethodInvoker)delegate
+            isSQSLoggedMemory = isSQSLogged;
+            if (firstTickDone)
             {
-                checkingForm.UpdateSQSStatus();
-            });
-
-            CheckSQSBadgeRunning = false;
+                currentOperatorGroupMemory = currentOperatorGroup;
+            }
+            checkBadgeTimer.Start();
         }
 
         public string ChooseFolder()
@@ -912,19 +946,26 @@ namespace OpenProtocolInterpreter.Sample
 
         private void checkBadgeTimer_Tick(object sender, EventArgs e)
         {
-            logger.Log("checkBadgeTimer_Tick hitted");
-            if (!CheckSQSBadgeRunning)
+            checkBadgeTimer.Stop();
+
+            CheckSQSBadge();
+
+            if (bypassAllowed)
             {
-                logger.Log("CheckSQSBadgeRunning is false, calling CheckSQSBadge()");
-
-                CheckSQSBadge();
-
-                this.Invoke((MethodInvoker)delegate
-                {
-                    checkingForm.TopMost = true;
-                });
+                checkingForm.TopMost = false;
             }
-            logger.Log("CheckSQSBadgeRunning is true, skipping CheckSQSBadge()");
+            else if (!bypassAllowed)
+            {
+                checkingForm.TopMost = true;
+            }
+
+            if (!firstTickDone && currentOperatorGroup != "")
+            {
+                checkingForm.UpdateSQSStatus();
+                checkingForm.Show();
+                firstTickDone = true;
+                Console.WriteLine("FirstTick DONE!");
+            }
         }
 
         private void hideCheckingFormTime_Tick(object sender, EventArgs e)
@@ -935,6 +976,7 @@ namespace OpenProtocolInterpreter.Sample
 
         private void closeMainFormButton_Click(object sender, EventArgs e)
         {
+            //if(homeForm.vsOneState == ) 
             this.Close();
         }
 
@@ -1006,31 +1048,61 @@ namespace OpenProtocolInterpreter.Sample
 
         private void vsTwoKeepAliveTimer_Tick(object sender, EventArgs e)
         {
-            if (vsTwoDriver.KeepAlive.ElapsedMilliseconds > 10000) //10 sec
+            if (vsTwoDriver.KeepAlive.ElapsedMilliseconds > 5000) //10 sec
             {
                 Console.WriteLine($"Sending Keep Alive...");
-                var pack = vsTwoDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(10));
+                var pack = vsTwoDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(5));
+
                 if (pack != null && pack.Header.Mid == Mid9999.MID)
                 {
                     Console.WriteLine($"Keep Alive Received");
                 }
                 else
-                    Console.WriteLine($"Keep Alive Not Received");
+                {
+                    Console.WriteLine($"Keep Alive Not Received, connection lost. Stopping keepAliveTimer and trying to connect again by StartInterface method");
+
+                    //if (pack.Header != null)
+                    //    Console.WriteLine($"Pack: {pack.Header.ToString()}");
+
+                    StopInterface(VirtualStations.Two);
+                    homeForm.updateVsConnStatus(VirtualStations.Two, VsStatus.ConnDropped);
+
+                    vsTwoConnLostTimeStamp = DateTime.Now;
+
+                    vsTwoKeepAliveTimer.Stop();
+                    connectToController(VirtualStations.Two);
+                }
+
             }
         }
 
         private void vsThreeKeepAliveTimer_Tick(object sender, EventArgs e)
         {
-            if (vsThreeDriver.KeepAlive.ElapsedMilliseconds > 10000) //10 sec
+            if (vsThreeDriver.KeepAlive.ElapsedMilliseconds > 5000) //10 sec
             {
                 Console.WriteLine($"Sending Keep Alive...");
-                var pack = vsThreeDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(10));
+                var pack = vsThreeDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(5));
+
                 if (pack != null && pack.Header.Mid == Mid9999.MID)
                 {
                     Console.WriteLine($"Keep Alive Received");
                 }
                 else
-                    Console.WriteLine($"Keep Alive Not Received");
+                {
+                    Console.WriteLine($"Keep Alive Not Received, connection lost. Stopping keepAliveTimer and trying to connect again by StartInterface method");
+
+                    //if (pack.Header != null)
+                    //    Console.WriteLine($"Pack: {pack.Header.ToString()}");
+
+                    StopInterface(VirtualStations.Three);
+                    homeForm.updateVsConnStatus(VirtualStations.Three, VsStatus.ConnDropped);
+
+                    vsThreeConnLostTimeStamp = DateTime.Now;
+
+                    vsThreeKeepAliveTimer.Stop();
+                    connectToController(VirtualStations.Three);
+                }
+
             }
         }
     }

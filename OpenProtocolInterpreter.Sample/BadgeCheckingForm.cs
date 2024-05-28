@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenProtocolInterpreter.Sample.Driver.Commands;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,8 +19,14 @@ namespace OpenProtocolInterpreter.Sample
 
         Logger logger = new Logger();
 
+        public int bypassScrennRetationTime = 500;
+        private int _bypassScrennRetationTime;
+        public bool retationAllowed = false;
+
         public BadgeCheckingForm(DriverForm driverForm)
         {
+            _bypassScrennRetationTime = bypassScrennRetationTime;
+
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             this.TopMost = true;
@@ -88,18 +96,35 @@ namespace OpenProtocolInterpreter.Sample
 
         private void cancelBypassButton_Click(object sender, EventArgs e)
         {
-            shadeEffectTimer.Start(); 
+            DriverForm.firstBadgeReadingAux = true;
+
+            DriverForm.firstTickDone = false;
+            retationAllowed = false;
+            shadeEffectTimer.Start();
+            DriverForm.checkBadgeTimer.Stop();
+
+            DriverForm.SendCommandAllStations(false);
+
+            DriverForm.callBypassForm.bypassRequestButton.Text = "BYPASS OFF";
+            DriverForm.callBypassForm.bypassRequestButton.ForeColor = Color.Yellow;
         }
 
         private void shadeEffectTimer_Tick(object sender, EventArgs e)
         {
+            if(_bypassScrennRetationTime != 0 && retationAllowed)
+            {
+                Thread.Sleep(bypassScrennRetationTime);
+                _bypassScrennRetationTime = 0;
+            }
+
             if (this.Opacity > 0.20)
                 this.Opacity = this.Opacity - 0.10;
             else
             {
-                this.Hide();
                 shadeEffectTimer.Stop();
+                this.Hide();
                 this.Opacity = 1.00;
+                _bypassScrennRetationTime = bypassScrennRetationTime;
             }
         }
     }

@@ -58,14 +58,11 @@ namespace OpenProtocolInterpreter.Sample
             {
                 this.Invoke((MethodInvoker)delegate
                 {
-                    driverForm.CheckSQSBadge();
-               
-                    checkingForm.Show();
-                    checkingForm.TopMost = true;
-                    checkingForm.TopMost = false;
+                    driverForm.checkBadgeTimer.Start();               
+                    //checkingForm.Show();
+                    //checkingForm.TopMost = true;
+                    //checkingForm.TopMost = false;
                                
-                    driverForm.checkBadgeTimer.Start();
-
                     bypassRequestButton.Text = "BYPASS ON";
                     bypassRequestButton.ForeColor = Color.Lime;
                 });

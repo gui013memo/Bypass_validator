@@ -60,11 +60,9 @@
     </Compile>
     <Compile Include="BadgeCheckingForm.cs">
       <SubType>Form</SubType>
-      <Link>BadgeCheckingForm.cs</Link>
     </Compile>
     <Compile Include="BadgeCheckingForm.Designer.cs">
       <DependentUpon>BadgeCheckingForm.cs</DependentUpon>
-      <Link>BadgeCheckingForm.Designer.cs</Link>
     </Compile>
     <Compile Include="CallBypassForm.cs">
       <SubType>Form</SubType>
@@ -126,12 +124,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BadgeCheckingForm.resx">
       <DependentUpon>BadgeCheckingForm.cs</DependentUpon>
-      <Link>BadgeCheckingForm.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="CallBypassForm.resx">
       <DependentUpon>CallBypassForm.cs</DependentUpon>
     </EmbeddedResource>
-        <EmbeddedResource Include="DriverForm.resx">
+    <EmbeddedResource Include="DriverForm.resx">
       <DependentUpon>DriverForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HomeForm.resx">
