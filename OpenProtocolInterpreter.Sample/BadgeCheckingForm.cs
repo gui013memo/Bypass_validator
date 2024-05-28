@@ -19,7 +19,7 @@ namespace OpenProtocolInterpreter.Sample
 
         Logger logger = new Logger();
 
-        public int bypassScrennRetationTime = 500;
+        public int bypassScrennRetationTime = 600;
         private int _bypassScrennRetationTime;
         public bool retationAllowed = false;
 
