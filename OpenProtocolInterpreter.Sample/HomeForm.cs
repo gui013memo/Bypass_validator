@@ -779,6 +779,7 @@ namespace OpenProtocolInterpreter.Sample
             }
             else if (vsOneStartOrStopButton.Text == "STOP")
             {
+                driverForm.SendCommandAllStations(false);
                 updateVsConnStatus(VirtualStations.One, VsStatus.None);
                 driverForm.StopInterface(VirtualStations.One);
             }
@@ -788,6 +789,7 @@ namespace OpenProtocolInterpreter.Sample
 
                 if (result == DialogResult.Yes)
                 {
+                    driverForm.SendCommandAllStations(false);
                     driverForm.StopConnAttempt(VirtualStations.One);
                     updateVsConnStatus(VirtualStations.One, VsStatus.None);
                 }
@@ -803,6 +805,7 @@ namespace OpenProtocolInterpreter.Sample
             }
             else if (vsTwoStartOrStopButton.Text == "STOP")
             {
+                driverForm.SendCommandAllStations(false);
                 updateVsConnStatus(VirtualStations.Two, VsStatus.None);
                 driverForm.StopInterface(VirtualStations.Two);
             }
@@ -812,6 +815,7 @@ namespace OpenProtocolInterpreter.Sample
 
                 if (result == DialogResult.Yes)
                 {
+                    driverForm.SendCommandAllStations(false);
                     driverForm.StopConnAttempt(VirtualStations.Two);
                     updateVsConnStatus(VirtualStations.Two, VsStatus.None);
                 }
@@ -827,6 +831,7 @@ namespace OpenProtocolInterpreter.Sample
             }
             else if (vsThreeStartOrStopButton.Text == "STOP")
             {
+                driverForm.SendCommandAllStations(false);
                 updateVsConnStatus(VirtualStations.Three, VsStatus.None);
                 driverForm.StopInterface(VirtualStations.Three);
             }
@@ -836,6 +841,7 @@ namespace OpenProtocolInterpreter.Sample
 
                 if (result == DialogResult.Yes)
                 {
+                    driverForm.SendCommandAllStations(false);
                     driverForm.StopConnAttempt(VirtualStations.Three);
                     updateVsConnStatus(VirtualStations.Three, VsStatus.None);
                 }

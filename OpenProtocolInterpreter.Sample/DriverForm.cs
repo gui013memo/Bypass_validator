@@ -60,8 +60,8 @@ namespace OpenProtocolInterpreter.Sample
         AboutForm aboutForm;
         public CallBypassForm callBypassForm;
         BadgeCheckingForm checkingForm;
+        ClosingForm closingForm;
 
-        SimpleTcpClient vsOneClient;
 
         Thread _vsOneThread;
         Thread _vsTwoThread;
@@ -114,6 +114,7 @@ namespace OpenProtocolInterpreter.Sample
             analysisForm = new AnalysisForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             aboutForm = new AboutForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             callBypassForm = new CallBypassForm(checkingForm, this);
+            closingForm = new ClosingForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
 
             this.topPanel.MouseDown += new MouseEventHandler(topPanel_MouseDown); this.appNameLabel.MouseDown += new MouseEventHandler(topPanel_MouseDown);
             this.topPanel.MouseMove += new MouseEventHandler(topPanel_MouseMove); this.appNameLabel.MouseMove += new MouseEventHandler(topPanel_MouseMove);
@@ -676,9 +677,11 @@ namespace OpenProtocolInterpreter.Sample
 
         public void SendCommandAllStations(bool setOrReset)
         {
-            new SendCommand(vsOneDriver).Execute(setOrReset);
-            new SendCommand(vsTwoDriver).Execute(setOrReset);
-            new SendCommand(vsThreeDriver).Execute(setOrReset);
+            bool vsOneCommandAttempt = new SendCommand(vsOneDriver).Execute(setOrReset);
+            bool vsTwoCommandAttempt = new SendCommand(vsTwoDriver).Execute(setOrReset);
+            bool vsThreeCommandAttempt = new SendCommand(vsThreeDriver).Execute(setOrReset);
+
+
         }
 
         public void SendCommand(VirtualStations vs, bool setOrReset)
@@ -697,35 +700,7 @@ namespace OpenProtocolInterpreter.Sample
             }
 
         }
-        private void vsOneKeepAliveTimer_Tick(object sender, EventArgs e)
-        {
-            if (vsOneDriver.KeepAlive.ElapsedMilliseconds > 5000) //10 sec
-            {
-                Console.WriteLine($"Sending Keep Alive...");
-                var pack = vsOneDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(5));
 
-                if (pack != null && pack.Header.Mid == Mid9999.MID)
-                {
-                    Console.WriteLine($"Keep Alive Received");
-                }
-                else
-                {
-                    Console.WriteLine($"Keep Alive Not Received, connection lost. Stopping keepAliveTimer and trying to connect again by StartInterface method");
-
-                    //if (pack.Header != null)
-                    //    Console.WriteLine($"Pack: {pack.Header.ToString()}");
-
-                    StopInterface(VirtualStations.One);
-                    homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.ConnDropped);
-
-                    vsOneConnLostTimeStamp = DateTime.Now;
-
-                    vsOneKeepAliveTimer.Stop();
-                    connectToController(VirtualStations.One);
-                }
-
-            }
-        }
 
         /// <summary>
         /// Tightening subscribe
@@ -875,6 +850,7 @@ namespace OpenProtocolInterpreter.Sample
 
                     if (currentOperatorGroup == "Master_Admin" && stateChanged)
                     {
+
                         stateChanged = false;
                         SendCommandAllStations(true);
                         bypassAllowed = true;
@@ -911,7 +887,7 @@ namespace OpenProtocolInterpreter.Sample
                         checkingForm.Show();
 
                         Console.WriteLine("NEW badge state: NotLogged");
-                        
+
                     }
                 }
             }
@@ -976,9 +952,9 @@ namespace OpenProtocolInterpreter.Sample
 
         private void closeMainFormButton_Click(object sender, EventArgs e)
         {
-            //if(homeForm.vsOneState == ) 
-            this.Close();
+            closingTimer.Start();
         }
+
 
         private void minimizeMainForm_Click(object sender, EventArgs e)
         {
@@ -1045,10 +1021,38 @@ namespace OpenProtocolInterpreter.Sample
         {
 
         }
+        private void vsOneKeepAliveTimer_Tick(object sender, EventArgs e)
+        {
+            if (vsOneDriver.KeepAlive.ElapsedMilliseconds > 5000) //5 sec
+            {
+                Console.WriteLine($"Sending Keep Alive...");
+                var pack = vsOneDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(5));
+
+                if (pack != null && pack.Header.Mid == Mid9999.MID)
+                {
+                    Console.WriteLine($"Keep Alive Received");
+                }
+                else
+                {
+                    Console.WriteLine($"Keep Alive Not Received, connection lost. Stopping keepAliveTimer and trying to connect again by StartInterface method");
+
+                    vsOneDriver.Connected = false;
+
+                    StopInterface(VirtualStations.One);
+                    homeForm.updateVsConnStatus(VirtualStations.One, VsStatus.ConnDropped);
+
+                    vsOneConnLostTimeStamp = DateTime.Now;
+
+                    vsOneKeepAliveTimer.Stop();
+                    connectToController(VirtualStations.One);
+                }
+
+            }
+        }
 
         private void vsTwoKeepAliveTimer_Tick(object sender, EventArgs e)
         {
-            if (vsTwoDriver.KeepAlive.ElapsedMilliseconds > 5000) //10 sec
+            if (vsTwoDriver.KeepAlive.ElapsedMilliseconds > 5000) //5 sec
             {
                 Console.WriteLine($"Sending Keep Alive...");
                 var pack = vsTwoDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(5));
@@ -1061,8 +1065,7 @@ namespace OpenProtocolInterpreter.Sample
                 {
                     Console.WriteLine($"Keep Alive Not Received, connection lost. Stopping keepAliveTimer and trying to connect again by StartInterface method");
 
-                    //if (pack.Header != null)
-                    //    Console.WriteLine($"Pack: {pack.Header.ToString()}");
+                    vsTwoDriver.Connected = false;
 
                     StopInterface(VirtualStations.Two);
                     homeForm.updateVsConnStatus(VirtualStations.Two, VsStatus.ConnDropped);
@@ -1078,7 +1081,7 @@ namespace OpenProtocolInterpreter.Sample
 
         private void vsThreeKeepAliveTimer_Tick(object sender, EventArgs e)
         {
-            if (vsThreeDriver.KeepAlive.ElapsedMilliseconds > 5000) //10 sec
+            if (vsThreeDriver.KeepAlive.ElapsedMilliseconds > 5000) //5 sec
             {
                 Console.WriteLine($"Sending Keep Alive...");
                 var pack = vsThreeDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(5));
@@ -1091,8 +1094,7 @@ namespace OpenProtocolInterpreter.Sample
                 {
                     Console.WriteLine($"Keep Alive Not Received, connection lost. Stopping keepAliveTimer and trying to connect again by StartInterface method");
 
-                    //if (pack.Header != null)
-                    //    Console.WriteLine($"Pack: {pack.Header.ToString()}");
+                    vsThreeDriver.Connected = false;
 
                     StopInterface(VirtualStations.Three);
                     homeForm.updateVsConnStatus(VirtualStations.Three, VsStatus.ConnDropped);
@@ -1103,6 +1105,31 @@ namespace OpenProtocolInterpreter.Sample
                     connectToController(VirtualStations.Three);
                 }
 
+            }
+        }
+
+        private void closingTimer_Tick(object sender, EventArgs e)
+        {
+            ClearHighlightedButtons();
+            this.formLoaderPanel.Controls.Clear();
+            this.formLoaderPanel.Controls.Add(closingForm);
+            closingForm.Show();
+
+            bool opacityAux = true;
+
+            if(closingForm.Opacity == 0.2)
+                opacityAux = false;
+            else if(closingForm.Opacity == 1)
+                opacityAux = true;
+
+            if (opacityAux)
+            {
+                closingForm.Opacity -= 0.2;
+            }
+
+            if (!opacityAux)
+            {
+                closingForm.Opacity += 0.2;
             }
         }
     }

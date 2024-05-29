@@ -15,6 +15,7 @@ namespace OpenProtocolInterpreter.Sample
     {
         BadgeCheckingForm checkingForm;
         DriverForm driverForm;
+        public bool isBypassOn;
 
         public CallBypassForm(BadgeCheckingForm badgeForm, DriverForm driverForm)
         {
@@ -58,11 +59,12 @@ namespace OpenProtocolInterpreter.Sample
             {
                 this.Invoke((MethodInvoker)delegate
                 {
-                    driverForm.checkBadgeTimer.Start();               
-                    //checkingForm.Show();
+                    driverForm.checkBadgeTimer.Start();
+                    //checkingForm.Show(); 
                     //checkingForm.TopMost = true;
                     //checkingForm.TopMost = false;
-                               
+
+                    isBypassOn = true;
                     bypassRequestButton.Text = "BYPASS ON";
                     bypassRequestButton.ForeColor = Color.Lime;
                 });

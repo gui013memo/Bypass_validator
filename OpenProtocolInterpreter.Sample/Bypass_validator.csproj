@@ -70,6 +70,12 @@
     <Compile Include="CallBypassForm.Designer.cs">
       <DependentUpon>CallBypassForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ClosingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClosingForm.Designer.cs">
+      <DependentUpon>ClosingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DriverForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CallBypassForm.resx">
       <DependentUpon>CallBypassForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClosingForm.resx">
+      <DependentUpon>ClosingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DriverForm.resx">
       <DependentUpon>DriverForm.cs</DependentUpon>

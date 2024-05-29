@@ -47,6 +47,7 @@
             this.vsOneKeepAliveTimer = new System.Windows.Forms.Timer(this.components);
             this.vsTwoKeepAliveTimer = new System.Windows.Forms.Timer(this.components);
             this.vsThreeKeepAliveTimer = new System.Windows.Forms.Timer(this.components);
+            this.closingTimer = new System.Windows.Forms.Timer(this.components);
             this.topPanel.SuspendLayout();
             this.sidePanel.SuspendLayout();
             this.SuspendLayout();
@@ -250,6 +251,10 @@
             this.vsThreeKeepAliveTimer.Interval = 1000;
             this.vsThreeKeepAliveTimer.Tick += new System.EventHandler(this.vsThreeKeepAliveTimer_Tick);
             // 
+            // closingTimer
+            // 
+            this.closingTimer.Tick += new System.EventHandler(this.closingTimer_Tick);
+            // 
             // DriverForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -292,6 +297,7 @@
         private System.Windows.Forms.Timer vsOneKeepAliveTimer;
         private System.Windows.Forms.Timer vsTwoKeepAliveTimer;
         private System.Windows.Forms.Timer vsThreeKeepAliveTimer;
+        private System.Windows.Forms.Timer closingTimer;
     }
 }
 

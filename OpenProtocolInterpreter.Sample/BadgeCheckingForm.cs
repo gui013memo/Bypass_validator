@@ -105,13 +105,14 @@ namespace OpenProtocolInterpreter.Sample
 
             DriverForm.SendCommandAllStations(false);
 
+            DriverForm.callBypassForm.isBypassOn = false;
             DriverForm.callBypassForm.bypassRequestButton.Text = "BYPASS OFF";
             DriverForm.callBypassForm.bypassRequestButton.ForeColor = Color.Yellow;
         }
 
         private void shadeEffectTimer_Tick(object sender, EventArgs e)
         {
-            if(_bypassScrennRetationTime != 0 && retationAllowed)
+            if (_bypassScrennRetationTime != 0 && retationAllowed)
             {
                 Thread.Sleep(bypassScrennRetationTime);
                 _bypassScrennRetationTime = 0;
