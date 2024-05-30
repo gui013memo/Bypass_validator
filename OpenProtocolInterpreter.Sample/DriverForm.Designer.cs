@@ -253,6 +253,7 @@
             // 
             // closingTimer
             // 
+            this.closingTimer.Interval = 250;
             this.closingTimer.Tick += new System.EventHandler(this.closingTimer_Tick);
             // 
             // DriverForm

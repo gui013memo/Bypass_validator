@@ -1,21 +1,17 @@
 ﻿using OpenProtocolInterpreter.Communication;
 using OpenProtocolInterpreter.IOInterface;
-using OpenProtocolInterpreter.Job;
 using OpenProtocolInterpreter.KeepAlive;
 using OpenProtocolInterpreter.Sample.Driver;
 using OpenProtocolInterpreter.Sample.Driver.Commands;
 using OpenProtocolInterpreter.Sample.Driver.Events;
 using OpenProtocolInterpreter.Sample.Driver.Helpers;
 using OpenProtocolInterpreter.Sample.Ethernet;
-using OpenProtocolInterpreter.Tightening;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using static OpenProtocolInterpreter.Sample.HomeForm;
@@ -34,8 +30,8 @@ namespace OpenProtocolInterpreter.Sample
 
         private bool mouseDown;
         private Point lastLocation;
+        int closingTick = 0;
 
-        bool CheckSQSBadgeRunning = false;
         bool bypassAllowed = false;
         public bool idLogsPathOK;
 
@@ -952,6 +948,11 @@ namespace OpenProtocolInterpreter.Sample
 
         private void closeMainFormButton_Click(object sender, EventArgs e)
         {
+            ClearHighlightedButtons();
+            this.formLoaderPanel.Controls.Clear();
+            this.formLoaderPanel.Controls.Add(closingForm);
+            closingForm.Show();
+
             closingTimer.Start();
         }
 
@@ -1110,27 +1111,19 @@ namespace OpenProtocolInterpreter.Sample
 
         private void closingTimer_Tick(object sender, EventArgs e)
         {
-            ClearHighlightedButtons();
-            this.formLoaderPanel.Controls.Clear();
-            this.formLoaderPanel.Controls.Add(closingForm);
-            closingForm.Show();
+            if (closingForm.closingLabel.Text == "Closing")
+                closingForm.closingLabel.Text = "Closing.";
+            else if (closingForm.closingLabel.Text == "Closing.")
+                closingForm.closingLabel.Text = "Closing..";
+            else if (closingForm.closingLabel.Text == "Closing..")
+                closingForm.closingLabel.Text = "Closing...";
+            else if (closingForm.closingLabel.Text == "Closing...")
+                closingForm.closingLabel.Text = "Closing";
 
-            bool opacityAux = true;
+            closingTick++;
 
-            if(closingForm.Opacity == 0.2)
-                opacityAux = false;
-            else if(closingForm.Opacity == 1)
-                opacityAux = true;
-
-            if (opacityAux)
-            {
-                closingForm.Opacity -= 0.2;
-            }
-
-            if (!opacityAux)
-            {
-                closingForm.Opacity += 0.2;
-            }
+            if (closingTick >= 8)
+                this.Close();
         }
     }
 }
