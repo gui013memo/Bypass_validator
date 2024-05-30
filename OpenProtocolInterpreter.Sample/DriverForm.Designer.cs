@@ -54,7 +54,6 @@
             // 
             // checkBadgeTimer
             // 
-            this.checkBadgeTimer.Interval = 250;
             this.checkBadgeTimer.Tick += new System.EventHandler(this.checkBadgeTimer_Tick);
             // 
             // hideCheckingFormTimer

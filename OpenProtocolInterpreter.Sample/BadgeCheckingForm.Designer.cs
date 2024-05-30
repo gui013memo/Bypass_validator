@@ -127,7 +127,7 @@
         private System.Windows.Forms.Label bypassRequestedLabel;
         private System.Windows.Forms.Label operatorStatusLabel;
         private System.Windows.Forms.Label operatorNameLabel;
-        private CustomControls.RJControls.RJButton cancelBypassButton;
         public System.Windows.Forms.Timer shadeEffectTimer;
+        private CustomControls.RJControls.RJButton cancelBypassButton;
     }
 }

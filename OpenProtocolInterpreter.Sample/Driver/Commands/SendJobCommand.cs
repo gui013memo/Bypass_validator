@@ -52,7 +52,7 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
 
                 var mid = _driver.SendAndWaitForResponse(mid0200.Pack(), new TimeSpan(0, 0, 5));
 
-                logger.Log("Pack sent: " + mid0200.Pack());
+               Console.WriteLine("Pack sent: " + mid0200.Pack());
 
                 if (mid.Header.Mid == Mid0004.MID)
                 {

@@ -779,7 +779,7 @@ namespace OpenProtocolInterpreter.Sample
             }
             else if (vsOneStartOrStopButton.Text == "STOP")
             {
-                driverForm.SendCommandAllStations(false);
+                driverForm.SendCommand(VirtualStations.One, false);
                 updateVsConnStatus(VirtualStations.One, VsStatus.None);
                 driverForm.StopInterface(VirtualStations.One);
             }
@@ -805,7 +805,7 @@ namespace OpenProtocolInterpreter.Sample
             }
             else if (vsTwoStartOrStopButton.Text == "STOP")
             {
-                driverForm.SendCommandAllStations(false);
+                driverForm.SendCommand(VirtualStations.Two, false);
                 updateVsConnStatus(VirtualStations.Two, VsStatus.None);
                 driverForm.StopInterface(VirtualStations.Two);
             }
@@ -831,7 +831,7 @@ namespace OpenProtocolInterpreter.Sample
             }
             else if (vsThreeStartOrStopButton.Text == "STOP")
             {
-                driverForm.SendCommandAllStations(false);
+                driverForm.SendCommand(VirtualStations.Three, false);
                 updateVsConnStatus(VirtualStations.Three, VsStatus.None);
                 driverForm.StopInterface(VirtualStations.Three);
             }

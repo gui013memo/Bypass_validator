@@ -60,9 +60,6 @@ namespace OpenProtocolInterpreter.Sample
                 this.Invoke((MethodInvoker)delegate
                 {
                     driverForm.checkBadgeTimer.Start();
-                    //checkingForm.Show(); 
-                    //checkingForm.TopMost = true;
-                    //checkingForm.TopMost = false;
 
                     isBypassOn = true;
                     bypassRequestButton.Text = "BYPASS ON";

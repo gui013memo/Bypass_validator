@@ -673,11 +673,14 @@ namespace OpenProtocolInterpreter.Sample
 
         public void SendCommandAllStations(bool setOrReset)
         {
-            bool vsOneCommandAttempt = new SendCommand(vsOneDriver).Execute(setOrReset);
-            bool vsTwoCommandAttempt = new SendCommand(vsTwoDriver).Execute(setOrReset);
-            bool vsThreeCommandAttempt = new SendCommand(vsThreeDriver).Execute(setOrReset);
+            string vsOneCommandAttempt = new SendCommand(vsOneDriver).Execute(setOrReset) ? "success" : "failed";
+            Console.WriteLine($"Attempt to send: {setOrReset} to vsOne - Attempt result: {vsOneCommandAttempt}");
 
+            string vsTwoCommandAttempt = new SendCommand(vsTwoDriver).Execute(setOrReset) ? "success" : "failed";
+            Console.WriteLine($"Attempt to send: {setOrReset} to vsTwo - Attempt result: {vsTwoCommandAttempt}");
 
+            string vsThreeCommandAttempt = new SendCommand(vsThreeDriver).Execute(setOrReset) ? "success" : "failed";
+            Console.WriteLine($"Attempt to send: {setOrReset} to vsThree - Attempt result: {vsThreeCommandAttempt}");
         }
 
         public void SendCommand(VirtualStations vs, bool setOrReset)
@@ -953,6 +956,9 @@ namespace OpenProtocolInterpreter.Sample
             this.formLoaderPanel.Controls.Add(closingForm);
             closingForm.Show();
 
+            SendCommandAllStations(false);
+            StopAllInterfaces();
+
             closingTimer.Start();
         }
 
@@ -1122,7 +1128,7 @@ namespace OpenProtocolInterpreter.Sample
 
             closingTick++;
 
-            if (closingTick >= 8)
+            if (closingTick == 8)
                 this.Close();
         }
     }
