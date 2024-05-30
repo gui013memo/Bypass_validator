@@ -31,7 +31,9 @@ namespace OpenProtocolInterpreter.Sample
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.bypassRequestButton = new System.Windows.Forms.Button();
+            this.bypassLabelBlinkingTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // bypassRequestButton
@@ -49,6 +51,10 @@ namespace OpenProtocolInterpreter.Sample
             this.bypassRequestButton.UseVisualStyleBackColor = true;
             this.bypassRequestButton.Click += new System.EventHandler(this.bypassRequestButton_Click);
             // 
+            // bypassLabelBlinkingTimer
+            // 
+            this.bypassLabelBlinkingTimer.Tick += new System.EventHandler(this.bypassLabelBlinkingTimer_Tick);
+            // 
             // CallBypassForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -59,6 +65,8 @@ namespace OpenProtocolInterpreter.Sample
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Location = new System.Drawing.Point(1016, 1027);
             this.Name = "CallBypassForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TopMost = true;
             this.ResumeLayout(false);
@@ -68,5 +76,6 @@ namespace OpenProtocolInterpreter.Sample
         #endregion
 
         public Button bypassRequestButton;
+        private Timer bypassLabelBlinkingTimer;
     }
 }

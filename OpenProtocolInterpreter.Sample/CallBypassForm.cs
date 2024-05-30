@@ -16,6 +16,7 @@ namespace OpenProtocolInterpreter.Sample
         BadgeCheckingForm checkingForm;
         DriverForm driverForm;
         public bool isBypassOn;
+       // bool isBypassOn = false;
 
         public CallBypassForm(BadgeCheckingForm badgeForm, DriverForm driverForm)
         {
@@ -64,14 +65,32 @@ namespace OpenProtocolInterpreter.Sample
                     isBypassOn = true;
                     bypassRequestButton.Text = "BYPASS ON";
                     bypassRequestButton.ForeColor = Color.Lime;
+
+                    bypassLabelBlinkingTimer.Start();
                 });
             }
             else if (bypassRequestButton.Text == "BYPASS ON")
             {
-                checkingForm.Show();
-                checkingForm.TopMost = true;
-                checkingForm.TopMost = false;
+                driverForm.firstBadgeReadingAux = true;
+
+                driverForm.firstTickDone = false;
+                checkingForm.retationAllowed = false;
+                checkingForm.shadeEffectTimer.Start();
+                driverForm.checkBadgeTimer.Stop();
+
+                driverForm.SendCommandAllStations(false);
+
+                driverForm.callBypassForm.bypassRequestButton.Text = "BYPASS OFF";
+                driverForm.callBypassForm.bypassRequestButton.ForeColor = Color.Yellow;
+
+                isBypassOn = false;
+                checkingForm.Hide();
             }
+        }
+
+        private void bypassLabelBlinkingTimer_Tick(object sender, EventArgs e)
+        {
+
         }
     }
 }

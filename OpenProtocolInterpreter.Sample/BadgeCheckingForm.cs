@@ -64,7 +64,7 @@ namespace OpenProtocolInterpreter.Sample
                     logger.Log("Operador autorizado");
 
                     this.BackColor = Color.FromArgb(0, 192, 0);
-                    cancelBypassButton.BackColor = Color.FromArgb(158, 163, 168);
+                    //cancelBypassButton.BackColor = Color.FromArgb(158, 163, 168);
 
                     operatorStatusLabel.Location = new Point(111, 87);
                     operatorStatusLabel.Text = "OPERADOR AUTORIZADO";
@@ -74,7 +74,7 @@ namespace OpenProtocolInterpreter.Sample
                     logger.Log("Operador não autorizado");
 
                     this.BackColor = Color.FromArgb(201, 44, 31);
-                    cancelBypassButton.BackColor = Color.FromArgb(158, 163, 168);
+                    //cancelBypassButton.BackColor = Color.FromArgb(158, 163, 168);
 
                     operatorStatusLabel.Location = new Point(60, 87);
                     operatorStatusLabel.Text = "OPERADOR NÃO AUTORIZADO";
@@ -83,7 +83,7 @@ namespace OpenProtocolInterpreter.Sample
             else
             {
                 this.BackColor = Color.FromArgb(158, 163, 168);
-                cancelBypassButton.BackColor = Color.FromArgb(201, 44, 31);
+                //cancelBypassButton.BackColor = Color.FromArgb(201, 44, 31);
 
                 logger.Log("Sem cracha logado");
 
@@ -105,7 +105,6 @@ namespace OpenProtocolInterpreter.Sample
 
             DriverForm.SendCommandAllStations(false);
 
-            DriverForm.callBypassForm.isBypassOn = false;
             DriverForm.callBypassForm.bypassRequestButton.Text = "BYPASS OFF";
             DriverForm.callBypassForm.bypassRequestButton.ForeColor = Color.Yellow;
         }

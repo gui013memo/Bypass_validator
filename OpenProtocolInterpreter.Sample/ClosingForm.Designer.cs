@@ -35,11 +35,11 @@
             // closingLabel
             // 
             this.closingLabel.AutoSize = true;
-            this.closingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 40F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.closingLabel.Font = new System.Drawing.Font("Microsoft New Tai Lue", 40F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.closingLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(63)))), ((int)(((byte)(72)))));
             this.closingLabel.Location = new System.Drawing.Point(98, 127);
             this.closingLabel.Name = "closingLabel";
-            this.closingLabel.Size = new System.Drawing.Size(216, 63);
+            this.closingLabel.Size = new System.Drawing.Size(217, 71);
             this.closingLabel.TabIndex = 0;
             this.closingLabel.Text = "Closing";
             // 

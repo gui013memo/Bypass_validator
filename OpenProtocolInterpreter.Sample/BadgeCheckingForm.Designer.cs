@@ -33,7 +33,6 @@
             this.operatorStatusLabel = new System.Windows.Forms.Label();
             this.operatorNameLabel = new System.Windows.Forms.Label();
             this.shadeEffectTimer = new System.Windows.Forms.Timer(this.components);
-            this.cancelBypassButton = new CustomControls.RJControls.RJButton();
             this.SuspendLayout();
             // 
             // bypassRequestedLabel
@@ -80,40 +79,21 @@
             this.shadeEffectTimer.Interval = 50;
             this.shadeEffectTimer.Tick += new System.EventHandler(this.shadeEffectTimer_Tick);
             // 
-            // cancelBypassButton
-            // 
-            this.cancelBypassButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(163)))), ((int)(((byte)(168)))));
-            this.cancelBypassButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(163)))), ((int)(((byte)(168)))));
-            this.cancelBypassButton.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.cancelBypassButton.BorderRadius = 8;
-            this.cancelBypassButton.BorderSize = 0;
-            this.cancelBypassButton.FlatAppearance.BorderSize = 0;
-            this.cancelBypassButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cancelBypassButton.Font = new System.Drawing.Font("Microsoft YaHei UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cancelBypassButton.ForeColor = System.Drawing.Color.White;
-            this.cancelBypassButton.Location = new System.Drawing.Point(280, 214);
-            this.cancelBypassButton.Name = "cancelBypassButton";
-            this.cancelBypassButton.Size = new System.Drawing.Size(203, 52);
-            this.cancelBypassButton.TabIndex = 4;
-            this.cancelBypassButton.Text = "CANCEL";
-            this.cancelBypassButton.TextColor = System.Drawing.Color.White;
-            this.cancelBypassButton.UseVisualStyleBackColor = false;
-            this.cancelBypassButton.Click += new System.EventHandler(this.cancelBypassButton_Click);
-            // 
             // BadgeCheckingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.ClientSize = new System.Drawing.Size(794, 278);
+            this.ClientSize = new System.Drawing.Size(794, 225);
             this.Controls.Add(this.bypassRequestedLabel);
-            this.Controls.Add(this.cancelBypassButton);
             this.Controls.Add(this.operatorStatusLabel);
             this.Controls.Add(this.operatorNameLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Location = new System.Drawing.Point(350, 500);
+            this.Location = new System.Drawing.Point(10, 795);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "BadgeCheckingForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "BadgeCheckingForm";
             this.TopMost = true;
@@ -128,6 +108,5 @@
         private System.Windows.Forms.Label operatorStatusLabel;
         private System.Windows.Forms.Label operatorNameLabel;
         public System.Windows.Forms.Timer shadeEffectTimer;
-        private CustomControls.RJControls.RJButton cancelBypassButton;
     }
 }
