@@ -25,7 +25,7 @@ namespace OpenProtocolInterpreter.Sample
             InitializeComponent();
             this.Paint += new PaintEventHandler(Form1_Paint);
 
-            focusTimer.Start();
+            //focusTimer.Start();
         }
 
         private void SetRoundedRegion()
@@ -57,25 +57,55 @@ namespace OpenProtocolInterpreter.Sample
 
 
         private void bypassRequestButton_Click(object sender, EventArgs e)
-          {
-            Console.WriteLine("bypassRequestButtonPressed");
+        {
+           
+        }
 
-            if (bypassRequestButton.Text == "BYPASS OFF")
+        private void bypassLabelBlinkingTimer_Tick(object sender, EventArgs e)
+        {
+            if (this.BackColor == Color.FromArgb(80, 94, 107))
+                this.BackColor = Color.FromArgb(82, 130, 184);
+            else
+                this.BackColor = Color.FromArgb(80, 94, 107);
+        }
+
+        private void focusTimer_Tick(object sender, EventArgs e)
+        {
+            //    if (!this.Focused)
+            //    {
+            //        Console.WriteLine("callBypassForm lost focus, focusing...");
+            //        this.Activate();
+            //    }
+
+            //    // Ensure a specific control has focus
+            //    if (!bypassRequestButton.Focused)
+            //    {
+            //        Console.WriteLine("bypassRequestButton lost focus, focusing...");
+            //        bypassRequestButton.Focus();
+            //    }
+        }
+
+        private void callBypassButtonLabel_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("callBypassButtonLabelPressed");
+
+            if (callBypassButtonLabel.Text == "BYPASS OFF")
             {
                 this.Invoke((MethodInvoker)delegate
                 {
                     bypassStopRequested = false;
 
                     driverForm.checkBadgeTimer.Start();
+                    bypassLabelBlinkingTimer.Start();
 
                     isBypassOn = true;
-                    bypassRequestButton.Text = "BYPASS ON";
-                    bypassRequestButton.ForeColor = Color.Lime;
+                    callBypassButtonLabel.Text = "BYPASS ON";
+                    callBypassButtonLabel.ForeColor = Color.Lime;
 
                     //bypassLabelBlinkingTimer.Start();
                 });
             }
-            else if (bypassRequestButton.Text == "BYPASS ON")
+            else if (callBypassButtonLabel.Text == "BYPASS ON")
             {
                 this.Invoke((MethodInvoker)delegate
                 {
@@ -90,32 +120,11 @@ namespace OpenProtocolInterpreter.Sample
                     checkingForm.shadeEffectTimer.Start();
                     driverForm.checkBadgeTimer.Stop();
 
-                    driverForm.callBypassForm.bypassRequestButton.Text = "BYPASS OFF";
-                    driverForm.callBypassForm.bypassRequestButton.ForeColor = Color.Yellow;
+                    driverForm.callBypassForm.callBypassButtonLabel.Text = "BYPASS OFF";
+                    driverForm.callBypassForm.callBypassButtonLabel.ForeColor = Color.Yellow;
 
                     isBypassOn = false;
                 });
-            }
-        }
-
-        private void bypassLabelBlinkingTimer_Tick(object sender, EventArgs e)
-        {
-
-        }
-
-        private void focusTimer_Tick(object sender, EventArgs e)
-        {
-            if (!this.Focused)
-            {
-                Console.WriteLine("callBypassForm lost focus, focusing...");
-                this.Activate();
-            }
-
-            // Ensure a specific control has focus
-            if (!bypassRequestButton.Focused)
-            {
-                Console.WriteLine("bypassRequestButton lost focus, focusing...");
-                bypassRequestButton.Focus();
             }
         }
     }

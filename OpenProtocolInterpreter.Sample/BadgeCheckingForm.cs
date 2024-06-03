@@ -22,7 +22,7 @@ namespace OpenProtocolInterpreter.Sample
         public int bypassScrennRetationTime = 600;
         private int _bypassScrennRetationTime;
         public bool retationAllowed = false;
-        
+
 
         public BadgeCheckingForm(DriverForm driverForm)
         {
@@ -97,19 +97,17 @@ namespace OpenProtocolInterpreter.Sample
 
         private void cancelBypassButton_Click(object sender, EventArgs e)
         {
-            
+            //DriverForm.firstBadgeReadingAux = true;
 
-            DriverForm.firstBadgeReadingAux = true;
+            //DriverForm.firstTickDone = false;
+            //retationAllowed = false;
+            //shadeEffectTimer.Start();
+            //DriverForm.checkBadgeTimer.Stop();
 
-            DriverForm.firstTickDone = false;
-            retationAllowed = false;
-            shadeEffectTimer.Start();
-            DriverForm.checkBadgeTimer.Stop();
+            //DriverForm.SendCommandAllStations(false);
 
-            DriverForm.SendCommandAllStations(false);
-
-            DriverForm.callBypassForm.bypassRequestButton.Text = "BYPASS OFF";
-            DriverForm.callBypassForm.bypassRequestButton.ForeColor = Color.Yellow;
+            //DriverForm.callBypassForm.bypassRequestButton.Text = "BYPASS OFF";
+            //DriverForm.callBypassForm.bypassRequestButton.ForeColor = Color.Yellow;
         }
 
         private void shadeEffectTimer_Tick(object sender, EventArgs e)
@@ -126,7 +124,7 @@ namespace OpenProtocolInterpreter.Sample
             {
                 shadeEffectTimer.Stop();
                 this.Hide();
-                this.Opacity = 1.00; 
+                this.Opacity = 1.00;
                 _bypassScrennRetationTime = bypassScrennRetationTime;
             }
         }
