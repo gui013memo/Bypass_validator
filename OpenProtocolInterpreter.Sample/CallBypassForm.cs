@@ -16,7 +16,7 @@ namespace OpenProtocolInterpreter.Sample
         BadgeCheckingForm checkingForm;
         DriverForm driverForm;
         public bool isBypassOn;
-       // bool isBypassOn = false;
+        public bool bypassStopRequested = false;
 
         public CallBypassForm(BadgeCheckingForm badgeForm, DriverForm driverForm)
         {
@@ -24,6 +24,8 @@ namespace OpenProtocolInterpreter.Sample
             checkingForm = badgeForm;
             InitializeComponent();
             this.Paint += new PaintEventHandler(Form1_Paint);
+
+            focusTimer.Start();
         }
 
         private void SetRoundedRegion()
@@ -55,42 +57,66 @@ namespace OpenProtocolInterpreter.Sample
 
 
         private void bypassRequestButton_Click(object sender, EventArgs e)
-        {
+          {
+            Console.WriteLine("bypassRequestButtonPressed");
+
             if (bypassRequestButton.Text == "BYPASS OFF")
             {
                 this.Invoke((MethodInvoker)delegate
                 {
+                    bypassStopRequested = false;
+
                     driverForm.checkBadgeTimer.Start();
 
                     isBypassOn = true;
                     bypassRequestButton.Text = "BYPASS ON";
                     bypassRequestButton.ForeColor = Color.Lime;
 
-                    bypassLabelBlinkingTimer.Start();
+                    //bypassLabelBlinkingTimer.Start();
                 });
             }
             else if (bypassRequestButton.Text == "BYPASS ON")
             {
-                driverForm.firstBadgeReadingAux = true;
+                this.Invoke((MethodInvoker)delegate
+                {
+                    bypassStopRequested = false;
 
-                driverForm.firstTickDone = false;
-                checkingForm.retationAllowed = false;
-                checkingForm.shadeEffectTimer.Start();
-                driverForm.checkBadgeTimer.Stop();
+                    driverForm.SendCommandAllStations(false);
 
-                driverForm.SendCommandAllStations(false);
+                    driverForm.firstBadgeReadingAux = true;
+                    driverForm.firstTickDone = false;
+                    checkingForm.retationAllowed = false;
 
-                driverForm.callBypassForm.bypassRequestButton.Text = "BYPASS OFF";
-                driverForm.callBypassForm.bypassRequestButton.ForeColor = Color.Yellow;
+                    checkingForm.shadeEffectTimer.Start();
+                    driverForm.checkBadgeTimer.Stop();
 
-                isBypassOn = false;
-                checkingForm.Hide();
+                    driverForm.callBypassForm.bypassRequestButton.Text = "BYPASS OFF";
+                    driverForm.callBypassForm.bypassRequestButton.ForeColor = Color.Yellow;
+
+                    isBypassOn = false;
+                });
             }
         }
 
         private void bypassLabelBlinkingTimer_Tick(object sender, EventArgs e)
         {
 
+        }
+
+        private void focusTimer_Tick(object sender, EventArgs e)
+        {
+            if (!this.Focused)
+            {
+                Console.WriteLine("callBypassForm lost focus, focusing...");
+                this.Activate();
+            }
+
+            // Ensure a specific control has focus
+            if (!bypassRequestButton.Focused)
+            {
+                Console.WriteLine("bypassRequestButton lost focus, focusing...");
+                bypassRequestButton.Focus();
+            }
         }
     }
 }

@@ -223,8 +223,6 @@
     <Content Include="Notes\mid200_message.txt" />
     <Content Include="Notes\States.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NewFolder1\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

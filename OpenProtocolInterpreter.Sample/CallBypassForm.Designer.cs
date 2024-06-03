@@ -34,6 +34,7 @@ namespace OpenProtocolInterpreter.Sample
             this.components = new System.ComponentModel.Container();
             this.bypassRequestButton = new System.Windows.Forms.Button();
             this.bypassLabelBlinkingTimer = new System.Windows.Forms.Timer(this.components);
+            this.focusTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // bypassRequestButton
@@ -54,6 +55,10 @@ namespace OpenProtocolInterpreter.Sample
             // bypassLabelBlinkingTimer
             // 
             this.bypassLabelBlinkingTimer.Tick += new System.EventHandler(this.bypassLabelBlinkingTimer_Tick);
+            // 
+            // focusTimer
+            // 
+            this.focusTimer.Tick += new System.EventHandler(this.focusTimer_Tick);
             // 
             // CallBypassForm
             // 
@@ -77,5 +82,6 @@ namespace OpenProtocolInterpreter.Sample
 
         public Button bypassRequestButton;
         private Timer bypassLabelBlinkingTimer;
+        private Timer focusTimer;
     }
 }

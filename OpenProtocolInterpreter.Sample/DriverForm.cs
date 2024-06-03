@@ -892,7 +892,6 @@ namespace OpenProtocolInterpreter.Sample
             }
             else
             {
-                //checkBadgeTimer.Stop();
                 MessageBox.Show("idLogsPath is NULL");
                 logger.Log("idLogsPath is null");
                 return;
@@ -903,7 +902,9 @@ namespace OpenProtocolInterpreter.Sample
             {
                 currentOperatorGroupMemory = currentOperatorGroup;
             }
-            checkBadgeTimer.Start();
+
+            if (!callBypassForm.bypassStopRequested)
+                checkBadgeTimer.Start();
         }
 
         public string ChooseFolder()
@@ -951,6 +952,7 @@ namespace OpenProtocolInterpreter.Sample
 
         private void closeMainFormButton_Click(object sender, EventArgs e)
         {
+            Console.WriteLine("Close button hitted");
             ClearHighlightedButtons();
             this.formLoaderPanel.Controls.Clear();
             this.formLoaderPanel.Controls.Add(closingForm);

@@ -29,7 +29,7 @@ namespace OpenProtocolInterpreter.Sample
 
         private void textBox5_Enter(object sender, EventArgs e)
         {
-            label1.Focus();
+            label1.Focus(); //used to remove the cursor from vsOneTrafficTextBox when the user enters on Analysis forms
         }
     }
 }
