@@ -1,23 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OpenProtocolInterpreter.Sample
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+        private static ManualResetEvent splashCompletedEvent;
+
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            splashCompletedEvent = new ManualResetEvent(false);
+            Thread splashThread = new Thread(new ThreadStart(ShowSplashScreen));
+            splashThread.Start();
+
+            // Wait for the splash screen to complete
+            splashCompletedEvent.WaitOne();
+
             Application.Run(new DriverForm());
+        }
+
+        static void ShowSplashScreen()
+        {
+            SplashScreenForm splashScreen = new SplashScreenForm(splashCompletedEvent);
+            splashScreen.Load += (s, e) => splashScreen.StartShadeEffect();
+            Application.Run(splashScreen);
         }
     }
 }

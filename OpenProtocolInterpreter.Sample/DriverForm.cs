@@ -70,8 +70,6 @@ namespace OpenProtocolInterpreter.Sample
         public bool firstBadgeReadingAux = true;
         private bool stateChanged = false;
 
-        public bool introDone = false;
-
         public DriverForm()
         {
             InitializeComponent();
@@ -82,14 +80,19 @@ namespace OpenProtocolInterpreter.Sample
             vsThreeDriver = new OpenProtocolDriver();
 
             this.Paint += new PaintEventHandler(SetRoundedRegion);
+            this.Load += new EventHandler(DriverForm_Load);
 
             callBypassForm.Show();
         }
 
+        private void DriverForm_Load(object sender, EventArgs e)
+        {
+            TopMost = true;
+            TopMost = false;
+        }
+
         private void SetRoundedRegion(object sender, PaintEventArgs e)
         {
-            Hide();
-
             int radius = 20;
             GraphicsPath path = new GraphicsPath();
             path.StartFigure();
