@@ -57,7 +57,7 @@ namespace OpenProtocolInterpreter.Sample
         public CallBypassForm callBypassForm;
         BadgeCheckingForm checkingForm;
         ClosingForm closingForm;
-
+        SplashScreenForm splashScreenForm;
 
         Thread _vsOneThread;
         Thread _vsTwoThread;
@@ -69,6 +69,8 @@ namespace OpenProtocolInterpreter.Sample
         public bool firstTickDone = false;
         public bool firstBadgeReadingAux = true;
         private bool stateChanged = false;
+
+        public bool introDone = false;
 
         public DriverForm()
         {
@@ -86,7 +88,9 @@ namespace OpenProtocolInterpreter.Sample
 
         private void SetRoundedRegion(object sender, PaintEventArgs e)
         {
-            int radius = 20;  
+            Hide();
+
+            int radius = 20;
             GraphicsPath path = new GraphicsPath();
             path.StartFigure();
             path.AddArc(new Rectangle(0, 0, radius, radius), 180, 90);

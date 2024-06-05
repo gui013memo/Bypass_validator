@@ -17,17 +17,6 @@ namespace OpenProtocolInterpreter.Sample
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            SplashScreenForm splashScreen = new SplashScreenForm();
-            splashScreen.Show();
-            splashScreen.ShadeEffectTimer.Start();
-            splashScreen.Refresh();
-
-            while (!splashScreen.introDone)
-            {
-                
-            }
-
             Application.Run(new DriverForm());
         }
     }
