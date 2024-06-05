@@ -79,14 +79,14 @@ namespace OpenProtocolInterpreter.Sample
             vsTwoDriver = new OpenProtocolDriver();
             vsThreeDriver = new OpenProtocolDriver();
 
-            this.Paint += new PaintEventHandler(DriverForm_Paint);
+            this.Paint += new PaintEventHandler(SetRoundedRegion);
 
             callBypassForm.Show();
         }
 
-        private void SetRoundedRegion()
+        private void SetRoundedRegion(object sender, PaintEventArgs e)
         {
-            int radius = 20;  // Adjust the radius to your preference
+            int radius = 20;  
             GraphicsPath path = new GraphicsPath();
             path.StartFigure();
             path.AddArc(new Rectangle(0, 0, radius, radius), 180, 90);
@@ -95,11 +95,6 @@ namespace OpenProtocolInterpreter.Sample
             path.AddArc(new Rectangle(0, this.Height - radius, radius, radius), 90, 90);
             path.CloseFigure();
             this.Region = new Region(path);
-        }
-
-        private void DriverForm_Paint(object sender, PaintEventArgs e)
-        {
-            SetRoundedRegion();
         }
 
         private void DriverFormInit()

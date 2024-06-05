@@ -130,11 +130,17 @@
   <data name="about-small" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\about-small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="4-bmp-mono" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\4-bmp-mono.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="settings - small11" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\settings - small11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Home-icon.svg - Copy - Copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Home-icon.svg - Copy - Copy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="JustWords-bigger" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\JustWords-bigger.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Home-icon.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Home-icon.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -163,7 +169,7 @@
   <data name="Home-icon2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Home-icon.svg2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="4-bmp-mono" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\4-bmp-mono.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

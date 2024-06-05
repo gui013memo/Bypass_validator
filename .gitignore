@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/OpenProtocolInterpreter.Sample/SplashScreenForm.resx
+/OpenProtocolInterpreter.Sample/SplashScreenForm.Designer.cs
+/OpenProtocolInterpreter.Sample/SplashScreenForm.cs
+/.gitignore
