@@ -8,7 +8,7 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
 {
     public class SendCommand
     {
-        Logger logger = new Logger();
+        Logger logger = new Logger(); 
 
         private readonly OpenProtocolDriver _driver;
 
@@ -52,7 +52,7 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
 
                 var mid = _driver.SendAndWaitForResponse(mid0200.Pack(), new TimeSpan(0, 0, 5));
 
-               Console.WriteLine("Pack sent: " + mid0200.Pack());
+               logger.Log("Pack sent: " + mid0200.Pack());
 
                 if (mid.Header.Mid == Mid0004.MID)
                 {

@@ -16,6 +16,8 @@ namespace OpenProtocolInterpreter.Sample.Ethernet
             Delimiter = 0x00; // NUL
         }
 
+        Logger logger = new Logger();
+
         private readonly object _messageSendLock = new object();
         private readonly object _queueStopLock = new object();
         private bool waitingForResponse = false;
@@ -49,7 +51,7 @@ namespace OpenProtocolInterpreter.Sample.Ethernet
 
         public SimpleTcpClient Connect(string hostNameOrIpAddress, int port)
         {
-            Console.WriteLine("Got inside of SimpleTcpClient.Connect() method");
+            logger.Log("Got inside of SimpleTcpClient.Connect() method");
 
             if (string.IsNullOrEmpty(hostNameOrIpAddress))
             {

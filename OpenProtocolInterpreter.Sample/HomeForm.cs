@@ -13,6 +13,8 @@ namespace OpenProtocolInterpreter.Sample
 {
     public partial class HomeForm : Form
     {
+        Logger logger = new Logger();
+
         public Color _orange = Color.FromArgb(255, 128, 0);
         public Color _red = Color.FromArgb(201, 44, 31);
         public Color _grey = Color.FromArgb(51, 61, 70);
@@ -159,17 +161,17 @@ namespace OpenProtocolInterpreter.Sample
                             vsOneConnStateLabel.ForeColor = _grey;
                             vsOneConnStateLabel.BackColor = Color.Transparent;
                             vsOneTimer.Stop();
-                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
+                            logger.Log("NEW vsOneStatus: " + status.ToString());
                             break;
                         case VsStatus.Connecting:
                             vsOneState = VsStatus.Connecting;
                             vsOneTimer.Start();
-                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
+                            logger.Log("NEW vsOneStatus: " + status.ToString());
                             break;
                         case VsStatus.Reconnecting:
                             vsOneState = VsStatus.Reconnecting;
                             vsOneTimer.Start();
-                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
+                            logger.Log("NEW vsOneStatus: " + status.ToString());
                             break;
                         case VsStatus.ConnFailed:
                             vsOneState = VsStatus.ConnFailed;
@@ -178,7 +180,7 @@ namespace OpenProtocolInterpreter.Sample
                             vsOneTimer.Stop();
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
-                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
+                            logger.Log("NEW vsOneStatus: " + status.ToString());
                             break;
                         case VsStatus.Connected:
                             vsOneState = VsStatus.Connected;
@@ -187,21 +189,21 @@ namespace OpenProtocolInterpreter.Sample
                             vsOneConnStateLabel.BackColor = Color.Green;
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
-                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
+                            logger.Log("NEW vsOneStatus: " + status.ToString());
                             break;
                         case VsStatus.Warning:
                             vsOneState = VsStatus.Warning;
                             vsOneTimer.Start();
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
-                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
+                            logger.Log("NEW vsOneStatus: " + status.ToString());
                             break;
                         case VsStatus.ConnDropped:
                             vsOneState = VsStatus.ConnDropped;
                             vsOneTimer.Start();
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
-                            Console.WriteLine("NEW vsOneStatus: " + status.ToString());
+                            logger.Log("NEW vsOneStatus: " + status.ToString());
                             break;
                     }
                     break;
@@ -213,17 +215,17 @@ namespace OpenProtocolInterpreter.Sample
                             vsTwoConnStateLabel.ForeColor = _grey;
                             vsTwoConnStateLabel.BackColor = Color.Transparent;
                             vsTwoTimer.Stop();
-                            Console.WriteLine("NEW vsTwoStatus: " + status.ToString());
+                            logger.Log("NEW vsTwoStatus: " + status.ToString());
                             break;
                         case VsStatus.Connecting:
                             vsTwoState = VsStatus.Connecting;
                             vsTwoTimer.Start();
-                            Console.WriteLine("NEW vsTwoStatus: " + status.ToString());
+                            logger.Log("NEW vsTwoStatus: " + status.ToString());
                             break;
                         case VsStatus.Reconnecting:
                             vsTwoState = VsStatus.Reconnecting;
                             vsTwoTimer.Start();
-                            Console.WriteLine("NEW vsTwoStatus: " + status.ToString());
+                            logger.Log("NEW vsTwoStatus: " + status.ToString());
                             break;
                         case VsStatus.ConnFailed:
                             vsTwoState = VsStatus.ConnFailed;
@@ -232,7 +234,7 @@ namespace OpenProtocolInterpreter.Sample
                             vsTwoTimer.Stop();
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
-                            Console.WriteLine("NEW vsTwoStatus: " + status.ToString());
+                            logger.Log("NEW vsTwoStatus: " + status.ToString());
                             break;
                         case VsStatus.Connected:
                             vsTwoState = VsStatus.Connected;
@@ -241,21 +243,21 @@ namespace OpenProtocolInterpreter.Sample
                             vsTwoConnStateLabel.BackColor = Color.Green;
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
-                            Console.WriteLine("NEW vsTwoStatus: " + status.ToString());
+                            logger.Log("NEW vsTwoStatus: " + status.ToString());
                             break;
                         case VsStatus.Warning:
                             vsTwoState = VsStatus.Warning;
                             vsTwoTimer.Start();
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
-                            Console.WriteLine("NEW vsTwoStatus: " + status.ToString());
+                            logger.Log("NEW vsTwoStatus: " + status.ToString());
                             break;
                         case VsStatus.ConnDropped:
                             vsTwoState = VsStatus.ConnDropped;
                             vsTwoTimer.Start();
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
-                            Console.WriteLine("NEW vsTwoStatus: " + status.ToString());
+                            logger.Log("NEW vsTwoStatus: " + status.ToString());
                             break;
                     }
                     break;
@@ -267,17 +269,17 @@ namespace OpenProtocolInterpreter.Sample
                             vsThreeConnStateLabel.ForeColor = _grey;
                             vsThreeConnStateLabel.BackColor = Color.Transparent;
                             vsThreeTimer.Stop();
-                            Console.WriteLine("NEW vsThreeStatus: " + status.ToString());
+                            logger.Log("NEW vsThreeStatus: " + status.ToString());
                             break;
                         case VsStatus.Connecting:
                             vsThreeState = VsStatus.Connecting;
                             vsThreeTimer.Start();
-                            Console.WriteLine("NEW vsThreeStatus: " + status.ToString());
+                            logger.Log("NEW vsThreeStatus: " + status.ToString());
                             break;
                         case VsStatus.Reconnecting:
                             vsThreeState = VsStatus.Reconnecting;
                             vsThreeTimer.Start();
-                            Console.WriteLine("NEW vsThreeStatus: " + status.ToString());
+                            logger.Log("NEW vsThreeStatus: " + status.ToString());
                             break;
                         case VsStatus.ConnFailed:
                             vsThreeState = VsStatus.ConnFailed;
@@ -286,7 +288,7 @@ namespace OpenProtocolInterpreter.Sample
                             vsThreeTimer.Stop();
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
-                            Console.WriteLine("NEW vsThreeStatus: " + status.ToString());
+                            logger.Log("NEW vsThreeStatus: " + status.ToString());
                             break;
                         case VsStatus.Connected:
                             vsThreeState = VsStatus.Connected;
@@ -295,21 +297,21 @@ namespace OpenProtocolInterpreter.Sample
                             vsThreeConnStateLabel.BackColor = Color.Green;
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
-                            Console.WriteLine("NEW vsThreeStatus: " + status.ToString());
+                            logger.Log("NEW vsThreeStatus: " + status.ToString());
                             break;
                         case VsStatus.Warning:
                             vsThreeState = VsStatus.Warning;
                             vsThreeTimer.Start();
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
-                            Console.WriteLine("NEW vsThreeStatus: " + status.ToString());
+                            logger.Log("NEW vsThreeStatus: " + status.ToString());
                             break;
                         case VsStatus.ConnDropped:
                             vsThreeState = VsStatus.ConnDropped;
                             vsThreeTimer.Start();
                             if (currentMode == StartMode.Automatic)
                                 updateStartOrStopButton();
-                            Console.WriteLine("NEW vsThreeStatus: " + status.ToString());
+                            logger.Log("NEW vsThreeStatus: " + status.ToString());
                             break;
                     }
                     break;

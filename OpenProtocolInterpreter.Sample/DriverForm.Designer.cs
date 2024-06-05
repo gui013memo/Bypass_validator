@@ -48,6 +48,7 @@
             this.vsTwoKeepAliveTimer = new System.Windows.Forms.Timer(this.components);
             this.vsThreeKeepAliveTimer = new System.Windows.Forms.Timer(this.components);
             this.closingTimer = new System.Windows.Forms.Timer(this.components);
+            this.label1 = new System.Windows.Forms.Label();
             this.topPanel.SuspendLayout();
             this.sidePanel.SuspendLayout();
             this.SuspendLayout();
@@ -155,6 +156,7 @@
             // sidePanel
             // 
             this.sidePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.sidePanel.Controls.Add(this.label1);
             this.sidePanel.Controls.Add(this.aboutButton);
             this.sidePanel.Controls.Add(this.analysisButton);
             this.sidePanel.Controls.Add(this.settingsButton);
@@ -255,6 +257,20 @@
             this.closingTimer.Interval = 250;
             this.closingTimer.Tick += new System.EventHandler(this.closingTimer_Tick);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label1.Font = new System.Drawing.Font("Microsoft New Tai Lue", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(61)))), ((int)(((byte)(70)))));
+            this.label1.Location = new System.Drawing.Point(4, 331);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(24, 15);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "R.C";
+            // 
             // DriverForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -298,6 +314,7 @@
         private System.Windows.Forms.Timer vsTwoKeepAliveTimer;
         private System.Windows.Forms.Timer vsThreeKeepAliveTimer;
         private System.Windows.Forms.Timer closingTimer;
+        private System.Windows.Forms.Label label1;
     }
 }
 

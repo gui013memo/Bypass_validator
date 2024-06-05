@@ -61,11 +61,11 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(210, 63);
+            this.label2.Location = new System.Drawing.Point(207, 63);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 17);
+            this.label2.Size = new System.Drawing.Size(198, 17);
             this.label2.TabIndex = 2;
-            this.label2.Text = "1.0.0";
+            this.label2.Text = "1.0.0 - Release Candidate";
             // 
             // label3
             // 

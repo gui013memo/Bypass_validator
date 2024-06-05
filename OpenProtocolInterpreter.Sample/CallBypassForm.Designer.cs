@@ -49,6 +49,7 @@ namespace OpenProtocolInterpreter.Sample
             // callBypassButtonLabel
             // 
             this.callBypassButtonLabel.AutoSize = true;
+            this.callBypassButtonLabel.BackColor = System.Drawing.Color.Transparent;
             this.callBypassButtonLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.callBypassButtonLabel.ForeColor = System.Drawing.Color.Yellow;
             this.callBypassButtonLabel.Location = new System.Drawing.Point(13, 12);
@@ -69,7 +70,6 @@ namespace OpenProtocolInterpreter.Sample
             this.Location = new System.Drawing.Point(1016, 1027);
             this.Name = "CallBypassForm";
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TopMost = true;
             this.ResumeLayout(false);
@@ -80,6 +80,6 @@ namespace OpenProtocolInterpreter.Sample
         #endregion
         private Timer bypassLabelBlinkingTimer;
         private Timer focusTimer;
-        private Label callBypassButtonLabel;
+        public Label callBypassButtonLabel;
     }
 }

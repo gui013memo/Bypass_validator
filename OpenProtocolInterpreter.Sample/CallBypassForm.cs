@@ -13,6 +13,8 @@ namespace OpenProtocolInterpreter.Sample
 {
     public partial class CallBypassForm : Form
     {
+        Logger logger = new Logger();
+
         BadgeCheckingForm checkingForm;
         DriverForm driverForm;
         public bool isBypassOn;
@@ -58,7 +60,7 @@ namespace OpenProtocolInterpreter.Sample
 
         private void bypassRequestButton_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void bypassLabelBlinkingTimer_Tick(object sender, EventArgs e)
@@ -73,21 +75,21 @@ namespace OpenProtocolInterpreter.Sample
         {
             //    if (!this.Focused)
             //    {
-            //        Console.WriteLine("callBypassForm lost focus, focusing...");
+            //        logger.Log("callBypassForm lost focus, focusing...");
             //        this.Activate();
             //    }
 
             //    // Ensure a specific control has focus
             //    if (!bypassRequestButton.Focused)
             //    {
-            //        Console.WriteLine("bypassRequestButton lost focus, focusing...");
+            //        logger.Log("bypassRequestButton lost focus, focusing...");
             //        bypassRequestButton.Focus();
             //    }
         }
 
         private void callBypassButtonLabel_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("callBypassButtonLabelPressed");
+            logger.Log("callBypassButtonLabelPressed");
 
             if (callBypassButtonLabel.Text == "BYPASS OFF")
             {
@@ -100,9 +102,7 @@ namespace OpenProtocolInterpreter.Sample
 
                     isBypassOn = true;
                     callBypassButtonLabel.Text = "BYPASS ON";
-                    callBypassButtonLabel.ForeColor = Color.Lime;
-
-                    //bypassLabelBlinkingTimer.Start();
+                    //callBypassButtonLabel.ForeColor = Color.Lime;
                 });
             }
             else if (callBypassButtonLabel.Text == "BYPASS ON")
@@ -124,6 +124,11 @@ namespace OpenProtocolInterpreter.Sample
                     driverForm.callBypassForm.callBypassButtonLabel.ForeColor = Color.Yellow;
 
                     isBypassOn = false;
+
+                    bypassLabelBlinkingTimer.Stop();
+                    this.BackColor = Color.FromArgb(80, 94, 107);
+                    callBypassButtonLabel.ForeColor = Color.Yellow;
+
                 });
             }
         }

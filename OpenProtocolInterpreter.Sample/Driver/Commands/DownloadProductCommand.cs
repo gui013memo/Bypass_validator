@@ -6,6 +6,8 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
 {
     public class DownloadProductCommand
     {
+        Logger logger = new Logger();
+
         private readonly OpenProtocolDriver _driver;
 
         public DownloadProductCommand(OpenProtocolDriver driver)
@@ -15,7 +17,7 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
 
         public bool Execute(string vinNumber)
         {
-            Console.WriteLine($"Sending product <{vinNumber}> to controller!");
+            logger.Log($"Sending product <{vinNumber}> to controller!");
             var mid = _driver.SendAndWaitForResponse(new Mid0050() { VinNumber = vinNumber }.Pack(), new TimeSpan(0, 0, 10));
 
             if (mid.Header.Mid == Mid0004.MID)
@@ -30,12 +32,12 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
 
         private void OnProductAccepted(Mid0005 mid)
         {
-            Console.WriteLine("Product Accepted by controller!");
+            logger.Log("Product Accepted by controller!");
         }
 
         private void OnProductRefused(Mid0004 mid)
         {
-            Console.WriteLine($"Error thrown by controller, product rejected under error code <{(int)mid.ErrorCode}> ({mid.ErrorCode.ToString()})!");
+            logger.Log($"Error thrown by controller, product rejected under error code <{(int)mid.ErrorCode}> ({mid.ErrorCode.ToString()})!");
         }
     }
 }

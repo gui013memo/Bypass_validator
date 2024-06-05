@@ -18,7 +18,6 @@ namespace OpenProtocolInterpreter.Sample
             Thread splashThread = new Thread(new ThreadStart(ShowSplashScreen));
             splashThread.Start();
 
-            // Wait for the splash screen to complete
             splashCompletedEvent.WaitOne();
 
             Application.Run(new DriverForm());

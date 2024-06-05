@@ -75,20 +75,23 @@ namespace OpenProtocolInterpreter.Sample
             InitializeComponent();
             DriverFormInit();
 
+            callBypassForm.Show();
+
             vsOneDriver = new OpenProtocolDriver();
             vsTwoDriver = new OpenProtocolDriver();
             vsThreeDriver = new OpenProtocolDriver();
 
             this.Paint += new PaintEventHandler(SetRoundedRegion);
             this.Load += new EventHandler(DriverForm_Load);
-
-            callBypassForm.Show();
         }
 
         private void DriverForm_Load(object sender, EventArgs e)
         {
-            TopMost = true;
-            TopMost = false;
+            this.TopMost = true;
+            this.TopMost = false;
+
+            callBypassForm.TopMost = true;
+            callBypassForm.Show();
         }
 
         private void SetRoundedRegion(object sender, PaintEventArgs e)
@@ -111,7 +114,7 @@ namespace OpenProtocolInterpreter.Sample
             settingsForm = new SettingsForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             analysisForm = new AnalysisForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             aboutForm = new AboutForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
-            callBypassForm = new CallBypassForm(checkingForm, this);
+            callBypassForm = new CallBypassForm(checkingForm, this) { TopMost = true };
             closingForm = new ClosingForm() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
 
             this.topPanel.MouseDown += new MouseEventHandler(topPanel_MouseDown); this.appNameLabel.MouseDown += new MouseEventHandler(topPanel_MouseDown);
@@ -180,7 +183,7 @@ namespace OpenProtocolInterpreter.Sample
 
         private void WorkingThreadHandleTcpConnection(VirtualStations vs)//PUT THIS ON DOCUMENTATION
         {
-            Console.WriteLine("New WorkingThread started for vs: " + vs.ToString());
+            logger.Log("New WorkingThread started for vs: " + vs.ToString());
 
             switch (vs)
             {
@@ -201,19 +204,19 @@ namespace OpenProtocolInterpreter.Sample
 
                         try
                         {
-                            Console.WriteLine("trying to conn localVsOneClient for vsOne inside of WorkingThread function");
+                            logger.Log("trying to conn localVsOneClient for vsOne inside of WorkingThread function");
                             localVsOneClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsOneIpTextBox.Text, int.Parse(homeForm.vsOnePortTextBox.Text));
-                            Console.WriteLine("vsOne Connected");
+                            logger.Log("vsOne Connected");
 
                             if (vsOneCancelReconn)
                             {
-                                Console.WriteLine("vsOneCancelReconn was TRUE on TRY block inside of WorkingThreadHandleTcpConnection, exiting from thread");
+                                logger.Log("vsOneCancelReconn was TRUE on TRY block inside of WorkingThreadHandleTcpConnection, exiting from thread");
                                 break;
                             }
 
                             if (localVsOneThreadQueue != vsOneThreadQueue)
                             {
-                                Console.WriteLine($"localVsOneThreadQueue is different from vsOneThreadQueue, this thread is not the latest, exiting from thread. localVsOneThreadQueue: {localVsOneThreadQueue}, vsOneThreadQueue: {vsOneThreadQueue}");
+                                logger.Log($"localVsOneThreadQueue is different from vsOneThreadQueue, this thread is not the latest, exiting from thread. localVsOneThreadQueue: {localVsOneThreadQueue}, vsOneThreadQueue: {vsOneThreadQueue}");
                                 break;
                             }
 
@@ -222,36 +225,36 @@ namespace OpenProtocolInterpreter.Sample
                         {
                             if (vsOneCancelReconn)
                             {
-                                Console.WriteLine("vsOneCancelReconn was TRUE on CATCH block inside of WorkingThreadHandleTcpConnection, exiting from thread");
+                                logger.Log("vsOneCancelReconn was TRUE on CATCH block inside of WorkingThreadHandleTcpConnection, exiting from thread");
                                 break;
                             }
 
                             if (localVsOneThreadQueue != vsOneThreadQueue)
                             {
-                                Console.WriteLine($"localVsOneThreadQueue is different from vsOneThreadQueue, this thread is not the latest, exiting from thread. localVsOneThreadQueue: {localVsOneThreadQueue}, vsOneThreadQueue: {vsOneThreadQueue}");
+                                logger.Log($"localVsOneThreadQueue is different from vsOneThreadQueue, this thread is not the latest, exiting from thread. localVsOneThreadQueue: {localVsOneThreadQueue}, vsOneThreadQueue: {vsOneThreadQueue}");
                                 break;
                             }
 
                             vsOneThreadQueue = 0;
 
-                            Console.WriteLine("vsOne not connected");
+                            logger.Log("vsOne not connected");
 
                             if (homeForm.vsOneState == VsStatus.Reconnecting)
                             {
-                                Console.WriteLine("The system is on RECONNECTING MODE for vsOne. The conn has been dropped at " + vsOneConnLostTimeStamp.ToString("HH:mm:ss") + " - The system is trying to reconnect...");
+                                logger.Log("The system is on RECONNECTING MODE for vsOne. The conn has been dropped at " + vsOneConnLostTimeStamp.ToString("HH:mm:ss") + " - The system is trying to reconnect...");
                                 if (!vsOneCancelReconn)
                                 {
                                     WorkingThreadHandleTcpConnection(vs);
                                 }
                                 else
                                 {
-                                    Console.WriteLine("vsOneCancelReconn was TRUE at WorkingThreadHandleTcpConnection reconn attempt, stopping the reconnection attempt");
+                                    logger.Log("vsOneCancelReconn was TRUE at WorkingThreadHandleTcpConnection reconn attempt, stopping the reconnection attempt");
                                     break;
                                 }
                             }
                             else
                             {
-                                Console.WriteLine("THE EXCEPTION: " + ex.ToString());
+                                logger.Log("THE EXCEPTION: " + ex.ToString());
                                 this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
                                 {
                                     if (ex.Message.Contains("refused"))
@@ -340,19 +343,19 @@ namespace OpenProtocolInterpreter.Sample
 
                         try
                         {
-                            Console.WriteLine("trying to conn localVsTwoClient for vsTwo inside of WorkingThread function");
+                            logger.Log("trying to conn localVsTwoClient for vsTwo inside of WorkingThread function");
                             localVsTwoClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsTwoIpTextBox.Text, int.Parse(homeForm.vsTwoPortTextBox.Text));
-                            Console.WriteLine("vsTwo Connected");
+                            logger.Log("vsTwo Connected");
 
                             if (vsTwoCancelReconn)
                             {
-                                Console.WriteLine("vsTwoCancelReconn was TRUE on TRY block inside of WorkingThreadHandleTcpConnection, exiting from thread");
+                                logger.Log("vsTwoCancelReconn was TRUE on TRY block inside of WorkingThreadHandleTcpConnection, exiting from thread");
                                 break;
                             }
 
                             if (localVsTwoThreadQueue != vsTwoThreadQueue)
                             {
-                                Console.WriteLine($"localVsTwoThreadQueue is different from vsTwoThreadQueue, this thread is not the latest, exiting from thread. localVsTwoThreadQueue: {localVsTwoThreadQueue}, vsTwoThreadQueue: {vsTwoThreadQueue}");
+                                logger.Log($"localVsTwoThreadQueue is different from vsTwoThreadQueue, this thread is not the latest, exiting from thread. localVsTwoThreadQueue: {localVsTwoThreadQueue}, vsTwoThreadQueue: {vsTwoThreadQueue}");
                                 break;
                             }
 
@@ -361,36 +364,36 @@ namespace OpenProtocolInterpreter.Sample
                         {
                             if (vsTwoCancelReconn)
                             {
-                                Console.WriteLine("vsTwoCancelReconn was TRUE on CATCH block inside of WorkingThreadHandleTcpConnection, exiting from thread");
+                                logger.Log("vsTwoCancelReconn was TRUE on CATCH block inside of WorkingThreadHandleTcpConnection, exiting from thread");
                                 break;
                             }
 
                             if (localVsTwoThreadQueue != vsTwoThreadQueue)
                             {
-                                Console.WriteLine($"localVsTwoThreadQueue is different from vsTwoThreadQueue, this thread is not the latest, exiting from thread. localVsTwoThreadQueue: {localVsTwoThreadQueue}, vsTwoThreadQueue: {vsTwoThreadQueue}");
+                                logger.Log($"localVsTwoThreadQueue is different from vsTwoThreadQueue, this thread is not the latest, exiting from thread. localVsTwoThreadQueue: {localVsTwoThreadQueue}, vsTwoThreadQueue: {vsTwoThreadQueue}");
                                 break;
                             }
 
                             vsTwoThreadQueue = 0;
 
-                            Console.WriteLine("vsTwo not connected");
+                            logger.Log("vsTwo not connected");
 
                             if (homeForm.vsTwoState == VsStatus.Reconnecting)
                             {
-                                Console.WriteLine("The system is on RECONNECTING MODE for vsTwo. The conn has been dropped at " + vsTwoConnLostTimeStamp.ToString("HH:mm:ss") + " - The system is trying to reconnect...");
+                                logger.Log("The system is on RECONNECTING MODE for vsTwo. The conn has been dropped at " + vsTwoConnLostTimeStamp.ToString("HH:mm:ss") + " - The system is trying to reconnect...");
                                 if (!vsTwoCancelReconn)
                                 {
                                     WorkingThreadHandleTcpConnection(vs);
                                 }
                                 else
                                 {
-                                    Console.WriteLine("vsTwoCancelReconn was TRUE at WorkingThreadHandleTcpConnection reconn attempt, stopping the reconnection attempt");
+                                    logger.Log("vsTwoCancelReconn was TRUE at WorkingThreadHandleTcpConnection reconn attempt, stopping the reconnection attempt");
                                     break;
                                 }
                             }
                             else
                             {
-                                Console.WriteLine("THE EXCEPTION: " + ex.ToString());
+                                logger.Log("THE EXCEPTION: " + ex.ToString());
                                 this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
                                 {
                                     if (ex.Message.Contains("refused"))
@@ -479,19 +482,19 @@ namespace OpenProtocolInterpreter.Sample
 
                         try
                         {
-                            Console.WriteLine("trying to conn localVsThreeClient for vsThree inside of WorkingThread function");
+                            logger.Log("trying to conn localVsThreeClient for vsThree inside of WorkingThread function");
                             localVsThreeClient = new Ethernet.SimpleTcpClient().Connect(homeForm.vsThreeIpTextBox.Text, int.Parse(homeForm.vsThreePortTextBox.Text));
-                            Console.WriteLine("vsThree Connected");
+                            logger.Log("vsThree Connected");
 
                             if (vsThreeCancelReconn)
                             {
-                                Console.WriteLine("vsThreeCancelReconn was TRUE on TRY block inside of WorkingThreadHandleTcpConnection, exiting from thread");
+                                logger.Log("vsThreeCancelReconn was TRUE on TRY block inside of WorkingThreadHandleTcpConnection, exiting from thread");
                                 break;
                             }
 
                             if (localVsThreeThreadQueue != vsThreeThreadQueue)
                             {
-                                Console.WriteLine($"localVsThreeThreadQueue is different from vsThreeThreadQueue, this thread is not the latest, exiting from thread. localVsThreeThreadQueue: {localVsThreeThreadQueue}, vsThreeThreadQueue: {vsThreeThreadQueue}");
+                                logger.Log($"localVsThreeThreadQueue is different from vsThreeThreadQueue, this thread is not the latest, exiting from thread. localVsThreeThreadQueue: {localVsThreeThreadQueue}, vsThreeThreadQueue: {vsThreeThreadQueue}");
                                 break;
                             }
 
@@ -500,36 +503,36 @@ namespace OpenProtocolInterpreter.Sample
                         {
                             if (vsThreeCancelReconn)
                             {
-                                Console.WriteLine("vsThreeCancelReconn was TRUE on CATCH block inside of WorkingThreadHandleTcpConnection, exiting from thread");
+                                logger.Log("vsThreeCancelReconn was TRUE on CATCH block inside of WorkingThreadHandleTcpConnection, exiting from thread");
                                 break;
                             }
 
                             if (localVsThreeThreadQueue != vsThreeThreadQueue)
                             {
-                                Console.WriteLine($"localVsThreeThreadQueue is different from vsThreeThreadQueue, this thread is not the latest, exiting from thread. localVsThreeThreadQueue: {localVsThreeThreadQueue}, vsThreeThreadQueue: {vsThreeThreadQueue}");
+                                logger.Log($"localVsThreeThreadQueue is different from vsThreeThreadQueue, this thread is not the latest, exiting from thread. localVsThreeThreadQueue: {localVsThreeThreadQueue}, vsThreeThreadQueue: {vsThreeThreadQueue}");
                                 break;
                             }
 
                             vsThreeThreadQueue = 0;
 
-                            Console.WriteLine("vsThree not connected");
+                            logger.Log("vsThree not connected");
 
                             if (homeForm.vsThreeState == VsStatus.Reconnecting)
                             {
-                                Console.WriteLine("The system is on RECONNECTING MODE for vsThree. The conn has been dropped at " + vsThreeConnLostTimeStamp.ToString("HH:mm:ss") + " - The system is trying to reconnect...");
+                                logger.Log("The system is on RECONNECTING MODE for vsThree. The conn has been dropped at " + vsThreeConnLostTimeStamp.ToString("HH:mm:ss") + " - The system is trying to reconnect...");
                                 if (!vsThreeCancelReconn)
                                 {
                                     WorkingThreadHandleTcpConnection(vs);
                                 }
                                 else
                                 {
-                                    Console.WriteLine("vsThreeCancelReconn was TRUE at WorkingThreadHandleTcpConnection reconn attempt, stopping the reconnection attempt");
+                                    logger.Log("vsThreeCancelReconn was TRUE at WorkingThreadHandleTcpConnection reconn attempt, stopping the reconnection attempt");
                                     break;
                                 }
                             }
                             else
                             {
-                                Console.WriteLine("THE EXCEPTION: " + ex.ToString());
+                                logger.Log("THE EXCEPTION: " + ex.ToString());
                                 this.Invoke((MethodInvoker)delegate // ## PUT ABOUT CHANGE UI ELEMENTS FROM A THREAD ON DOC
                                 {
                                     if (ex.Message.Contains("refused"))
@@ -676,13 +679,13 @@ namespace OpenProtocolInterpreter.Sample
         public void SendCommandAllStations(bool setOrReset)
         {
             string vsOneCommandAttempt = new SendCommand(vsOneDriver).Execute(setOrReset) ? "success" : "failed";
-            Console.WriteLine($"Attempt to send: {setOrReset} to vsOne - Attempt result: {vsOneCommandAttempt}");
+            logger.Log($"Attempt to send: {setOrReset} to vsOne - Attempt result: {vsOneCommandAttempt}");
 
             string vsTwoCommandAttempt = new SendCommand(vsTwoDriver).Execute(setOrReset) ? "success" : "failed";
-            Console.WriteLine($"Attempt to send: {setOrReset} to vsTwo - Attempt result: {vsTwoCommandAttempt}");
+            logger.Log($"Attempt to send: {setOrReset} to vsTwo - Attempt result: {vsTwoCommandAttempt}");
 
             string vsThreeCommandAttempt = new SendCommand(vsThreeDriver).Execute(setOrReset) ? "success" : "failed";
-            Console.WriteLine($"Attempt to send: {setOrReset} to vsThree - Attempt result: {vsThreeCommandAttempt}");
+            logger.Log($"Attempt to send: {setOrReset} to vsThree - Attempt result: {vsThreeCommandAttempt}");
         }
 
         public void SendCommand(VirtualStations vs, bool setOrReset)
@@ -844,7 +847,7 @@ namespace OpenProtocolInterpreter.Sample
                         if (currentOperatorGroupMemory != currentOperatorGroup)
                         {
                             stateChanged = true;
-                            Console.WriteLine($"NEW state detected, oldStateMemory: {currentOperatorGroupMemory} / currentOperator {currentOperatorGroup}");
+                            logger.Log($"NEW state detected, oldStateMemory: {currentOperatorGroupMemory} / currentOperator {currentOperatorGroup}");
                         }
                     }
 
@@ -860,7 +863,7 @@ namespace OpenProtocolInterpreter.Sample
                         checkingForm.retationAllowed = true;
                         checkingForm.shadeEffectTimer.Start();
 
-                        Console.WriteLine("NEW badge state: Master_Admin");
+                        logger.Log("NEW badge state: Master_Admin");
                     }
                     else if (currentOperatorGroup == "Operator" && stateChanged)
                     {
@@ -870,7 +873,7 @@ namespace OpenProtocolInterpreter.Sample
                         checkingForm.UpdateSQSStatus();
                         checkingForm.Show();
 
-                        Console.WriteLine("NEW badge state: Operator");
+                        logger.Log("NEW badge state: Operator");
                     }
                 }
                 else
@@ -879,7 +882,7 @@ namespace OpenProtocolInterpreter.Sample
 
                     if (isSQSLoggedMemory != isSQSLogged)
                     {
-                        Console.WriteLine($"IsSQSLoggedMemory: {isSQSLoggedMemory} / isSQSLogged: {isSQSLogged}");
+                        logger.Log($"IsSQSLoggedMemory: {isSQSLoggedMemory} / isSQSLogged: {isSQSLogged}");
 
                         currentOperatorGroup = "NotLogged";
                         SendCommandAllStations(false);
@@ -887,7 +890,7 @@ namespace OpenProtocolInterpreter.Sample
                         checkingForm.UpdateSQSStatus();
                         checkingForm.Show();
 
-                        Console.WriteLine("NEW badge state: NotLogged");
+                        logger.Log("NEW badge state: NotLogged");
 
                     }
                 }
@@ -931,10 +934,12 @@ namespace OpenProtocolInterpreter.Sample
             if (bypassAllowed)
             {
                 checkingForm.TopMost = false;
+                callBypassForm.callBypassButtonLabel.ForeColor = Color.Lime;
             }
             else if (!bypassAllowed)
             {
                 checkingForm.TopMost = true;
+                callBypassForm.callBypassButtonLabel.ForeColor = Color.Red;
             }
 
             if (!firstTickDone && currentOperatorGroup != "")
@@ -942,7 +947,7 @@ namespace OpenProtocolInterpreter.Sample
                 checkingForm.UpdateSQSStatus();
                 checkingForm.Show();
                 firstTickDone = true;
-                Console.WriteLine("FirstTick DONE!");
+                logger.Log("FirstTick DONE!");
             }
         }
 
@@ -954,7 +959,7 @@ namespace OpenProtocolInterpreter.Sample
 
         private void closeMainFormButton_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("Close button hitted");
+            logger.Log("Close button hitted");
             ClearHighlightedButtons();
             this.formLoaderPanel.Controls.Clear();
             this.formLoaderPanel.Controls.Add(closingForm);
@@ -1036,16 +1041,16 @@ namespace OpenProtocolInterpreter.Sample
         {
             if (vsOneDriver.KeepAlive.ElapsedMilliseconds > 5000) //5 sec
             {
-                Console.WriteLine($"Sending Keep Alive...");
+                logger.Log($"Sending Keep Alive...");
                 var pack = vsOneDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(5));
 
                 if (pack != null && pack.Header.Mid == Mid9999.MID)
                 {
-                    Console.WriteLine($"Keep Alive Received");
+                    logger.Log($"Keep Alive Received");
                 }
                 else
                 {
-                    Console.WriteLine($"Keep Alive Not Received, connection lost. Stopping keepAliveTimer and trying to connect again by StartInterface method");
+                    logger.Log($"Keep Alive Not Received, connection lost. Stopping keepAliveTimer and trying to connect again by StartInterface method");
 
                     vsOneDriver.Connected = false;
 
@@ -1065,16 +1070,16 @@ namespace OpenProtocolInterpreter.Sample
         {
             if (vsTwoDriver.KeepAlive.ElapsedMilliseconds > 5000) //5 sec
             {
-                Console.WriteLine($"Sending Keep Alive...");
+                logger.Log($"Sending Keep Alive...");
                 var pack = vsTwoDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(5));
 
                 if (pack != null && pack.Header.Mid == Mid9999.MID)
                 {
-                    Console.WriteLine($"Keep Alive Received");
+                    logger.Log($"Keep Alive Received");
                 }
                 else
                 {
-                    Console.WriteLine($"Keep Alive Not Received, connection lost. Stopping keepAliveTimer and trying to connect again by StartInterface method");
+                    logger.Log($"Keep Alive Not Received, connection lost. Stopping keepAliveTimer and trying to connect again by StartInterface method");
 
                     vsTwoDriver.Connected = false;
 
@@ -1094,16 +1099,16 @@ namespace OpenProtocolInterpreter.Sample
         {
             if (vsThreeDriver.KeepAlive.ElapsedMilliseconds > 5000) //5 sec
             {
-                Console.WriteLine($"Sending Keep Alive...");
+                logger.Log($"Sending Keep Alive...");
                 var pack = vsThreeDriver.SendAndWaitForResponse(new Mid9999().Pack(), TimeSpan.FromSeconds(5));
 
                 if (pack != null && pack.Header.Mid == Mid9999.MID)
                 {
-                    Console.WriteLine($"Keep Alive Received");
+                    logger.Log($"Keep Alive Received");
                 }
                 else
                 {
-                    Console.WriteLine($"Keep Alive Not Received, connection lost. Stopping keepAliveTimer and trying to connect again by StartInterface method");
+                    logger.Log($"Keep Alive Not Received, connection lost. Stopping keepAliveTimer and trying to connect again by StartInterface method");
 
                     vsThreeDriver.Connected = false;
 

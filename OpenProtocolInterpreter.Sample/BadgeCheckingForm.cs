@@ -17,7 +17,7 @@ namespace OpenProtocolInterpreter.Sample
     {
         DriverForm DriverForm;
 
-        Logger logger = new Logger();
+        Logger logger = new Logger(); 
 
         public int bypassScrennRetationTime = 600;
         private int _bypassScrennRetationTime;

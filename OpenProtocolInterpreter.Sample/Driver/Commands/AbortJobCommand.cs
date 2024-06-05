@@ -6,6 +6,9 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
 {
     public class AbortJobCommand
     {
+
+        Logger logger = new Logger();
+
         private readonly OpenProtocolDriver driver;
 
         public AbortJobCommand(OpenProtocolDriver driver)
@@ -15,7 +18,7 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
 
         public bool Execute()
         {
-            Console.WriteLine($"Sending abort job to controller!");
+            logger.Log($"Sending abort job to controller!");
             var mid = driver.SendAndWaitForResponse(new Mid0127().Pack(), new TimeSpan(0, 0, 10));
 
             if (mid.Header.Mid == Mid0004.MID)
@@ -30,12 +33,12 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
 
         private void onJobAccepted(Mid0005 mid)
         {
-            Console.WriteLine("Job Abort Accepted by controller!");
+            logger.Log("Job Abort Accepted by controller!");
         }
 
         private void onJobRefused(Mid0004 mid)
         {
-            Console.WriteLine($"Job Abort refused by controller under error code <{(int)mid.ErrorCode}> ({mid.ErrorCode.ToString()})!");
+            logger.Log($"Job Abort refused by controller under error code <{(int)mid.ErrorCode}> ({mid.ErrorCode.ToString()})!");
         }
     }
 }
