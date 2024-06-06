@@ -52,7 +52,7 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
 
                 var mid = _driver.SendAndWaitForResponse(mid0200.Pack(), new TimeSpan(0, 0, 5));
 
-               logger.Log("Pack sent: " + mid0200.Pack());
+               Console.WriteLine("Pack sent: " + mid0200.Pack());
 
                 if (mid.Header.Mid == Mid0004.MID)
                 {
@@ -72,13 +72,13 @@ namespace OpenProtocolInterpreter.Sample.Driver.Commands
 
         private void CommandAccepted(Mid0005 mid)
         {
-            logger.Log($"Cmd Accepted by controller!");
+            Console.WriteLine($"Cmd Accepted by controller!");
         }
 
         private void CommandRefused(Mid0004 mid)
         {
             string str = $"Cmd refused by controller under error code <{(int)mid.ErrorCode}> ({mid.ErrorCode.ToString()})!";
-            logger.Log(str);
+            Console.WriteLine(str);
             MessageBox.Show(str);
         }
     }

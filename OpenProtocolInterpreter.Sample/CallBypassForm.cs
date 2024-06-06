@@ -75,21 +75,21 @@ namespace OpenProtocolInterpreter.Sample
         {
             //    if (!this.Focused)
             //    {
-            //        logger.Log("callBypassForm lost focus, focusing...");
+            //        Console.WriteLine("callBypassForm lost focus, focusing...");
             //        this.Activate();
             //    }
 
             //    // Ensure a specific control has focus
             //    if (!bypassRequestButton.Focused)
             //    {
-            //        logger.Log("bypassRequestButton lost focus, focusing...");
+            //        Console.WriteLine("bypassRequestButton lost focus, focusing...");
             //        bypassRequestButton.Focus();
             //    }
         }
 
         private void callBypassButtonLabel_Click(object sender, EventArgs e)
         {
-            logger.Log("callBypassButtonLabelPressed");
+            Console.WriteLine("callBypassButtonLabelPressed");
 
             if (callBypassButtonLabel.Text == "BYPASS OFF")
             {

@@ -78,14 +78,14 @@ namespace OpenProtocolInterpreter.Sample.Driver
             try
             {
                 System.Threading.Thread.Sleep(50); //Just to not send so many packages at once
-                logger.Log($"Sending message: {message}");
+                Console.WriteLine($"Sending message: {message}");
 
                 this.simpleTcpClient.WriteLine(message);
                 this.KeepConnectionAlive();
             }
             catch (Exception ex)
             {
-                logger.Log($"Exception: {ex.Message}");
+                Console.WriteLine($"Exception: {ex.Message}");
             }
         }
 
@@ -102,10 +102,10 @@ namespace OpenProtocolInterpreter.Sample.Driver
                 System.Threading.Thread.Sleep(100);
                 Mid midResponse = null;
 
-                logger.Log($"Sending message: {message}");
+                Console.WriteLine($"Sending message: {message}");
                 Message response = this.simpleTcpClient.WriteLineAndGetReply(message, timeout);
 
-                logger.Log((response != null) ? $"Response: {response.MessageString}" : "TIMEOUT!");
+                Console.WriteLine((response != null) ? $"Response: {response.MessageString}" : "TIMEOUT!");
 
                 if (response != null)
                 {
@@ -117,7 +117,7 @@ namespace OpenProtocolInterpreter.Sample.Driver
             }
             catch (Exception ex)
             {
-                logger.Log($"Exception: {ex.Message}");
+                Console.WriteLine($"Exception: {ex.Message}");
                 return null;
             }
         }
@@ -132,14 +132,14 @@ namespace OpenProtocolInterpreter.Sample.Driver
         {
             try
             {
-                logger.Log($"Message arrived: {message.MessageString}");
+                Console.WriteLine($"Message arrived: {message.MessageString}");
 
                 var mid = this._midInterpreter.Parse(message.MessageString);
                 var action = this.OnReceivedMID.FirstOrDefault(x => x.Key == mid.GetType());
 
                 if (action.Equals(default(KeyValuePair<Type, ReceivedCommandActionDelegate>)))
                 {
-                    logger.Log($"NO ACTION WAS REGISTERED TO MID: {mid.GetType()}");
+                    Console.WriteLine($"NO ACTION WAS REGISTERED TO MID: {mid.GetType()}");
                     return;
                 }
 
@@ -147,7 +147,7 @@ namespace OpenProtocolInterpreter.Sample.Driver
             }
             catch (Exception ex)
             {
-                logger.Log($"Exception: {ex.Message}");
+                Console.WriteLine($"Exception: {ex.Message}");
             }
         }
 
@@ -173,7 +173,7 @@ namespace OpenProtocolInterpreter.Sample.Driver
                 }
                 else if (message == null)
                 {
-                    logger.Log($"Reply from controller was NULL");
+                    Console.WriteLine($"Reply from controller was NULL");
                     startCommErrorMessage = "Reply from controller was NULL, probably by TIMEOUT";
                     return false;
                 }
@@ -181,7 +181,7 @@ namespace OpenProtocolInterpreter.Sample.Driver
             catch (Exception ex)
             {
                 Connected = false;
-                logger.Log($"Exception: {ex.Message}");
+                Console.WriteLine($"Exception: {ex.Message}");
             }
 
             return Connected;
@@ -194,7 +194,7 @@ namespace OpenProtocolInterpreter.Sample.Driver
         protected virtual void OnCommunicationStartAccepted(Mid0002 mid)
         {
             Connected = true;
-            logger.Log($"Communication Start Accepted (MID 0002)");
+            Console.WriteLine($"Communication Start Accepted (MID 0002)");
         }
 
         protected virtual void OnCommunicationStartError(Mid0004 mid)
@@ -205,13 +205,13 @@ namespace OpenProtocolInterpreter.Sample.Driver
             if (mid.ErrorCode == Error.ClientAlreadyConnected)
             {
                 msg = "Client is already connected";
-                logger.Log(msg);
+                Console.WriteLine(msg);
                 startCommErrorMessage = msg + "\r\nError code: " + Error.ClientAlreadyConnected.ToString();
             }
             else if (mid.ErrorCode == Error.MidRevisionUnsupported)
             {
                 msg = "MidRevisionUnsupported";
-                logger.Log(msg);
+                Console.WriteLine(msg);
                 startCommErrorMessage = msg + "\r\nError code: " + Error.MidRevisionUnsupported.ToString();
             }
 

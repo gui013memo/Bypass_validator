@@ -197,7 +197,7 @@
             this.vsThreeIpTextBox.Name = "vsThreeIpTextBox";
             this.vsThreeIpTextBox.Size = new System.Drawing.Size(149, 22);
             this.vsThreeIpTextBox.TabIndex = 2;
-            this.vsThreeIpTextBox.Text = "10.127.1.21";
+            this.vsThreeIpTextBox.Text = "172.16.110.21";
             this.vsThreeIpTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // vsThreeControllerIpLabel
@@ -266,7 +266,7 @@
             this.vsTwoPortTextBox.Name = "vsTwoPortTextBox";
             this.vsTwoPortTextBox.Size = new System.Drawing.Size(149, 22);
             this.vsTwoPortTextBox.TabIndex = 10;
-            this.vsTwoPortTextBox.Text = "4548";
+            this.vsTwoPortTextBox.Text = "4545";
             this.vsTwoPortTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // vsTwoStartOrStopButton
@@ -290,7 +290,7 @@
             this.vsTwoIpTextBox.Name = "vsTwoIpTextBox";
             this.vsTwoIpTextBox.Size = new System.Drawing.Size(149, 22);
             this.vsTwoIpTextBox.TabIndex = 2;
-            this.vsTwoIpTextBox.Text = "172.16.110.21";
+            this.vsTwoIpTextBox.Text = "172.16.110.22";
             this.vsTwoIpTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // vsTwoControllerIpLabel
@@ -383,7 +383,7 @@
             this.vsOneIpTextBox.Name = "vsOneIpTextBox";
             this.vsOneIpTextBox.Size = new System.Drawing.Size(149, 22);
             this.vsOneIpTextBox.TabIndex = 2;
-            this.vsOneIpTextBox.Text = "10.127.1.21";
+            this.vsOneIpTextBox.Text = "172.16.110.21";
             this.vsOneIpTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // vsOneControllerIpLabel

@@ -62,7 +62,7 @@ namespace OpenProtocolInterpreter.Sample
 
                 if (DriverForm.currentOperatorGroup.Contains("Master"))
                 {
-                    logger.Log("Operador autorizado");
+                    Console.WriteLine("Operador autorizado");
 
                     this.BackColor = Color.FromArgb(0, 192, 0);
                     //cancelBypassButton.BackColor = Color.FromArgb(158, 163, 168);
@@ -72,7 +72,7 @@ namespace OpenProtocolInterpreter.Sample
                 }
                 else
                 {
-                    logger.Log("Operador não autorizado");
+                    Console.WriteLine("Operador não autorizado");
 
                     this.BackColor = Color.FromArgb(201, 44, 31);
                     //cancelBypassButton.BackColor = Color.FromArgb(158, 163, 168);
@@ -86,7 +86,7 @@ namespace OpenProtocolInterpreter.Sample
                 this.BackColor = Color.FromArgb(158, 163, 168);
                 //cancelBypassButton.BackColor = Color.FromArgb(201, 44, 31);
 
-                logger.Log("Sem cracha logado");
+                Console.WriteLine("Sem cracha logado");
 
                 operatorStatusLabel.Location = new Point(70, 87);
                 operatorStatusLabel.Text = "LOGAR CRACHA OPERADOR";

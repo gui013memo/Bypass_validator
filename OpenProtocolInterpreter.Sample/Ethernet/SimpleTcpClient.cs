@@ -51,7 +51,7 @@ namespace OpenProtocolInterpreter.Sample.Ethernet
 
         public SimpleTcpClient Connect(string hostNameOrIpAddress, int port)
         {
-            logger.Log("Got inside of SimpleTcpClient.Connect() method");
+            Console.WriteLine("Got inside of SimpleTcpClient.Connect() method");
 
             if (string.IsNullOrEmpty(hostNameOrIpAddress))
             {
