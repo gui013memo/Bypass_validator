@@ -17,7 +17,7 @@ namespace OpenProtocolInterpreter.Sample
     {
         DriverForm DriverForm;
 
-        Logger logger = new Logger(); 
+        Logger logger = new Logger();
 
         public int bypassScrennRetationTime = 600;
         private int _bypassScrennRetationTime;
@@ -95,20 +95,6 @@ namespace OpenProtocolInterpreter.Sample
             }
         }
 
-        private void cancelBypassButton_Click(object sender, EventArgs e)
-        {
-            //DriverForm.firstBadgeReadingAux = true;
-
-            //DriverForm.firstTickDone = false;
-            //retationAllowed = false;
-            //shadeEffectTimer.Start();
-            //DriverForm.checkBadgeTimer.Stop();
-
-            //DriverForm.SendCommandAllStations(false);
-
-            //DriverForm.callBypassForm.bypassRequestButton.Text = "BYPASS OFF";
-            //DriverForm.callBypassForm.bypassRequestButton.ForeColor = Color.Yellow;
-        }
 
         private void shadeEffectTimer_Tick(object sender, EventArgs e)
         {

@@ -26,9 +26,9 @@ namespace OpenProtocolInterpreter.Sample
 
         Logger logger = new Logger();
 
-        //string idLogsPath = "C:\\ProgramData\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
-        string idLogsPath = " C:\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
-       
+        string idLogsPath = "C:\\ProgramData\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
+        //string idLogsPath = " C:\\Atlas Copco\\SQS\\LBMS\\log\\WorkerIdent_1";
+
 
         private bool mouseDown;
         private Point lastLocation;
@@ -795,14 +795,12 @@ namespace OpenProtocolInterpreter.Sample
                 {
                     checkBadgeTimer.Stop();
                 });
-
-
             }
         }
 
         public void CheckSQSBadge()
         {
-            Console.WriteLine("CheckSQSBadge func called");
+            //Console.WriteLine("CheckSQSBadge func called");
 
             string targetKeyOut = "[WorkerIdent.1.1] SendKeyOut - Command [OperatorCode] Destination [Ident.1] Value [] - Worker";
 
@@ -855,10 +853,8 @@ namespace OpenProtocolInterpreter.Sample
                         }
                     }
 
-
                     if (currentOperatorGroup == "Master_Admin" && stateChanged)
                     {
-
                         stateChanged = false;
                         SendCommandAllStations(true);
                         bypassAllowed = true;
